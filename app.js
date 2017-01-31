@@ -5,23 +5,26 @@ const http = require('http');
 
 const HTTP_PORT = process.env.HTTP_PORT || 80;
 
-if (!process.env.DEVELOPMENT)
-{
+if (!process.env.DEVELOPMENT) {
     const https = require('https');
     const HTTPS_PORT = 443;
     const fs = require('fs');
-    const privateKey = fs.readFileSync('/etc/letsencrypt/live/revolutionconf.com/privkey.pem');
-    const certificate = fs.readFileSync('/etc/letsencrypt/live/revolutionconf.com/cert.pem');
+    const httpsOptions = {
+        key: fs.readFileSync('/etc/letsencrypt/live/revolutionconf.com/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/revolutionconf.com/cert.pem'),
+        ca: fs.readFileSync('/etc/letsencrypt/live/revolutionconf.com/chain.pem')
+    };
 
     app.all('*', function (req, res, next) {
 
         if (req.secure) {
             return next();
         }
+
         res.redirect('https://' + req.hostname + ':' + HTTPS_PORT + req.url);
     });
 
-    https.createServer({ key: privateKey, cert: certificate }, app)
+    https.createServer(httpsOptions, app)
         .listen(HTTPS_PORT, function () {
 
             console.log('Secure Server listening on port ' + HTTPS_PORT);
