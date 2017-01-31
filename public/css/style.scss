@@ -351,204 +351,6 @@ hr {
     box-shadow: .25rem .25rem 1rem $black_30;
 }
 
-.section-wrapper {
-
-    position: relative;
-    display: table;
-    width: 100%;
-    background-color: #000;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
-    box-shadow: inset 0 0 10em 3em rgba(0,0,0,0.8);
-    color: #fff;
-
-    a {
-        color: $gray;
-        &:focus {
-            color: $white;
-        }
-        &:hover {
-            color: $color_mountain_mist_approx;
-        }
-    }
-    hr {
-        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
-        box-shadow: 0 0 10px $black;
-        border-top: 1px solid $white_8;
-    }
-    .section-position {
-        margin-top: -2rem;
-    }
-}
-
-.section-home.section-wrapper {
-
-    background-image: $url_1;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    font-size: 28px;
-    color: $white;
-
-    h1 {
-        font-size: 70px;
-        line-height: 1;
-
-        text-shadow: -3px -3px 2px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 3px #a00;
-
-        color: rgba(255, 255, 255, 1);
-
-        .divider {
-            display: inline-block;
-            opacity: 0.9;
-
-            width: 0.75em;
-            height: 0.75em;
-            background: $logo_grunge;
-            background-size: contain;
-            vertical-align: center;
-        }
-    }
-
-    .site-info {
-
-        &.date {
-            line-height: 1;
-        }
-
-        &.numbers {
-            line-height: 1.1;
-        }
-        span {
-            display: inline-block;
-        }
-
-        > span {
-            padding: 0.125em 0;
-        }
-
-        > span.divider {
-            padding: 0;
-            vertical-align: middle;
-            margin: 0 1em;
-            height: 1.65em;
-
-            > span {
-                transform: rotate(30deg);
-                width: 2px;
-                background: #fff;
-                height: 1.65em;
-                opacity: 0.5;
-            }
-        }
-    }
-}
-
-.section-intro.section-wrapper {
-    font-size: 28px;
-    color: $white;
-
-    .conference-description {
-        color: $color_silver_chalice_approx;
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: 300;
-    }
-
-    .conference-logo {
-        text-align: center;
-        margin-top: 1rem;
-        img {
-            max-width: 90%;
-            max-height: 50vh;
-        }
-    }
-    .row {
-        margin-top: 3rem;
-        margin-bottom: 2rem;
-        .border {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: $white_40;
-        }
-        i.fa {
-            margin-right: 10px;
-            color: $color_bright_red_approx;
-        }
-        &.dividers > div {
-            position: relative;
-            margin-bottom: .5em;
-        }
-    }
-}
-
-.section-about.section-wrapper {
-    background-image: url('../img/background1.png');
-    .organizers {
-        img {
-            -webkit-filter: grayscale(1);
-            filter: grayscale(1);
-        }
-        .clearfix {
-            margin-bottom: 1rem;
-        }
-        .row {
-            margin: 0;
-            > div {
-                padding: 0;
-            }
-            > div.info {
-                padding: 0 10px;
-            }
-        }
-        .social {
-            font-size: 1.2rem;
-        }
-    }
-}
-
-.section-location.section-wrapper {
-    background-image: url('../img/background4.png');
-}
-
-.section-tickets.section-wrapper {
-    background-image: url('../img/background4.png');
-}
-
-.section-sponsors.section-wrapper {
-    background-image: url('../img/background2.png');
-}
-
-.section-speakers.section-wrapper {
-    background-image: url('../img/background3.png');
-    .discussion-panel {
-        img {
-            -webkit-filter: grayscale(1);
-            filter: grayscale(1);
-        }
-        .clearfix {
-            margin-bottom: 1rem;
-        }
-        .row {
-            margin: 0;
-            > div {
-                padding: 0;
-            }
-            > div.info {
-                padding: 0 10px;
-            }
-        }
-        .social {
-            font-size: 1.2rem;
-        }
-    }
-
-}
-
 .modal-body {
     padding: 2rem;
     &.bg-dark {
@@ -810,7 +612,39 @@ hr {
     width: 100%;
     overflow: hidden;
 
+    .section-wrapper + .section-wrapper .section {
+        padding-top: 7em;
+    }
+
     .section-wrapper {
+        position: relative;
+        display: table;
+        width: 100%;
+        background-color: #000;
+        background-position: center center;
+        background-size: cover;
+        background-attachment: fixed;
+        box-shadow: inset 0 0 10em 3em rgba(0, 0, 0, 0.8);
+        color: #fff;
+
+        a {
+            color: $gray;
+            &:focus {
+                color: $white;
+            }
+            &:hover {
+                color: $color_mountain_mist_approx;
+            }
+        }
+        hr {
+            //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+            box-shadow: 0 0 10px $black;
+            border-top: 1px solid $white_8;
+        }
+        .section-position {
+            margin-top: -2rem;
+        }
+
         &.bg-dark {
             background-color: $color_log_cabin_approx;
             .section .section-subtitle {
@@ -825,9 +659,12 @@ hr {
             z-index: 5;
             display: table-cell;
             width: 100%;
-            padding: 7em 0;
+            padding: 55px 0 7em 0;
             vertical-align: middle;
 
+            &.full-height {
+                padding: 55px 0;
+            }
             .section-title {
                 color: $color_bright_red_approx;
                 text-transform: uppercase;
@@ -859,6 +696,176 @@ hr {
             z-index: 1;
         }
     }
+}
+
+.section-home.section-wrapper {
+
+    background-image: $url_1;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-size: 28px;
+    color: $white;
+
+    h1 {
+        font-size: 70px;
+        line-height: 1;
+
+        text-shadow: -3px -3px 2px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 3px #a00;
+
+        color: rgba(255, 255, 255, 1);
+
+        .divider {
+            display: inline-block;
+            opacity: 0.9;
+            width: 0.75em;
+            height: 0.75em;
+            background: $logo_grunge;
+            background-size: contain;
+            vertical-align: center;
+        }
+    }
+
+    .site-info {
+
+        &.date {
+            line-height: 1;
+        }
+
+        &.numbers {
+            line-height: 1.1;
+        }
+        span {
+            display: inline-block;
+        }
+
+        > span {
+            padding: 0.125em 0;
+        }
+
+        > span.divider {
+            padding: 0;
+            vertical-align: middle;
+            margin: 0 1em;
+            height: 1.65em;
+
+            > span {
+                transform: rotate(30deg);
+                width: 2px;
+                background: #fff;
+                height: 1.65em;
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+.section-intro.section-wrapper {
+    font-size: 28px;
+    color: $white;
+
+    .conference-description {
+        color: $color_silver_chalice_approx;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+
+    .conference-logo {
+        text-align: center;
+        margin-top: 1rem;
+        img {
+            max-width: 90%;
+            max-height: 50vh;
+        }
+    }
+    .row {
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        .border {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: $white_40;
+        }
+        i.fa {
+            margin-right: 10px;
+            color: $color_bright_red_approx;
+        }
+        &.dividers > div {
+            position: relative;
+            margin-bottom: .5em;
+        }
+    }
+}
+
+.section-about.section-wrapper {
+    background-image: url('../img/background1.png');
+    .organizers {
+        img {
+            -webkit-filter: grayscale(1);
+            filter: grayscale(1);
+        }
+        .clearfix {
+            margin-bottom: 1rem;
+        }
+        .row {
+            margin: 0;
+            > div {
+                padding: 0;
+            }
+            > div.info {
+                padding: 0 10px;
+            }
+        }
+        .social {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.section-page.section-wrapper {
+    background-image: url('../img/background4.png');
+}
+
+.section-location.section-wrapper {
+    background-image: url('../img/background4.png');
+}
+
+.section-tickets.section-wrapper {
+    background-image: url('../img/background4.png');
+}
+
+.section-sponsors.section-wrapper {
+    background-image: url('../img/background2.png');
+}
+
+.section-speakers.section-wrapper {
+    background-image: url('../img/background3.png');
+    .discussion-panel {
+        img {
+            -webkit-filter: grayscale(1);
+            filter: grayscale(1);
+        }
+        .clearfix {
+            margin-bottom: 1rem;
+        }
+        .row {
+            margin: 0;
+            > div {
+                padding: 0;
+            }
+            > div.info {
+                padding: 0 10px;
+            }
+        }
+        .social {
+            font-size: 1.2rem;
+        }
+    }
+
 }
 
 .sponsor {
