@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2017 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="lanyrd" unicode="&#xe800;" d="M0 739q-1 11 6 20t14 17 23 15 27 13 33 14 35 15q54 22 97 16t54-35q25-67 102-320t116-361q268 88 326 105 16 6 37 4t33-23q23-47 32-99t1-74q-19-15-60-32t-75-29-90-29-73-23q-10-3-38-13t-53-19-58-19-61-17-54-12-45-3-25 9q-18 18-32 52t-29 87-19 66q-42 125-113 338t-104 313q-6 13-7 24z" horiz-adv-x="940" />
+</font>
+</defs>
+</svg>
