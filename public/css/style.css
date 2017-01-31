@@ -207,8 +207,32 @@ hr {
   border: 1px solid #444;
   box-shadow: 0.25rem 0.25rem 1rem rgba(0, 0, 0, 0.3); }
 
+.section-wrapper {
+  position: relative;
+  display: table;
+  width: 100%;
+  background-color: #000;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  box-shadow: inset 0 0 10em 3em rgba(0, 0, 0, 0.8);
+  color: #fff; }
+  .section-wrapper a {
+    color: gray; }
+    .section-wrapper a:focus {
+      color: #fff; }
+    .section-wrapper a:hover {
+      color: #999; }
+  .section-wrapper hr {
+    box-shadow: 0 0 10px #000;
+    border-top: 1px solid rgba(255, 255, 255, 0.08); }
+  .section-wrapper .section-position {
+    margin-top: -2rem; }
+
 .section-home.section-wrapper {
-  background: #000 url("../img/hero_1400px.png") fixed no-repeat;
+  background-image: url("../img/hero_1400px.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   font-size: 28px;
   color: #fff; }
@@ -246,8 +270,6 @@ hr {
       opacity: 0.5; }
 
 .section-intro.section-wrapper {
-  background-size: cover;
-  background: #000 url("../img/hero_1400px.png") fixed;
   font-size: 28px;
   color: #fff; }
   .section-intro.section-wrapper .conference-description {
@@ -278,27 +300,33 @@ hr {
       position: relative;
       margin-bottom: .5em; }
 
-.section-about .organizers img {
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1); }
-.section-about .organizers .clearfix {
-  margin-bottom: 1rem; }
-.section-about .organizers .row {
-  margin: 0; }
-  .section-about .organizers .row > div {
-    padding: 0; }
-  .section-about .organizers .row > div.info {
-    padding: 0 10px; }
-.section-about .organizers .social {
-  font-size: 1.2rem; }
+.section-about.section-wrapper {
+  background-image: url("../img/background1.png"); }
+  .section-about.section-wrapper .organizers img {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1); }
+  .section-about.section-wrapper .organizers .clearfix {
+    margin-bottom: 1rem; }
+  .section-about.section-wrapper .organizers .row {
+    margin: 0; }
+    .section-about.section-wrapper .organizers .row > div {
+      padding: 0; }
+    .section-about.section-wrapper .organizers .row > div.info {
+      padding: 0 10px; }
+  .section-about.section-wrapper .organizers .social {
+    font-size: 1.2rem; }
+
+.section-location.section-wrapper {
+  background-image: url("../img/background4.png"); }
 
 .section-tickets.section-wrapper {
-  background-size: cover;
-  background: url("../img/star_grey_1400px.png") center center fixed; }
+  background-image: url("../img/background4.png"); }
+
+.section-sponsors.section-wrapper {
+  background-image: url("../img/background2.png"); }
 
 .section-speakers.section-wrapper {
-  background-size: cover;
-  background: url("../img/star_dark_grey_1400px.png") center center fixed; }
+  background-image: url("../img/background3.png"); }
   .section-speakers.section-wrapper .discussion-panel img {
     -webkit-filter: grayscale(1);
     filter: grayscale(1); }
@@ -338,7 +366,7 @@ hr {
   color: #a00 !important; }
 
 .btn-primary {
-  color: #fff;
+  color: #fff !important;
   background-color: #d51305;
   border-color: #a00;
   margin-top: 2rem; }
@@ -513,7 +541,7 @@ hr {
     z-index: 5;
     display: table-cell;
     width: 100%;
-    padding: 50px 0;
+    padding: 7em 0;
     vertical-align: middle; }
     .page-sections .section-wrapper .section .section-title {
       color: #a00;
@@ -539,19 +567,6 @@ hr {
     bottom: 0;
     right: 0;
     z-index: 1; }
-
-.section-wrapper {
-  position: relative;
-  display: table;
-  width: 100%;
-  background: #fff fixed center center; }
-  .section-wrapper .section-position {
-    margin-top: -2rem; }
-
-.section-sponsors {
-  background-size: cover;
-  background: url("../img/star_grey_1400px.png") centercenter;
-  color: #333; }
 
 .sponsor {
   position: relative;
@@ -622,10 +637,6 @@ hr {
   display: block; }
 .section-sessions .open .session .less {
   display: block; }
-
-.section-location {
-  background-size: cover;
-  background: url(../img/star_grey_1400px.png) center center fixed; }
 
 .section-signup .section-title {
   font-size: 2.25em !important;

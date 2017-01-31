@@ -351,9 +351,42 @@ hr {
     box-shadow: .25rem .25rem 1rem $black_30;
 }
 
+.section-wrapper {
+
+    position: relative;
+    display: table;
+    width: 100%;
+    background-color: #000;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    box-shadow: inset 0 0 10em 3em rgba(0,0,0,0.8);
+    color: #fff;
+
+    a {
+        color: $gray;
+        &:focus {
+            color: $white;
+        }
+        &:hover {
+            color: $color_mountain_mist_approx;
+        }
+    }
+    hr {
+        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        box-shadow: 0 0 10px $black;
+        border-top: 1px solid $white_8;
+    }
+    .section-position {
+        margin-top: -2rem;
+    }
+}
+
 .section-home.section-wrapper {
 
-    background: $black $url_1 fixed no-repeat;
+    background-image: $url_1;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     font-size: 28px;
     color: $white;
@@ -413,9 +446,6 @@ hr {
 }
 
 .section-intro.section-wrapper {
-
-    background-size: cover;
-    background: $black $url_1 fixed;
     font-size: 28px;
     color: $white;
 
@@ -456,7 +486,8 @@ hr {
     }
 }
 
-.section-about {
+.section-about.section-wrapper {
+    background-image: url('../img/background1.png');
     .organizers {
         img {
             -webkit-filter: grayscale(1);
@@ -480,15 +511,20 @@ hr {
     }
 }
 
-.section-tickets.section-wrapper {
-    background-size: cover;
-    background: $url_3 center center fixed;
+.section-location.section-wrapper {
+    background-image: url('../img/background4.png');
+}
 
+.section-tickets.section-wrapper {
+    background-image: url('../img/background4.png');
+}
+
+.section-sponsors.section-wrapper {
+    background-image: url('../img/background2.png');
 }
 
 .section-speakers.section-wrapper {
-    background-size: cover;
-    background: $url_2 center center fixed;
+    background-image: url('../img/background3.png');
     .discussion-panel {
         img {
             -webkit-filter: grayscale(1);
@@ -545,7 +581,7 @@ hr {
 }
 
 .btn-primary {
-    color: $white;
+    color: $white !important;
     background-color: $color_milano_red_approx;
     border-color: $color_bright_red_approx;
     margin-top: 2rem;
@@ -789,7 +825,7 @@ hr {
             z-index: 5;
             display: table-cell;
             width: 100%;
-            padding: 50px 0;
+            padding: 7em 0;
             vertical-align: middle;
 
             .section-title {
@@ -823,22 +859,6 @@ hr {
             z-index: 1;
         }
     }
-}
-
-.section-wrapper {
-    position: relative;
-    display: table;
-    width: 100%;
-    background: $white fixed center center;
-    .section-position {
-        margin-top: -2rem;
-    }
-}
-
-.section-sponsors {
-    background-size: cover;
-    background: $url_3 centercenter;
-    color: $color_mine_shaft_approx;
 }
 
 .sponsor {
@@ -937,11 +957,6 @@ hr {
             display: block;
         }
     }
-}
-
-.section-location {
-    background-size: cover;
-    background: url(../img/star_grey_1400px.png) center center fixed;
 }
 
 .section-signup {
