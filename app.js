@@ -3,7 +3,7 @@ const app = express();
 const routes = require('./routes');
 const http = require('http');
 
-const HTTP_PORT = process.env.HTTP_PORT || 80;
+const HTTP_PORT = process.env.PORT || 80;
 
 if (!process.env.DEVELOPMENT) {
     const https = require('https');
