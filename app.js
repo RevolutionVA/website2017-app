@@ -5,7 +5,7 @@ const http = require('http');
 
 const HTTP_PORT = process.env.PORT || 80;
 
-if (!process.env.DEVELOPMENT) {
+if (process.env.SSL) {
     const https = require('https');
     const HTTPS_PORT = 443;
     const fs = require('fs');
