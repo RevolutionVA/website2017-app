@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "ejs": "^2.5.5",
     "express": "^4.14.1",
+    "express-handlebars": "^3.0.0",
+    "fs-extra": "^2.0.0",
     "lodash": "^4.17.4",
+    "marked": "^0.3.6",
     "serve-favicon": "^2.3.2"
   },
   "devDependencies": {
+    "ncp": "^2.0.0",
     "nodemon": "^1.11.0"
   },
   "scripts": {
