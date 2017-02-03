@@ -109,6 +109,8 @@ module.exports = {
 
             try {
 
+                let dataTypes = [];
+
                 fs.readdirSync(tmpDir).forEach(function (fileType) {
 
                     let curPath = tmpDir + '/' + fileType;
@@ -117,16 +119,27 @@ module.exports = {
 
                         if (fileType.endsWith('.json')) {
                             fs.copySync(curPath, contentDir + '/' + fileType);
+                            dataTypes.push(fileType);
                         }
                     } else {
                         processItemsDir(curPath, contentDir + '/' + fileType + '.json');
+                        dataTypes.push(fileType);
                     }
                 });
+
+                let content = {
+                    updated: new Date(),
+                    dataTypes
+                };
+
+                fs.writeFileSync(appRoot + '/public/content-status.json', JSON.stringify(content, null, '\t'));
+
             } catch (err) {
                 reject(err);
             } finally {
                 fs.removeSync(tmpDir);
             }
+
             resolve();
         });
 
