@@ -77,86 +77,53 @@
                 <div class="organizers">
                     <div class="row">
 
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/organizers/erik.png">
+                        {{#each organizers}}
+                        <div class="col-md-6 human" style="margin-bottom: 2em;">
+                            <div class="row">
+
+                                <div class="col-xs-6">
+                                    <div class="embed-responsive embed-responsive-1x1">
+                                        <div class="embed-responsive-item text-center">
+                                            <img src="{{profile}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 info">
+                                    <h4 class="ng-binding">{{firstName}} {{lastName}}</h4>
+                                    <p class="ng-binding">{{title}}<br>
+                                        {{#if company_name}}
+
+                                        {{#if company_website}}
+                                        <a class="text-grey" target="_blank"
+                                           href="{{company_website}}">{{company_name}}</a>
+                                        {{else}}
+                                        {{company_name}}
+                                        {{/if}}
+                                        {{/if}}
+                                    </p>
+                                    <p class="social">
+                                        {{#if twitter}}
+                                        <a target="_blank" href="https://twitter.com/{{twitter}}">
+                                            <i class="fa fa-twitter"></i></a>
+                                        {{/if}}
+                                        {{#if linkedin}}
+                                        <a target="_blank"
+                                           href="https://www.linkedin.com/in/{{linkedin}}">
+                                            <i class="fa fa-linkedin"></i></a>
+                                        {{/if}}
+                                        {{#if facebook}}
+                                        <a target="_blank"
+                                           href="https://www.facebook.com/{{facebook}}">
+                                            <i class="fa fa-facebook-official"></i></a>
+                                        {{/if}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-xs-8 col-sm-3  col-md-2 info">
-                            <h4 class="ng-binding">Erik Olson</h4>
-                            <p class="ng-binding">CEO, Programmer <br>
-                                <a class="text-grey" target="_blank"
-                                   href="http://8020.co">80|20</a>
-                            </p>
-                            <p class="social">
-                                <a target="_blank" href="https://twitter.com/erikpmp"><i
-                                            class="fa fa-twitter"></i></a>
-                                <a target="_blank" href="https://www.linkedin.com/in/erikpmp"><i
-                                            class="fa fa-linkedin"></i></a>
-                                <a target="_blank" href="https://www.facebook.com/erikpmp"><i
-                                            class="fa fa-facebook-official"></i></a>
-                            </p>
-                        </div>
-
-                        <div class="clearfix visible-xs"></div>
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/organizers/kevin.png">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-8 col-sm-3 col-md-2 info">
-                            <h4 class="ng-binding">Kevin Griffin</h4>
-                            <p class="ng-binding">Owner, President, Consultant<br>
-                                <a class="text-grey" target="_blank"
-                                   href="http://kevgriffin.com/">Griffin Consulting</a>
-                            </p>
-                            <p class="social">
-                                <a target="_blank" href="https://twitter.com/1kevgriff"><i
-                                            class="fa fa-twitter"></i></a>
-                                <a target="_blank" href="https://www.linkedin.com/in/1kevgriff"><i
-                                            class="fa fa-linkedin"></i></a>
-                                <a target="_blank" href="https://www.facebook.com/1kevgriff"><i
-                                            class="fa fa-facebook-official"></i></a>
-                            </p>
-                        </div>
-                        <div class="clearfix visible-xs visible-sm"></div>
-
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/organizers/linda.png">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-8 col-sm-3 col-md-2 info">
-                            <h4 class="ng-binding">Linda Nichols</h4>
-                            <p class="ng-binding">Software Engineer <br>
-                                <a class="text-grey" target="_blank"
-                                   href="http://eta.im/">ETA</a>
-                            </p>
-                            <p class="social">
-                                <a target="_blank" href="https://twitter.com/lynnaloo"><i
-                                            class="fa fa-twitter"></i></a>
-                                <a target="_blank" href="https://www.linkedin.com/in/lynnaloo"><i
-                                            class="fa fa-linkedin"></i></a>
-                                <a target="_blank" href="https://www.facebook.com/lynnaloo"><i
-                                            class="fa fa-facebook-official"></i></a>
-                                <a target="_blank" href="http://norfolkjs.org"><i
-                                            class="fa fa-globe"></i></a>
-                            </p>
-                        </div>
-
+                        {{/each}}
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -170,8 +137,8 @@
                 <p class="intro-text">Early bird tickets on sale now. For the die-hard fans. The
                     best rate possible.</p>
                 <p><a href="http://tickets.revolutionconf.com" class="btn btn-primary btn-lg"
-                      target="_blank" style="margin-top: 0;"><i class="fa fa-ticket"></i>&ensp;Get
-                        Your&nbsp;Ticket</a></p>
+                      target="_blank" style="margin-top: 0;">
+                    <i class="fa fa-ticket"></i>&ensp;Get Your&nbsp;Ticket</a></p>
             </div>
         </div>
     </div>
@@ -192,83 +159,51 @@
                 <div class="discussion-panel">
                     <div class="row">
 
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/discussion-panel/aimee.png">
+                        {{#each panelists}}
+                        <div class="col-md-6 human" style="margin-bottom: 2em;">
+                            <div class="row">
+
+                                <div class="col-xs-6">
+                                    <div class="embed-responsive embed-responsive-1x1">
+                                        <div class="embed-responsive-item text-center">
+                                            <img src="{{profile}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 info">
+                                    <h4 class="ng-binding">{{firstName}} {{lastName}}</h4>
+                                    <p class="ng-binding">{{title}}<br>
+                                        {{#if company_name}}
+
+                                        {{#if company_website}}
+                                        <a class="text-grey" target="_blank"
+                                           href="{{company_website}}">{{company_name}}</a>
+                                        {{else}}
+                                        {{company_name}}
+                                        {{/if}}
+                                        {{/if}}
+                                    </p>
+                                    <p class="social">
+                                        {{#if twitter}}
+                                        <a target="_blank" href="https://twitter.com/{{twitter}}">
+                                            <i class="fa fa-twitter"></i></a>
+                                        {{/if}}
+                                        {{#if linkedin}}
+                                        <a target="_blank"
+                                           href="https://www.linkedin.com/in/{{linkedin}}">
+                                            <i class="fa fa-linkedin"></i></a>
+                                        {{/if}}
+                                        {{#if facebook}}
+                                        <a target="_blank"
+                                           href="https://www.facebook.com/{{facebook}}">
+                                            <i class="fa fa-facebook-official"></i></a>
+                                        {{/if}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-xs-8 col-sm-3  col-md-2 info">
-                            <h4 class="ng-binding">Aimee Knight</h4>
-                            <p class="ng-binding">Software Engineer<br>
-                                <a class="text-grey" target="_blank"
-                                   href="https://www.dramafever.com/company/">DramaFever</a>
-                            </p>
-                            <p class="social">
-                            </p>
-                        </div>
-
-                        <div class="clearfix visible-xs"></div>
-
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/discussion-panel/erika.png">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-8 col-sm-3 col-md-2 info">
-                            <h4 class="ng-binding">Erika Carlson</h4>
-                            <p class="ng-binding">Director of Apprenticeship & Training<br>
-                                <a class="text-grey" target="_blank"
-                                   href="https://www.detroitlabs.com/">Detroit Labs</a>
-                            </p>
-                            <p class="social">
-                            </p>
-                        </div>
-
-                        <div class="clearfix visible-xs visible-sm"></div>
-
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/discussion-panel/jason.png">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-8 col-sm-3  col-md-2 info">
-                            <h4 class="ng-binding">Jason Staughan</h4>
-                            <p class="ng-binding">Co-Founder Grok Interactive and Codeup<br>
-                                <a class="text-grey" target="_blank"
-                                   href="https://www.grok-interactive.com/">Grok Interactive</a>
-                            </p>
-                            <p class="social">
-                            </p>
-                        </div>
-
-                        <div class="clearfix visible-xs visible-md visible-lg"></div>
-
-                        <div class="col-xs-4 col-sm-3 col-md-2">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <img src="/img/discussion-panel/mike.png">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-8 col-sm-3 col-md-2 info">
-                            <h4 class="ng-binding">Mike Hostetler</h4>
-                            <p class="ng-binding">CEO, Publisher<br>
-                                <a class="text-grey" target="_blank"
-                                   href="https://modernweb.com/">Modern Web</a>
-                            </p>
-                            <p class="social">
-                            </p>
-                        </div>
+                        {{/each}}
 
                     </div>
                 </div>
@@ -305,7 +240,7 @@
                     <div class="col-xs-6">
                         <h3>Wyndham Virginia Beach Oceanfront</h3>
                         <p>5700 Atlantic Ave, Virginia Beach, VA 23451<br><a
-                                    href="tel://7574287025">(757) 428-7025</a></p>
+                                href="tel://7574287025">(757) 428-7025</a></p>
                     </div>
 
                 </div>

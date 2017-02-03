@@ -35,11 +35,8 @@ $font_family_gothic: League Gothic, Arial Narrow, Haettenschweiler, Franklin Got
 $font_family_sans: Open Sans, Arial, Helvetica, sans-serif;
 
 //urls
-$url_1: url('../img/hero_1400px.png');
-$url_2: url('../img/star_dark_grey_1400px.png');
-$url_3: url('../img/star_grey_1400px.png');
-$url_4: url('../img/map.png');
-$logo_grunge: url('../img/logo_grunge.png');
+$url_1: url('../images/layout/hero_1400px.png');
+$logo_grunge: url('../images/layout/logo_grunge.png');
 
 $screen-sm-min: 768px;
 $screen-md-min: 992px;
@@ -620,10 +617,8 @@ hr {
         position: relative;
         display: table;
         width: 100%;
-        background-color: #000;
-        background-position: center center;
+        background: #000 fixed center center;
         background-size: cover;
-        background-attachment: fixed;
         box-shadow: inset 0 0 10em 3em rgba(0, 0, 0, 0.8);
         color: #fff;
 
@@ -700,9 +695,7 @@ hr {
 
 .section-home.section-wrapper {
 
-    background-image: $url_1;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: $url_1 no-repeat fixed;
     background-size: cover;
     font-size: 28px;
     color: $white;
@@ -720,7 +713,7 @@ hr {
             opacity: 0.9;
             width: 0.75em;
             height: 0.75em;
-            background: $logo_grunge;
+            background: $logo_grunge no-repeat;
             background-size: contain;
             vertical-align: center;
         }
@@ -802,11 +795,14 @@ hr {
 }
 
 .section-about.section-wrapper {
-    background-image: url('../img/background1.png');
+    background-image: url('../images/layout/background1.png');
     .organizers {
+
         img {
             -webkit-filter: grayscale(1);
             filter: grayscale(1);
+            min-width: 100%;
+            min-height: 100%;
         }
         .clearfix {
             margin-bottom: 1rem;
@@ -827,23 +823,23 @@ hr {
 }
 
 .section-page.section-wrapper {
-    background-image: url('../img/background1.png');
+    background-image: url('../images/layout/background1.png');
 }
 
 .section-location.section-wrapper {
-    background-image: url('../img/background4.png');
+    background-image: url('../images/layout/background4.png');
 }
 
 .section-tickets.section-wrapper {
-    background-image: url('../img/background4.png');
+    background-image: url('../images/layout/background4.png');
 }
 
 .section-sponsors.section-wrapper {
-    background-image: url('../img/background2.png');
+    background-image: url('../images/layout/background2.png');
 }
 
 .section-speakers.section-wrapper {
-    background-image: url('../img/background3.png');
+    background-image: url('../images/layout/background3.png');
     .discussion-panel {
         img {
             -webkit-filter: grayscale(1);

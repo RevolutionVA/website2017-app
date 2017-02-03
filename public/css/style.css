@@ -402,10 +402,8 @@ hr {
     position: relative;
     display: table;
     width: 100%;
-    background-color: #000;
-    background-position: center center;
+    background: #000 fixed center center;
     background-size: cover;
-    background-attachment: fixed;
     box-shadow: inset 0 0 10em 3em rgba(0, 0, 0, 0.8);
     color: #fff; }
     .page-sections .section-wrapper a {
@@ -460,9 +458,7 @@ hr {
       z-index: 1; }
 
 .section-home.section-wrapper {
-  background-image: url("../img/hero_1400px.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: url("../images/layout/hero_1400px.png") no-repeat fixed;
   background-size: cover;
   font-size: 28px;
   color: #fff; }
@@ -476,7 +472,7 @@ hr {
       opacity: 0.9;
       width: 0.75em;
       height: 0.75em;
-      background: url("../img/logo_grunge.png");
+      background: url("../images/layout/logo_grunge.png") no-repeat;
       background-size: contain;
       vertical-align: center; }
   .section-home.section-wrapper .site-info.date {
@@ -531,10 +527,12 @@ hr {
       margin-bottom: .5em; }
 
 .section-about.section-wrapper {
-  background-image: url("../img/background1.png"); }
+  background-image: url("../images/layout/background1.png"); }
   .section-about.section-wrapper .organizers img {
     -webkit-filter: grayscale(1);
-    filter: grayscale(1); }
+    filter: grayscale(1);
+    min-width: 100%;
+    min-height: 100%; }
   .section-about.section-wrapper .organizers .clearfix {
     margin-bottom: 1rem; }
   .section-about.section-wrapper .organizers .row {
@@ -547,19 +545,19 @@ hr {
     font-size: 1.2rem; }
 
 .section-page.section-wrapper {
-  background-image: url("../img/background1.png"); }
+  background-image: url("../images/layout/background1.png"); }
 
 .section-location.section-wrapper {
-  background-image: url("../img/background4.png"); }
+  background-image: url("../images/layout/background4.png"); }
 
 .section-tickets.section-wrapper {
-  background-image: url("../img/background4.png"); }
+  background-image: url("../images/layout/background4.png"); }
 
 .section-sponsors.section-wrapper {
-  background-image: url("../img/background2.png"); }
+  background-image: url("../images/layout/background2.png"); }
 
 .section-speakers.section-wrapper {
-  background-image: url("../img/background3.png"); }
+  background-image: url("../images/layout/background3.png"); }
   .section-speakers.section-wrapper .discussion-panel img {
     -webkit-filter: grayscale(1);
     filter: grayscale(1); }
