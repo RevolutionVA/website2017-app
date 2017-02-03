@@ -25,12 +25,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://iambriansreed@github.com/iambriansreed/revconf2017-app.git"
+    "url": "git+https://iambriansreed@github.com/revolutionva/website2017-app.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iambriansreed/revconf2017-app/issues"
+    "url": "https://github.com/revolutionva/website2017-app/issues"
   },
-  "homepage": "https://github.com/iambriansreed/revconf2017-app#readme"
+  "homepage": "https://github.com/revolutionva/website2017-app#readme"
 }
