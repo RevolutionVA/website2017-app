@@ -5,8 +5,8 @@ const http = require('http');
 const auth = require('basic-auth');
 const routes = require('./config/routes');
 
-const zipUrl = process.env.contentZipUrl;
 const appRoot = process.cwd();
+const zipUrl = process.env.contentZipUrl;
 
 const HTTP_PORT = process.env.PORT || 80;
 
