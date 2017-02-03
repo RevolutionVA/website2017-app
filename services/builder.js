@@ -123,7 +123,7 @@ module.exports = {
                         }
                     } else {
                         processItemsDir(curPath, contentDir + '/' + fileType + '.json');
-                        dataTypes.push(fileType);
+                        dataTypes.push(fileType + '.json');
                     }
                 });
 
@@ -132,7 +132,8 @@ module.exports = {
                     dataTypes
                 };
 
-                fs.writeFileSync(appRoot + '/public/content-status.json', JSON.stringify(content, null, '\t'));
+                fs.writeFileSync(appRoot + '/public/content-status.json',
+                                 JSON.stringify(content, null, '\t'));
 
             } catch (err) {
                 reject(err);
