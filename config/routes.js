@@ -10,13 +10,15 @@ const allRoutes =
             path: '/',
             view: 'home',
             cache: 'index.html',
-            data: {
-                organizers: contentService.getHumans()
-                    .filter(h => h.role == 'Organizer')
-                    .sort((h1, h2) => h1.lastName > h2.lastName),
-                panelists: contentService.getHumans()
-                    .filter(h => h.role == 'Panelist')
-                    .sort((h1, h2) => h1.lastName > h2.lastName)
+            data: function () {
+                return {
+                    organizers: contentService.getHumans()
+                        .filter(h => h.role == 'Organizer')
+                        .sort((h1, h2) => h1.lastName > h2.lastName),
+                    panelists: contentService.getHumans()
+                        .filter(h => h.role == 'Panelist')
+                        .sort((h1, h2) => h1.lastName > h2.lastName)
+                };
             }
         },
         {
