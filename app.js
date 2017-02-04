@@ -14,13 +14,20 @@ app.set('view engine', 'handlebars');
 
 app.use('*', (req, res, next) => {
 
+    let redirectFrom = req.protocol + '://' + req.headers.host + req.url;
+    let redirectTo = null;
+
     if (process.env.SSL_REDIRECT && 'http' === req.protocol) {
-        let secureUrl = 'https://' + req.headers.host + req.url;
-        console.log('Redirecting http://' + req.headers.host + req.url + ' to ' + secureUrl);
-        res.redirect(secureUrl);
-    }else {
+        redirectTo = 'https://' + req.headers.host + req.url;
+    }
+
+    if (redirectTo && redirectTo !== redirectFrom) {
+        console.log('Redirecting ' + redirectFrom + ' to ' + redirectTo);
+        res.redirect(redirectTo);
+    } else {
         return next();
     }
+
 });
 
 app.use('/build', (req, res, next) => {
