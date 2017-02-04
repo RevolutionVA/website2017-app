@@ -5,20 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "adm-zip": "latest",
+    "basic-auth": "latest",
     "express": "^4.14.1",
-    "express-basic-auth": "^0.2.3",
     "express-handlebars": "^3.0.0",
     "fs-extra": "^2.0.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
-    "request": "latest",
-    "serve-favicon": "^2.3.2",
-    "basic-auth": "latest"
+    "request": "latest"
   },
-  "devDependencies": {
-    "ncp": "^2.0.0",
-    "nodemon": "^1.11.0"
-  },
+  "devDependencies": {},
   "scripts": {
     "start": "node app.js",
     "postinstall": "node postinstall.js",
