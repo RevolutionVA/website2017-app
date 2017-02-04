@@ -17,7 +17,7 @@ app.use('*', (req, res, next) => {
     let redirectFrom = req.protocol + '://' + req.headers.host + req.url;
     let redirectTo = null;
 
-    if (process.env.SSL_REDIRECT && 'http' === req.protocol) {
+    if (process.env.SSL_REDIRECT && 'http' === req.headers['x-forwarded-proto']) {
         redirectTo = 'https://' + req.headers.host + req.url;
     }
 
