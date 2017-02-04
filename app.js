@@ -18,7 +18,6 @@ app.use('*', (req, res, next) => {
         let secureUrl = 'https://' + req.headers.host + req.url;
         console.log('Redirecting http://' + req.headers.host + req.url + ' to ' + secureUrl);
         res.redirect(secureUrl);
-        res.end();
     }else {
         return next();
     }
