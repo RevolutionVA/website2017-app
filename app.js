@@ -25,6 +25,12 @@ app.use('/build', (req, res, next) => {
     }
 });
 
+const letsEncryptReponse = process.env.CERTBOT_RESPONSE;
+
+app.get('/.well-known/acme-challenge/:content', function(req, res) {
+    res.send(letsEncryptReponse);
+});
+
 app.get('/build', (req, res) => {
 
     let builder = require('./services/builder');
