@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "adm-zip": "latest",
-    "basic-auth": "latest",
+    "basic-auth": "^1.1.0",
     "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
     "fs-extra": "^2.0.0",
