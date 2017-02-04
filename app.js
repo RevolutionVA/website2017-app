@@ -16,6 +16,17 @@ app.set('view engine', 'handlebars');
 
 app.use('/', express.static('public'));
 
+if (process.env.PRODUCTION) {
+
+    app.use('*', (req, res, next) => {
+        if (!/https/.test(req.protocol)) {
+            res.redirect("https://" + req.headers.host + req.url);
+        } else {
+            return next();
+        }
+    });
+}
+
 app.use('/build', (req, res, next) => {
 
     if (isValidBuildUser(auth(req))) {
@@ -25,11 +36,14 @@ app.use('/build', (req, res, next) => {
     }
 });
 
-const letsEncryptReponse = process.env.CERTBOT_RESPONSE;
+/* Maybe needed for cert expiration
 
-app.get('/.well-known/acme-challenge/:content', function(req, res) {
-    res.send(letsEncryptReponse);
-});
+ const letsEncryptResponse = process.env.CERTBOT_RESPONSE;
+
+ app.get('/.well-known/acme-challenge/:content', function(req, res) {
+ res.send(letsEncryptResponse);
+ });
+ */
 
 app.get('/build', (req, res) => {
 
