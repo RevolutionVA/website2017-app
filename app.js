@@ -14,18 +14,16 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 
 app.set('view engine', 'handlebars');
 
+app.use('*', (req, res, next) => {
+
+    if (process.env.SSL_REDIRECT && 'http' === req.protocol) {
+        res.redirect("https://" + req.headers.host + req.url);
+    }
+
+    return next();
+});
+
 app.use('/', express.static('public'));
-
-if (process.env.SSL_REDIRECT) {
-
-    app.use('*', (req, res, next) => {
-        if (!/https/.test(req.protocol)) {
-            res.redirect("https://" + req.headers.host + req.url);
-        } else {
-            return next();
-        }
-    });
-}
 
 app.use('/build', (req, res, next) => {
 
