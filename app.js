@@ -18,12 +18,11 @@ app.use('*', (req, res, next) => {
         let secureUrl = 'https://' + req.headers.host + req.url;
         console.log('Redirecting http://' + req.headers.host + req.url + ' to ' + secureUrl);
         res.redirect(secureUrl);
+        res.end();
     }
 
     return next();
 });
-
-app.use('/', express.static('public'));
 
 app.use('/build', (req, res, next) => {
 
@@ -33,6 +32,8 @@ app.use('/build', (req, res, next) => {
         res.set({ 'WWW-Authenticate': 'Basic realm="revconf-builder"' }).send(401);
     }
 });
+
+app.use('/', express.static('public'));
 
 /* Maybe needed for cert expiration
 
@@ -87,15 +88,12 @@ http.createServer(app).listen(HTTP_PORT, function () {
 ██╔══██╗██╔══╝  ╚██╗ ██╔╝██║   ██║██║     ██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
 ██║  ██║███████╗ ╚████╔╝ ╚██████╔╝███████╗╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
 ╚═╝  ╚═╝╚══════╝  ╚═══╝   ╚═════╝ ╚══════╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-                                                                                  
  ██████╗ ██████╗ ███╗   ██╗███████╗                                               
 ██╔════╝██╔═══██╗████╗  ██║██╔════╝                                               
 ██║     ██║   ██║██╔██╗ ██║█████╗                                                 
 ██║     ██║   ██║██║╚██╗██║██╔══╝                                                 
 ╚██████╗╚██████╔╝██║ ╚████║██║                                                    
- ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝                                                    
-                                                                                  
-`);
+ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝`);
 });
 
 function isValidBuildUser(req) {
