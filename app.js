@@ -16,7 +16,7 @@ app.set('view engine', 'handlebars');
 
 app.use('/', express.static('public'));
 
-if (process.env.PRODUCTION) {
+if (process.env.SSL_REDIRECT) {
 
     app.use('*', (req, res, next) => {
         if (!/https/.test(req.protocol)) {
