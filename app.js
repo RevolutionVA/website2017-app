@@ -19,9 +19,9 @@ app.use('*', (req, res, next) => {
         console.log('Redirecting http://' + req.headers.host + req.url + ' to ' + secureUrl);
         res.redirect(secureUrl);
         res.end();
+    }else {
+        return next();
     }
-
-    return next();
 });
 
 app.use('/build', (req, res, next) => {
