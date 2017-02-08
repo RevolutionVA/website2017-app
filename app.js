@@ -5,12 +5,14 @@ const http = require('http');
 
 const appRoot = process.cwd();
 const zipUrl = process.env.contentZipUrl;
-
 const HTTP_PORT = process.env.PORT || 80;
+const redirectUrls = require('./services/redirectUrls');
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 
 app.set('view engine', 'handlebars');
+
+app.use('*', redirectUrls);
 
 app.use('*', (req, res, next) => {
 
