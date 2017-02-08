@@ -94,6 +94,7 @@ function setRawContent() {
 
             try {
                 let zip = new AdmZip(tmpZipPath);
+                //noinspection JSUnresolvedFunction
                 zip.extractAllTo(tmpDir, true);
                 fs.removeSync(tmpZipPath);
                 console.log("Zip Extracted!");
@@ -200,7 +201,7 @@ function generateData() {
                 slug: slug
             };
 
-            let sources = [];
+            let sources = [], warnings = [];
 
             if (!fs.lstatSync(pathItem).isDirectory()) {
                 return;
@@ -250,6 +251,10 @@ function generatePages() {
 
     return new Promise((resolve, reject) => {
 
+        if (0 == 'Implement this later.') {
+            reject();
+        }
+
         resolve();
 
     });
@@ -259,6 +264,7 @@ function isValidBuildUser(req) {
 
     const user = require('basic-auth')(req);
 
+    //noinspection JSUnresolvedVariable
     return user && user.name && user.pass
            && user.name === process.env.BUILD_USER
            && user.pass === process.env.BUILD_PASS;
