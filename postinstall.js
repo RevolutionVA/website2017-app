@@ -1,16 +1,13 @@
-const appRoot = process.cwd();
-const zipUrl = process.env.contentZipUrl;
-
 let builder = require('./services/builder');
 
-builder.setRawContent(appRoot, zipUrl)
+builder.setRawContent()
     .then(function () {
         console.log('Raw Content Store Created.');
-        return builder.generateData(appRoot);
+        return builder.generateData();
     })
     .then(function () {
         console.log('Data Store Created.');
-        return builder.generatePages(appRoot);
+        return builder.generatePages();
     })
     .then(function () {
         console.error('Build Complete!');

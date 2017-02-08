@@ -1,0 +1,5 @@
+//Maybe needed for cert expiration
+
+app.get('/.well-known/acme-challenge/:content', function(req, res) {
+    res.send(process.env.CERTBOT_RESPONSE);
+});
