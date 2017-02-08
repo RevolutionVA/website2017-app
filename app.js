@@ -10,8 +10,9 @@ const redirectUrls = require('./services/redirectUrls');
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-app.get('/.well-known/acme-challenge/:content', function(req, res) {
-    res.send(process.env.CERTBOT_RESPONSE);
+app.get('/.well-known/acme-challenge/:content', function (req, res) {
+    let content = req.param('content');
+    res.send(process.env['CERTBOT_RESPONSE:' + content]);
 });
 
 // redirections
