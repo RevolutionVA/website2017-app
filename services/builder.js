@@ -232,7 +232,7 @@ function generateData() {
                 if (path.extname(file) === '.png') {
                     item[fileName] =
                         '/images/' + typeName + '/' + slug + '-' + fileName + '.png';
-                    fs.copySync(filePath, './public' + item[fileName]);
+                    fs.copySync(filePath, './content' + item[fileName]);
                 }
 
             });

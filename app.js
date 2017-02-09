@@ -23,6 +23,7 @@ app.use('/build', require('./services/builder').use);
 
 // static stuff
 app.use('/', express.static('public'));
+app.use('/', express.static('content'));
 
 // build getter
 app.get('/build', require('./services/builder').get);
