@@ -878,6 +878,7 @@ hr {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         opacity: 0.9;
+        text-align: center;
         span.title {
             display: none;
         }
@@ -886,6 +887,8 @@ hr {
             top: 50%;
             transform: translateY(-50%);
             text-align: center;
+            display: block;
+            width: 100%;
             img {
                 vertical-align: middle;
                 width: 90%;
