@@ -211,7 +211,7 @@ img {
         border-radius: 50%;
     }
     &.greyscale {
-        filter: grayscale(100%);
+        filter: grayscale(1);
         &:hover {
             filter: none;
         }
@@ -472,8 +472,14 @@ hr {
     text-transform: uppercase;
 
     .container-fluid {
+        .nav > li > a {
+            padding: 10px;
+            > .icon {
+                font-size: 80%;
+            }
+        }
 
-        background: #000;
+        background: rgba(0,0,0,0.8);
         ul.nav-pills {
 
             li {
@@ -865,46 +871,36 @@ hr {
 }
 
 .sponsor {
-    position: relative;
-    margin: 0 0 1.75rem;
-    padding: 1rem;
-    border: 2px solid $white_10;
-    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
-    border-radius: .25rem;
-    background: $white_50;
-    &:hover {
-        //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
-        border-radius: 5px;
-        border: 2px solid $color_silver_chalice_approx;
-        background: $white_95;
-        .img-wrapper img {
-            filter: grayscale(0);
-        }
-    }
-    .img-wrapper {
-        padding: .25rem;
-        img {
-            height: auto;
-            width: auto;
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: contain;
-            filter: grayscale(100%);
-        }
-    }
-    h4 {
-        padding: 1rem 0;
-        top: auto;
-        bottom: 0;
-        opacity: 0;
-        font-weight: 700;
-    }
     a {
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0.9;
+        span.title {
+            display: none;
+        }
+        span.logo {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            img {
+                vertical-align: middle;
+                width: 90%;
+                max-width: 300px;
+                filter: contrast(0) brightness(1000%);
+            }
+        }
+        &:hover {
+            opacity: 1;
+            span.logo {
+                img {
+                    filter: none;
+                }
+            }
+        }
     }
 }
 

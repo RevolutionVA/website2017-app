@@ -1,9 +1,8 @@
-const routes = require('../config/routes');
-
 /*
  * Router
  */
-module.exports = (req, res) => {
+
+module.exports = (routes) => (req, res) => {
 
     let route = routes.find(req.path);
 

@@ -111,7 +111,7 @@ img {
   img.img-circle {
     border-radius: 50%; }
   img.greyscale {
-    filter: grayscale(100%); }
+    filter: grayscale(1); }
     img.greyscale:hover {
       filter: none; }
 
@@ -305,7 +305,11 @@ hr {
   line-height: 30px;
   text-transform: uppercase; }
   .site-header .container-fluid {
-    background: #000; }
+    background: rgba(0, 0, 0, 0.8); }
+    .site-header .container-fluid .nav > li > a {
+      padding: 10px; }
+      .site-header .container-fluid .nav > li > a > .icon {
+        font-size: 80%; }
     .site-header .container-fluid ul.nav-pills li {
       float: right; }
       .site-header .container-fluid ul.nav-pills li a {
@@ -572,40 +576,29 @@ hr {
   .section-speakers.section-wrapper .discussion-panel .social {
     font-size: 1.2rem; }
 
-.sponsor {
-  position: relative;
-  margin: 0 0 1.75rem;
-  padding: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: .25rem;
-  background: rgba(255, 255, 255, 0.5); }
-  .sponsor:hover {
-    border-radius: 5px;
-    border: 2px solid #b0b0b0;
-    background: rgba(255, 255, 255, 0.95); }
-    .sponsor:hover .img-wrapper img {
-      filter: grayscale(0); }
-  .sponsor .img-wrapper {
-    padding: .25rem; }
-    .sponsor .img-wrapper img {
-      height: auto;
-      width: auto;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: contain;
-      filter: grayscale(100%); }
-  .sponsor h4 {
-    padding: 1rem 0;
-    top: auto;
-    bottom: 0;
-    opacity: 0;
-    font-weight: 700; }
-  .sponsor a {
+.sponsor a {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.9; }
+  .sponsor a span.title {
+    display: none; }
+  .sponsor a span.logo {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0; }
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center; }
+    .sponsor a span.logo img {
+      vertical-align: middle;
+      width: 90%;
+      max-width: 300px;
+      filter: contrast(0) brightness(1000%); }
+  .sponsor a:hover {
+    opacity: 1; }
+    .sponsor a:hover span.logo img {
+      filter: none; }
 
 .section-sessions .session {
   position: relative;

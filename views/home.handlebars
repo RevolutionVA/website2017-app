@@ -223,6 +223,28 @@
                     possible and for showing their commitment to making our community
                     better...stronger...faster!</p>
 
+                <div class="sponsors-list">
+                    <div class="row">
+
+                        {{#each sponsors}}
+                        <!-- {{level}} -->
+                        {{#each sponsors}}
+                        <div class="col-xs-6 col-md-4 sponsor" style="margin-bottom: 2em;">
+                            <div class="embed-responsive embed-responsive-1x1">
+                                <div class="embed-responsive-item">
+                                    <a target="_blank" href="{{url}}" title="{{title}}">
+                                        <span class="logo"><img src="{{logo}}"></span>
+                                        <span class="title">{{title}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{/each}}
+
+                    </div>
+                </div>
+
                 <p><a target="_blank"
                       href="https://drive.google.com/open?id=0B0HrtfzUfLt6QjFVYW9VeV9vejQ"
                       outbound-track="" class="btn btn-primary btn-lg">Want to Sponsor?</a></p>

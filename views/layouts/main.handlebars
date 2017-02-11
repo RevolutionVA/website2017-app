@@ -56,20 +56,15 @@
             <li class="nav-item icon">
                 <a class="nav-link slide-nav-toggle" id="side-nav-toggle" target="_blank"
                    href="#"><i
-                        class="fa fa-bars"></i></a>
+                        class="fa-fw fa fa-bars"></i></a>
             </li>
+            {{#each socialMedia}}
             <li class="nav-item icon">
-                <a class="nav-link" target="_blank" href="mailto:team@revolutionconf.com"><i
-                        class="fa fa-envelope"></i></a>
+                <a class="nav-link" target="_blank" href="{{url}}">
+                    <i class="fa-fw {{iconClass}}"></i>
+                </a>
             </li>
-            <li class="nav-item icon">
-                <a class="nav-link" target="_blank" href="http://lanyrd.com/2017/revconf/"><i
-                        class="icon-lanyrd" style="font-size: 92%"></i></a>
-            </li>
-            <li class="nav-item icon">
-                <a class="nav-link" target="_blank" href="https://twitter.com/revconf"><i
-                        class="fa fa-twitter"></i></a>
-            </li>
+            {{/each}}
         </ul>
     </div>
     <ul class="nav nav-pills nav-stacked side-nav" id="side-nav">

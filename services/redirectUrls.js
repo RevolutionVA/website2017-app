@@ -23,7 +23,6 @@ module.exports = function (req, res, next) {
     }
 
     if (redirectTo && redirectTo !== redirectFrom) {
-        console.log(req.headers);
         console.log('Redirecting ' + redirectFrom + ' to ' + redirectTo + ' via ' + redirectionType);
         res.redirect(redirectTo);
         return false;

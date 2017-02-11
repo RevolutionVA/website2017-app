@@ -6,6 +6,7 @@ const path = require('path');
 
 const appRoot = process.cwd();
 const zipUrl = process.env.CONTENT_ZIP_URL;
+const contentLocalPath = process.env.CONTENT_LOCAL;
 
 /*
  * Config
@@ -26,7 +27,7 @@ module.exports = {
         if (isValidBuildUser(req)) {
             next();
         } else {
-            res.set({ 'WWW-Authenticate': 'Basic realm="revconf-builder"' }).sendStatus(401);
+            res.set({'WWW-Authenticate': 'Basic realm="revconf-builder"'}).sendStatus(401);
         }
     },
 
@@ -57,6 +58,9 @@ function setRawContent() {
 
     fs.emptyDir(tmpDir);
 
+    if (contentLocalPath)
+        return copyLocal();
+
     return download()
         .then(() => {
             return extract();
@@ -69,7 +73,7 @@ function setRawContent() {
 
         return new Promise((resolve, reject) => {
 
-            request({ url: zipUrl, encoding: null }, function (err, resp, body) {
+            request({url: zipUrl, encoding: null}, function (err, resp, body) {
                 if (err) {
                     console.error(err);
                     reject(err);
@@ -107,6 +111,19 @@ function setRawContent() {
         });
     }
 
+    function copyLocal() {
+        fs.readdirSync(contentLocalPath).forEach(function (file) {
+            if (!file.startsWith('.')) {
+                fs.copySync(process.env.CONTENT_LOCAL + '/' + file,
+                    tmpDir + '/' + file);
+            }
+        });
+
+        console.log("Files Copied Locally!");
+
+        return Promise.resolve();
+    }
+
     function copy() {
 
         return new Promise((resolve, reject) => {
@@ -116,10 +133,11 @@ function setRawContent() {
                 // move zipped file contents to tmpDir
                 fs.readdirSync(tmpDir).forEach(function (unzippedFolder) {
                     unzippedFolderPath = tmpDir + '/' + unzippedFolder;
+
                     fs.readdirSync(unzippedFolderPath).forEach(function (file) {
                         if (!file.startsWith('.')) {
                             fs.copySync(unzippedFolderPath + '/' + file,
-                                        tmpDir + '/' + file);
+                                tmpDir + '/' + file);
                         }
                     });
                 });
@@ -130,7 +148,6 @@ function setRawContent() {
                 console.error(err);
                 reject(err);
             }
-
         });
     }
 }
@@ -172,7 +189,7 @@ function generateData() {
             };
 
             fs.writeFileSync(appRoot + '/public/content-status.json',
-                             JSON.stringify(content, null, '\t'));
+                JSON.stringify(content, null, '\t'));
 
         } catch (err) {
             reject(err);
@@ -191,7 +208,7 @@ function generateData() {
 
         fs.readdirSync(filePath).forEach(slug => {
 
-            if (slug.startsWith('_') || slug.startsWith('.')) {
+            if (slug.startsWith('_') || slug.startsWith('.') || slug.toLowerCase() === 'readme.md') {
                 return;
             }
 
@@ -220,7 +237,7 @@ function generateData() {
 
                 if (path.extname(file) === '.json') {
 
-                    let data = fs.readJsonSync(filePath, { throws: false });
+                    let data = fs.readJsonSync(filePath, {throws: false});
 
                     if (data === null) {
                         warnings.push(`JSON parse '${slug}' ${fileName} data was null.`)
@@ -266,6 +283,6 @@ function isValidBuildUser(req) {
 
     //noinspection JSUnresolvedVariable
     return user && user.name && user.pass
-           && user.name === process.env.BUILD_USER
-           && user.pass === process.env.BUILD_PASS;
+        && user.name === process.env.BUILD_USER
+        && user.pass === process.env.BUILD_PASS;
 }

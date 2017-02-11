@@ -2,7 +2,7 @@
  * Routes
  */
 
-const contentService = require('./../services/content');
+const contentService = require('../services/content');
 
 const allRoutes =
     [
@@ -12,12 +12,9 @@ const allRoutes =
             cache: 'index.html',
             data: function () {
                 return {
-                    organizers: contentService.getHumans()
-                        .filter(h => h.role == 'Organizer')
-                        .sort((h1, h2) => h1.lastName > h2.lastName),
-                    panelists: contentService.getHumans()
-                        .filter(h => h.role == 'Panelist')
-                        .sort((h1, h2) => h1.lastName > h2.lastName)
+                    organizers: contentService.getOrganizers(),
+                    panelists: contentService.getPanelists(),
+                    sponsors: contentService.getSponsors()
                 };
             }
         },
@@ -32,18 +29,23 @@ const allRoutes =
         }
     ];
 
-module.exports = {
+module.exports = function (app) {
 
-    all: allRoutes.map(r => {
-        if (!r.cached) {
-            r.cached = (r.path + '/index.html').replace('//', '/');
+    app.locals.socialMedia = contentService.getSocialMedia();
+
+    return {
+
+        all: allRoutes.map(r => {
+            if (!r.cached) {
+                r.cached = (r.path + '/index.html').replace('//', '/');
+            }
+            return r;
+        }),
+
+        find: path => {
+            return allRoutes.find(r => r.path == path)
+                || allRoutes.find(r => r.default)
+                || allRoutes[0];
         }
-        return r;
-    }),
-
-    find: path => {
-        return allRoutes.find(r => r.path == path)
-               || allRoutes.find(r => r.default)
-               || allRoutes[0];
-    }
-};
+    };
+}
