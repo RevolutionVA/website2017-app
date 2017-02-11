@@ -26,12 +26,8 @@ app.use('/build', require('./services/builder').use);
 app.use('/', express.static('public'));
 app.use('/', express.static('content'));
 
-// build getter
-app.get('/build', require('./services/builder').get);
-
 // everything else
-const routes = require('./config/routes')(app);
-app.get('*', require('./services/router')(routes));
+app.get('*', require('./services/router')(app));
 
 http.createServer(app).listen(HTTP_PORT, function () {
     console.log('Unsecured server listening on port ' + HTTP_PORT + `.

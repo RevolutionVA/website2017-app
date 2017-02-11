@@ -20,11 +20,15 @@ const allRoutes =
         },
         {
             path: '/code-of-conduct',
-            view: 'code-of-conduct'
+            view: 'code-of-conduct',
+            data: function () {
+            }
         },
         {
             path: '/404',
             view: '404',
+            data: function () {
+            },
             default: true
         }
     ];

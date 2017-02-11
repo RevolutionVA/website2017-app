@@ -2,16 +2,18 @@
  * Router
  */
 
-module.exports = (routes) => (req, res) => {
 
-    let route = routes.find(req.path);
+module.exports = (app) => (req, res) => {
 
-    let data = route.data || {};
-
-    if (typeof(data) === 'function') {
-        data = data();
+    // build getter
+    if (req.path === '/build') {
+        return require('./builder').get(req, res);
     }
 
-    res.render(route.view, data);
+    // everything else
+    const routes = require('../config/routes')(app);
+
+    let route = routes.find(req.path);
+    res.render(route.view, route.data(app, req, res));
 
 };
