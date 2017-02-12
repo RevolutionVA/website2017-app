@@ -3,41 +3,34 @@ const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const marked = require('marked');
 const path = require('path');
-const schedule = require('node-schedule');
 
 const appRoot = process.cwd();
 const zipUrl = process.env.CONTENT_ZIP_URL;
 const contentLocalPath = process.env.CONTENT_LOCAL;
-
+const contentBuildPath = appRoot + '/public/content-build.json';
+``
 /* globals config appRoot */
 
 module.exports = {
 
-    startScheduler : function(){
+    checkSchedule: function () {
 
-        schedule.scheduleJob('*/5 * * * *', function () {
+        if (fs.existsSync(contentBuildPath)) {
+            console.log('Scheduled build starting...');
+            build();
+            fs.removeSync(contentBuildPath);
+            console.log('Scheduled build complete.');
+            return;
+        }
 
-            if (fs.existsSync(appRoot + '/public/content-build.json')) {
-                console.log('Scheduled build starting...');
-                build();
-                fs.removeSync(appRoot + '/public/content-build.json');
-                console.log('Scheduled build complete.');
-            } else {
-                console.log('Nothing to see here...');
-            }
-
-        });
-
-        console.log('Scheduler started.');
-
-        return Promise.resolve();
+        console.log('Nothing to see here...');
     },
 
     use: (req, res, next) => {
 
         if (req.method === 'POST' && isValidBuildHook(req)) {
 
-            fs.writeFileSync(appRoot + '/public/content-build.json',
+            fs.writeFileSync(contentBuildPath,
                 JSON.stringify({requested: new Date()}, null, '\t'));
 
             console.log('Scheduled a build.');
@@ -45,6 +38,7 @@ module.exports = {
         }
 
         if (req.method === 'GET') {
+
             if (isValidBuildUser(req)) {
                 return next();
             }
