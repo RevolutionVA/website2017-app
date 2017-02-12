@@ -3,53 +3,79 @@ const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const marked = require('marked');
 const path = require('path');
+const schedule = require('node-schedule');
 
 const appRoot = process.cwd();
 const zipUrl = process.env.CONTENT_ZIP_URL;
 const contentLocalPath = process.env.CONTENT_LOCAL;
 
-/*
- * Config
- */
-
 /* globals config appRoot */
+
+schedule.scheduleJob('*/1 * * * *', function () {
+
+    if (fs.existsSync(appRoot + '/public/content-build.json')) {
+        console.log('Scheduled build starting...');
+        build();
+        fs.removeSync(appRoot + '/public/content-build.json');
+        console.log('Scheduled build complete.');
+    } else {
+        console.log('Nothing to see here...');
+    }
+
+});
 
 module.exports = {
 
-    setRawContent: setRawContent,
-
-    generateData: generateData,
-
-    generatePages: generatePages,
-
     use: (req, res, next) => {
 
-        if (isValidBuildUser(req)) {
-            next();
-        } else {
-            res.set({'WWW-Authenticate': 'Basic realm="revconf-builder"'}).sendStatus(401);
+        if (req.method === 'POST' && isValidBuildHook(req)) {
+
+            fs.writeFileSync(appRoot + '/public/content-build.json',
+                JSON.stringify({requested: new Date()}, null, '\t'));
+
+            console.log('Scheduled a build.');
+            return res.status(200).send('Thanks!');
         }
+
+        if (req.method === 'GET') {
+            if (isValidBuildUser(req)) {
+                return next();
+            }
+            res.set({'WWW-Authenticate': 'Basic realm="revconf-builder"'});
+        }
+
+        return res.status(401).send('Nice try!');
     },
 
-    get: function (req, res) {
+    run: function (req, res) {
 
-        setRawContent(appRoot, zipUrl)
+        console.log('Manual build starting...');
+        build()
             .then(function () {
-                console.log('Raw Content Store Created.');
-                return generateData(appRoot);
-            })
-            .then(function () {
-                console.log('Data Store Created.');
-                return generatePages(appRoot);
-            })
-            .then(function () {
+                console.log('Manual build complete.');
                 res.send('<pre>Done.</pre>');
             })
             .catch(err => {
+                console.log('Manual build incomplete.');
+                console.error(err);
                 res.send('<pre style="color:red;">' + err.stack + '</pre>');
             });
     }
 };
+
+function build() {
+
+    return setRawContent(appRoot, zipUrl)
+        .then(function () {
+            console.log('Raw Content Store Created.');
+            return generateData(appRoot);
+        })
+        .then(function () {
+            console.log('Data Store Created.');
+            return generatePages(appRoot);
+        })
+
+}
 
 function setRawContent() {
 
@@ -275,6 +301,20 @@ function generatePages() {
         resolve();
 
     });
+}
+
+function isValidBuildHook(req) {
+
+    let secret = process.env.GITHUB_HOOK_SECRET;
+
+    if (req.body && req.headers['x-hub-signature'] && secret) {
+
+        let xHubSignature = 'sha1=' + (require('crypto').createHmac('sha1', secret))
+                .update(JSON.stringify(req.body))
+                .digest('hex');
+        return req.headers['x-hub-signature'] === xHubSignature;
+    }
+    return false;
 }
 
 function isValidBuildUser(req) {

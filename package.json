@@ -11,6 +11,7 @@
     "fs-extra": "^2.0.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
+    "node-schedule": "^1.2.0",
     "request": "latest"
   },
   "devDependencies": {},

@@ -7,7 +7,7 @@ module.exports = (app) => (req, res) => {
 
     // build getter
     if (req.path === '/build') {
-        return require('./builder').get(req, res);
+        return require('./builder').run(req, res);
     }
 
     // everything else
