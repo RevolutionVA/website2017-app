@@ -322,7 +322,11 @@ function isValidBuildHook(req) {
                 .update(JSON.stringify(req.body))
                 .digest('hex');
 
-        console.debug({xHubSignature: xHubSignature, xHubSignatureGenerated: xHubSignatureGenerated});
+        console.log({
+            secret: process.env.GITHUB_HOOK_SECRET,
+            xHubSignature: xHubSignature,
+            xHubSignatureGenerated: xHubSignatureGenerated
+        });
 
         return xHubSignature === xHubSignatureGenerated;
     }
