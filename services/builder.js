@@ -15,15 +15,20 @@ module.exports = {
 
     checkSchedule: function () {
 
-        if (fs.existsSync(contentBuildPath)) {
-            console.log('Scheduled build starting...');
-            build();
-            fs.removeSync(contentBuildPath);
-            console.log('Scheduled build complete.');
+        console.log('existsSync: ' + contentBuildPath);
+
+        if (!fs.existsSync(contentBuildPath)) {
+            console.log('Nothing to see here...');
             return;
         }
 
-        console.log('Nothing to see here...');
+        console.log('Scheduled build starting...');
+
+        build()
+            .then(() => {
+                fs.removeSync(contentBuildPath);
+                console.log('Scheduled build complete.');
+            });
     },
 
     use: (req, res, next) => {
