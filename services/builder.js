@@ -37,10 +37,13 @@ module.exports = {
 
             if (isValidBuildHook(req)) {
 
+                console.log('writeFileSync: ' + contentBuildPath);
+
                 fs.writeFileSync(contentBuildPath,
                     JSON.stringify({requested: new Date()}, null, '\t'));
 
                 console.log('Scheduled a build.');
+
                 return res.status(200).send('Thanks!');
             }
 
