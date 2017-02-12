@@ -17,6 +17,8 @@ module.exports = {
 
         console.log('existsSync: ' + contentBuildPath);
 
+        console.log('readdirSync: ' + fs.readdirSync(appRoot + '/public/').join(', '));
+
         if (!fs.existsSync(contentBuildPath)) {
             console.log('Nothing to see here...');
             return;
