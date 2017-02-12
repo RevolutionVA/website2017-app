@@ -316,6 +316,12 @@ function isValidBuildHook(req) {
     let secret = process.env.GITHUB_HOOK_SECRET;
     let xHubSignature = req.headers['x-hub-signature'];
 
+
+    console.log({
+        secret: process.env.GITHUB_HOOK_SECRET,
+        xHubSignature: xHubSignature
+    });
+
     if (req.body && xHubSignature && secret) {
 
         let xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
