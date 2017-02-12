@@ -2,7 +2,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const app = express();
 const http = require('http');
-
+const bodyParser = require('body-parser');
 const builder = require('./services/builder');
 
 const HTTP_PORT = process.env.PORT || 80;
@@ -16,6 +16,9 @@ app.get('/.well-known/acme-challenge/:content', function (req, res) {
     let content = req.param('content');
     res.send(process.env['CERTBOT_RESPONSE:' + content]);
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // redirections
 app.use('*', redirectUrls);

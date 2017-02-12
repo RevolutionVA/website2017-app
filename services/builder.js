@@ -8,7 +8,7 @@ const appRoot = process.cwd();
 const zipUrl = process.env.CONTENT_ZIP_URL;
 const contentLocalPath = process.env.CONTENT_LOCAL;
 const contentBuildPath = appRoot + '/public/content-build.json';
-``
+
 /* globals config appRoot */
 
 module.exports = {
@@ -316,24 +316,11 @@ function isValidBuildHook(req) {
     let secret = process.env.GITHUB_HOOK_SECRET;
     let xHubSignature = req.headers['x-hub-signature'];
 
-
-    console.log({
-        secret: process.env.GITHUB_HOOK_SECRET,
-        xHubSignature: xHubSignature,
-        hasBody: !!req.body
-    });
-
-    if (!!req.body && xHubSignature && secret) {
+    if (req.body && xHubSignature && secret) {
 
         let xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
                 .update(JSON.stringify(req.body))
                 .digest('hex');
-
-        console.log({
-            secret: process.env.GITHUB_HOOK_SECRET,
-            xHubSignature: xHubSignature,
-            xHubSignatureGenerated: xHubSignatureGenerated
-        });
 
         return xHubSignature === xHubSignatureGenerated;
     }
