@@ -15,7 +15,7 @@ module.exports = {
 
     startScheduler : function(){
 
-        schedule.scheduleJob('*/1 * * * *', function () {
+        schedule.scheduleJob('*/5 * * * *', function () {
 
             if (fs.existsSync(appRoot + '/public/content-build.json')) {
                 console.log('Scheduled build starting...');
