@@ -11,20 +11,27 @@ const contentLocalPath = process.env.CONTENT_LOCAL;
 
 /* globals config appRoot */
 
-schedule.scheduleJob('*/1 * * * *', function () {
-
-    if (fs.existsSync(appRoot + '/public/content-build.json')) {
-        console.log('Scheduled build starting...');
-        build();
-        fs.removeSync(appRoot + '/public/content-build.json');
-        console.log('Scheduled build complete.');
-    } else {
-        console.log('Nothing to see here...');
-    }
-
-});
-
 module.exports = {
+
+    startScheduler : function(){
+
+        schedule.scheduleJob('*/1 * * * *', function () {
+
+            if (fs.existsSync(appRoot + '/public/content-build.json')) {
+                console.log('Scheduled build starting...');
+                build();
+                fs.removeSync(appRoot + '/public/content-build.json');
+                console.log('Scheduled build complete.');
+            } else {
+                console.log('Nothing to see here...');
+            }
+
+        });
+
+        console.log('Scheduler started.');
+
+        return Promise.resolve();
+    },
 
     use: (req, res, next) => {
 
