@@ -60,7 +60,9 @@ module.exports = {
                 console.error(err);
                 res.send('<pre style="color:red;">' + err.stack + '</pre>');
             });
-    }
+    },
+
+    build: build
 };
 
 function build() {
