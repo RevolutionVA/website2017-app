@@ -314,13 +314,18 @@ function generatePages() {
 function isValidBuildHook(req) {
 
     let secret = process.env.GITHUB_HOOK_SECRET;
+    let xHubSignature = req.headers['x-hub-signature'];
 
-    if (req.body && req.headers['x-hub-signature'] && secret) {
 
-        let xHubSignature = 'sha1=' + (require('crypto').createHmac('sha1', secret))
+    if (req.body && signature && secret) {
+
+        let xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
                 .update(JSON.stringify(req.body))
                 .digest('hex');
-        return req.headers['x-hub-signature'] === xHubSignature;
+
+        console.debug({xHubSignature: xHubSignature, xHubSignatureGenerated: xHubSignatureGenerated});
+
+        return xHubSignature === xHubSignatureGenerated;
     }
     return false;
 }
