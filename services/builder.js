@@ -28,13 +28,18 @@ module.exports = {
 
     use: (req, res, next) => {
 
-        if (req.method === 'POST' && isValidBuildHook(req)) {
+        if (req.method === 'POST') {
 
-            fs.writeFileSync(contentBuildPath,
-                JSON.stringify({requested: new Date()}, null, '\t'));
+            if (isValidBuildHook(req)) {
 
-            console.log('Scheduled a build.');
-            return res.status(200).send('Thanks!');
+                fs.writeFileSync(contentBuildPath,
+                    JSON.stringify({requested: new Date()}, null, '\t'));
+
+                console.log('Scheduled a build.');
+                return res.status(200).send('Thanks!');
+            }
+
+            console.log('Failed to schedule a build.');
         }
 
         if (req.method === 'GET') {
