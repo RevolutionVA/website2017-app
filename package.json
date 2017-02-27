@@ -1,6 +1,9 @@
 {
 	"name": "revconf2017-app",
 	"version": "1.0.0",
+	"engines": {
+    "node": "6.10.0"
+  },
 	"homepage": "https://github.com/revolutionva/website2017-app#readme",
 	"bugs": {
 		"url": "https://github.com/revolutionva/website2017-app/issues"
@@ -27,5 +30,7 @@
 		"marked": "^0.3.6",
 		"request": "latest"
 	},
-	"devDependencies": {}
+	"devDependencies": {
+
+	}
 }
