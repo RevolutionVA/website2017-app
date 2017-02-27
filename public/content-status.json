@@ -1,0 +1,11 @@
+{
+	"updated": "2017-02-27T23:37:21.500Z",
+	"dataTypes": [
+		"humans.json",
+		"pages.json",
+		"schedule.json",
+		"social-media.json",
+		"sponsors.json",
+		"sponsorship-levels.json"
+	]
+}

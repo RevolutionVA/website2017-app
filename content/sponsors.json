@@ -1,0 +1,50 @@
+[
+	{
+		"title": "CData",
+		"slug": "cdata",
+		"url": "http://www.cdata.com/",
+		"level": "Bronze",
+		"company_summary": "<p>CData Software is a leading provider of data access and connectivity solutions. We specialize in the development of Drivers and data access technologies for real-time access to on-line or on-premise applications, databases, and Web APIs. Our drivers are universally accessible, providing access to data through established data standards and application platforms such as ODBC, JDBC, ADO.NET, OData, SSIS, BizTalk, Excel, etc.</p>\n<p>We are fully committed to providing our customers with high-performance, reliable, and fully extensible products. We know your organization places a large investment in data management and we are proud to be a trusted provider of data integration products.</p>\n",
+		"logo": "/images/sponsors/cdata-logo.png"
+	},
+	{
+		"title": "ETA",
+		"slug": "eta",
+		"url": "https://www.emergingtechnologyadvisors.com/",
+		"level": "Bronze",
+		"company_summary": "<p>Emerging Technology Advisors (ETA) was founded around the mission of assisting large enterprise organizations keep up with the constant change in the technology field. We provide a holistic approach to reinvent organizations by leveraging next generation innovations and concepts, which has worked tremendously for our clients. </p>\n<p>We do not just reimagine product lines or define corporate strategy - we work with your employees directly to re-ignite their desire to change the world. We are not people that that just talk about technology, we are actually the ones building, exploring, supporting, and, as needed, creating the emerging technology that will change the world.</p>\n",
+		"logo": "/images/sponsors/eta-logo.png"
+	},
+	{
+		"title": "Grow",
+		"slug": "grow",
+		"url": "http://thisisgrow.com/",
+		"level": "Bronze",
+		"company_summary": "<p>We’re a team of close-knit creatives, technologists, strategists, and producers whose skills are matched only by our dedication. Our hard work put us on the map, and our commitment to creative innovation keeps us there. We strive to put that same level of energy into everything we touch, whether building a global campaign or a better neighborhood.</p>\n",
+		"logo": "/images/sponsors/grow-logo.png"
+	},
+	{
+		"title": "Issuetrak",
+		"slug": "issuetrak",
+		"url": "https://www.issuetrak.com/",
+		"level": "Platinum",
+		"company_summary": "<p>Issuetrak is a fast-paced, agile software company based in the Hampton Roads area of Virginia. We’ve got a 20-year track record of successfully developing issue-tracking and process management software for companies of all sizes. </p>\n<p>We’re stoked on innovation and we love data, and we’re harnessing the power of both to develop a next generation product. We are a customer-centric company with a dedicated vision of creating the most robust and versatile software solution for our clients. And, we aren’t afraid to take risks to make this happen.</p>\n",
+		"logo": "/images/sponsors/issuetrak-logo.png"
+	},
+	{
+		"title": "Marathon Consulting",
+		"slug": "marathon",
+		"url": "http://www.marathonus.com/",
+		"level": "Bronze",
+		"company_summary": "<p>Marathon Consulting is one of the fastest growing and most successful Information Technology Consulting firms in the Hampton Roads region. Our name, our growth, and public recognition are the results of our total commitment to our clients’ success. Over 95% of our revenue comes from referrals and repeat business. Therefore, commitment to client success is a full time job.</p>\n",
+		"logo": "/images/sponsors/marathon-logo.png"
+	},
+	{
+		"title": "TowneBank",
+		"slug": "townebank",
+		"url": "https://www.townebank.com/",
+		"level": "Friends of RevConf",
+		"company_summary": "<p>We are a community bank with a great hometown spirit.  If you are currently \na TowneBank member or shareholder, thank you for your friendship and support! \nYOU are the reason for our success. If you are new, then welcome.  We invite \nyou to get to know our family. </p>\n",
+		"logo": "/images/sponsors/townebank-logo.png"
+	}
+]
