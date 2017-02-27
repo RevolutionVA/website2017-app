@@ -98,4 +98,5 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-
+# Generated website content
+content
