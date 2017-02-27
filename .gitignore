@@ -100,3 +100,4 @@ jspm_packages
 
 # Generated website content
 content
+public/content-status.json
