@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * Module
  */
@@ -31,9 +33,9 @@ module.exports = {
     },
 
     getSponsors: function () {
-        let levels = getSet('sponsorship-levels');
-        let sponsors = getSet('sponsors');
-        let groupedSponsors = _.groupBy(sponsors, 'level');
+        const levels = getSet('sponsorship-levels');
+        const sponsors = getSet('sponsors');
+        const groupedSponsors = _.groupBy(sponsors, 'level');
         return levels.map(level => {
             return {
                 level: level,
@@ -42,5 +44,4 @@ module.exports = {
             };
         });
     }
-
 };

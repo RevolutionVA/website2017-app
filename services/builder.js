@@ -1,4 +1,6 @@
-const request = require("request");
+'use strict';
+
+const request = require('request');
 const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const marked = require('marked');
@@ -91,7 +93,7 @@ function build() {
         .then(function () {
             console.log('Data Store Created.');
             return generatePages(appRoot);
-        })
+        });
 
 }
 
@@ -128,7 +130,7 @@ function setRawContent() {
                         reject(err);
                     }
 
-                    console.log("Zip Downloaded!");
+                    console.log('Zip Downloaded!');
                     resolve();
                 });
             });
@@ -141,11 +143,11 @@ function setRawContent() {
         return new Promise((resolve, reject) => {
 
             try {
-                let zip = new AdmZip(tmpZipPath);
+                const zip = new AdmZip(tmpZipPath);
                 //noinspection JSUnresolvedFunction
                 zip.extractAllTo(tmpDir, true);
                 fs.removeSync(tmpZipPath);
-                console.log("Zip Extracted!");
+                console.log('Zip Extracted!');
                 resolve();
             } catch (err) {
                 console.error(err);
@@ -163,7 +165,7 @@ function setRawContent() {
             }
         });
 
-        console.log("Files Copied Locally!");
+        console.log('Files Copied Locally!');
 
         return Promise.resolve();
     }
@@ -186,7 +188,7 @@ function setRawContent() {
                     });
                 });
                 fs.removeSync(unzippedFolderPath);
-                console.log("Files Copied!");
+                console.log('Files Copied!');
                 resolve();
             } catch (err) {
                 console.error(err);
@@ -209,11 +211,11 @@ function generateData() {
 
         try {
 
-            let dataTypes = [];
+            const dataTypes = [];
 
             fs.readdirSync(tmpDir).forEach(function (fileType) {
 
-                let curPath = tmpDir + '/' + fileType;
+                const curPath = tmpDir + '/' + fileType;
 
                 if (!fs.lstatSync(curPath).isDirectory()) {
 
@@ -227,7 +229,7 @@ function generateData() {
                 }
             });
 
-            let content = {
+            const content = {
                 updated: new Date(),
                 dataTypes
             };
@@ -246,9 +248,9 @@ function generateData() {
 
     function processItemsDir(filePath, outputPath) {
 
-        let typeName = path.basename(filePath);
+        const typeName = path.basename(filePath);
 
-        let set = [];
+        const set = [];
 
         fs.readdirSync(filePath).forEach(slug => {
 
@@ -256,13 +258,13 @@ function generateData() {
                 return;
             }
 
-            let pathItem = filePath + '/' + slug;
+            const pathItem = filePath + '/' + slug;
 
-            let item = {
+            const item = {
                 slug: slug
             };
 
-            let sources = [], warnings = [];
+            const sources = [], warnings = [];
 
             if (!fs.lstatSync(pathItem).isDirectory()) {
                 return;
@@ -270,21 +272,21 @@ function generateData() {
 
             fs.readdirSync(pathItem).forEach(file => {
 
-                let filePath = pathItem + '/' + file;
-                let fileName = path.basename(file, path.extname(file));
+                const filePath = pathItem + '/' + file;
+                const fileName = path.basename(file, path.extname(file));
 
                 if (path.extname(file) === '.md') {
 
-                    let markdownContent = fs.readFileSync(filePath, 'utf-8');
+                    const markdownContent = fs.readFileSync(filePath, 'utf-8');
                     item[fileName] = marked(markdownContent);
                 }
 
                 if (path.extname(file) === '.json') {
 
-                    let data = fs.readJsonSync(filePath, {throws: false});
+                    const data = fs.readJsonSync(filePath, {throws: false});
 
                     if (data === null) {
-                        warnings.push(`JSON parse '${slug}' ${fileName} data was null.`)
+                        warnings.push(`JSON parse '${slug}' ${fileName} data was null.`);
                     } else {
                         sources.push(data);
                     }
@@ -311,10 +313,11 @@ function generateData() {
 function generatePages() {
 
     return new Promise((resolve, reject) => {
-
+        /*eslint-disable */
         if (0 == 'Implement this later.') {
             reject();
         }
+        /*eslint-enable */
 
         resolve();
 
@@ -323,12 +326,12 @@ function generatePages() {
 
 function isValidBuildHook(req) {
 
-    let secret = process.env.GITHUB_HOOK_SECRET;
-    let xHubSignature = req.headers['x-hub-signature'];
+    const secret = process.env.GITHUB_HOOK_SECRET;
+    const xHubSignature = req.headers['x-hub-signature'];
 
     if (req.body && xHubSignature && secret) {
 
-        let xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
+        const xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
                 .update(JSON.stringify(req.body))
                 .digest('hex');
 

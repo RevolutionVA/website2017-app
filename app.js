@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const exphbs = require('express-handlebars');
 const app = express();
@@ -13,7 +15,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/.well-known/acme-challenge/:content', function (req, res) {
-    let content = req.param('content');
+    const content = req.param('content');
     res.send(process.env['CERTBOT_RESPONSE:' + content]);
 });
 
@@ -42,10 +44,10 @@ http.createServer(app).listen(HTTP_PORT, function () {
 ██╔══██╗██╔══╝  ╚██╗ ██╔╝██║   ██║██║     ██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
 ██║  ██║███████╗ ╚████╔╝ ╚██████╔╝███████╗╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
 ╚═╝  ╚═╝╚══════╝  ╚═══╝   ╚═════╝ ╚══════╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
- ██████╗ ██████╗ ███╗   ██╗███████╗                                               
-██╔════╝██╔═══██╗████╗  ██║██╔════╝                                               
-██║     ██║   ██║██╔██╗ ██║█████╗                                                 
-██║     ██║   ██║██║╚██╗██║██╔══╝                                                 
-╚██████╗╚██████╔╝██║ ╚████║██║                                                    
+ ██████╗ ██████╗ ███╗   ██╗███████╗
+██╔════╝██╔═══██╗████╗  ██║██╔════╝
+██║     ██║   ██║██╔██╗ ██║█████╗
+██║     ██║   ██║██║╚██╗██║██╔══╝
+╚██████╗╚██████╔╝██║ ╚████║██║
  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝`);
 });

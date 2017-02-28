@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * Routes
  */
@@ -52,4 +54,4 @@ module.exports = function (app) {
                 || allRoutes[0];
         }
     };
-}
+};
