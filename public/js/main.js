@@ -18,7 +18,7 @@ jQuery(function ($) {
         $(document.body).css('opacity', 1);
     });
 
-    var sideNavToggle = $(document.getElementById('side-nav-toggle')),
+    const sideNavToggle = $(document.getElementById('side-nav-toggle')),
         sideNav = $(document.getElementById('side-nav'));
 
     sideNavToggle.on('click', function (event) {

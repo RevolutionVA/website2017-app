@@ -16,7 +16,7 @@ function getSet(type) {
 module.exports = {
 
     getPages: function () {
-        let pages = {list: getSet('pages')};
+        const pages = {list: getSet('pages')};
         pages.list.forEach(page => {
             pages[page.slug] = page;
         });
