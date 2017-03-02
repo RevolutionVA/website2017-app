@@ -345,6 +345,6 @@ function isValidBuildUser(req) {
 
     //noinspection JSUnresolvedVariable
     return user && user.name && user.pass
-        && user.name === process.env.BUILD_USER
-        && user.pass === process.env.BUILD_PASS;
+        && user.name === conf.get('buildUsername')
+        && user.pass === conf.get('buildPassword');
 }
