@@ -1,33 +1,37 @@
 {
-  "name": "revconf2017-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "adm-zip": "latest",
-    "basic-auth": "^1.1.0",
-    "body-parser": "^1.16.1",
-    "express": "^4.14.1",
-    "express-handlebars": "^3.0.0",
-    "fs-extra": "^2.0.0",
-    "lodash": "^4.17.4",
-    "marked": "^0.3.6",
-    "request": "latest"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node app.js",
-    "postinstall": "node postinstall.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://iambriansreed@github.com/revolutionva/website2017-app.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/revolutionva/website2017-app/issues"
-  },
-  "homepage": "https://github.com/revolutionva/website2017-app#readme"
+	"name": "revconf2017-app",
+	"version": "1.0.0",
+	"homepage": "https://github.com/revolutionva/website2017-app#readme",
+	"bugs": {
+		"url": "https://github.com/revolutionva/website2017-app/issues"
+	},
+	"license": "ISC",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://iambriansreed@github.com/revolutionva/website2017-app.git"
+	},
+	"scripts": {
+		"start": "node app.js",
+		"postinstall": "node postinstall.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"adm-zip": "latest",
+		"basic-auth": "^1.1.0",
+		"body-parser": "^1.16.1",
+		"convict": "^2.0.0",
+		"express": "^4.14.1",
+		"express-handlebars": "^3.0.0",
+		"fs-extra": "^2.0.0",
+		"lodash": "^4.17.4",
+		"marked": "^0.3.6",
+		"request": "^2.79.0"
+	},
+	"devDependencies": {
+		"eslint": "^3.16.1"
+	},
+	"engines": {
+		"node": "6.10.0"
+	}
 }
