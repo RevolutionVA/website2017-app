@@ -160,7 +160,7 @@ function setRawContent() {
     function copyLocal() {
         fs.readdirSync(contentLocalPath).forEach(function (file) {
             if (!file.startsWith('.')) {
-                fs.copySync(process.env.CONTENT_LOCAL + '/' + file,
+                fs.copySync(contentLocalPath + '/' + file,
                     tmpDir + '/' + file);
             }
         });
