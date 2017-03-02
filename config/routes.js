@@ -4,52 +4,31 @@
 
 const contentService = require('../services/content');
 
-const allRoutes =
-    [
-        {
-            path: '/',
-            view: 'home',
-            cache: 'index.html',
-            data: function () {
-                return {
-                    organizers: contentService.getOrganizers(),
-                    panelists: contentService.getPanelists(),
-                    sponsors: contentService.getSponsors()
-                };
-            }
-        },
-        {
-            path: '/code-of-conduct',
-            view: 'code-of-conduct',
-            data: function () {
-            }
-        },
-        {
-            path: '/404',
-            view: '404',
-            data: function () {
-            },
-            default: true
+module.exports = [
+    {
+        path: '/',
+        view: 'home',
+        cache: 'index.html',
+        data: function () {
+            return {
+                organizers: contentService.getOrganizers(),
+                panelists: contentService.getPanelists(),
+                sponsors: contentService.getSponsors(),
+                pages: contentService.getPages()
+            };
         }
-    ];
-
-module.exports = function (app) {
-
-    app.locals.socialMedia = contentService.getSocialMedia();
-
-    return {
-
-        all: allRoutes.map(r => {
-            if (!r.cached) {
-                r.cached = (r.path + '/index.html').replace('//', '/');
-            }
-            return r;
-        }),
-
-        find: path => {
-            return allRoutes.find(r => r.path == path)
-                || allRoutes.find(r => r.default)
-                || allRoutes[0];
+    },
+    {
+        path: '/code-of-conduct',
+        view: 'code-of-conduct',
+        data: function () {
         }
-    };
-}
+    },
+    {
+        path: '/404',
+        view: '404',
+        data: function () {
+        },
+        default: true
+    }
+];
