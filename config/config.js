@@ -23,7 +23,7 @@ var conf = convict({
     env: 'CONTENT_ZIP_URL'
   },
   contentLocal: {
-    doc: 'directory path for the local copy of the content repo',
+    doc: 'The directory path for a local copy of the content repo.',
     format: String,
     default: '',
     env: 'CONTENT_LOCAL'
