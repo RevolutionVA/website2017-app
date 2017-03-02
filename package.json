@@ -21,15 +21,19 @@
 		"adm-zip": "latest",
 		"basic-auth": "^1.1.0",
 		"body-parser": "^1.16.1",
+		"convict": "^2.0.0",
 		"express": "^4.14.1",
 		"express-handlebars": "^3.0.0",
 		"fs-extra": "^2.0.0",
 		"lodash": "^4.17.4",
 		"marked": "^0.3.6",
-		"request": "latest"
+		"request": "^2.79.0"
 	},
 	"devDependencies": {
 		"eslint": "^3.16.1",
 		"eslint-config-eta": "^0.0.7"
+	},
+	"engines": {
+		"node": "6.10.0"
 	}
 }

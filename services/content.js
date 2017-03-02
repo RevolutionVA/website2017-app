@@ -15,6 +15,14 @@ function getSet(type) {
 
 module.exports = {
 
+    getPages: function () {
+        let pages = {list: getSet('pages')};
+        pages.list.forEach(page => {
+            pages[page.slug] = page;
+        });
+        return pages;
+    },
+
     getSocialMedia: function () {
         return getSet('social-media').map(link => {
             link.iconClass = (link.icon === 'lanyrd' ? 'icon icon-' : 'fa fa-') + link.icon;

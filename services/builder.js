@@ -1,5 +1,6 @@
 'use strict';
 
+const conf = require('../config/config.js');
 const request = require('request');
 const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
@@ -7,8 +8,8 @@ const marked = require('marked');
 const path = require('path');
 
 const appRoot = process.cwd();
-const zipUrl = process.env.CONTENT_ZIP_URL;
-const contentLocalPath = process.env.CONTENT_LOCAL;
+const zipUrl = conf.get('contentZipUrl');
+const contentLocalPath = conf.get('contentLocal');
 const contentBuildPath = appRoot + '/public/content-build.json';
 
 /* globals config appRoot */
@@ -86,11 +87,11 @@ module.exports = {
 function build() {
 
     return setRawContent(appRoot, zipUrl)
-        .then(function () {
+        .then(() => {
             console.log('Raw Content Store Created.');
             return generateData(appRoot);
         })
-        .then(function () {
+        .then(() => {
             console.log('Data Store Created.');
             return generatePages(appRoot);
         });
@@ -118,13 +119,12 @@ function setRawContent() {
     function download() {
 
         return new Promise((resolve, reject) => {
-
-            request({url: zipUrl, encoding: null}, function (err, resp, body) {
+            return request({url: zipUrl, encoding: null}, (err, resp, body) => {
                 if (err) {
                     console.error(err);
                     reject(err);
                 }
-                fs.writeFile(tmpZipPath, body, function (err) {
+                fs.writeFile(tmpZipPath, body, (err) => {
                     if (err) {
                         console.error(err);
                         reject(err);
@@ -160,7 +160,7 @@ function setRawContent() {
     function copyLocal() {
         fs.readdirSync(contentLocalPath).forEach(function (file) {
             if (!file.startsWith('.')) {
-                fs.copySync(process.env.CONTENT_LOCAL + '/' + file,
+                fs.copySync(contentLocalPath + '/' + file,
                     tmpDir + '/' + file);
             }
         });
@@ -346,6 +346,6 @@ function isValidBuildUser(req) {
 
     //noinspection JSUnresolvedVariable
     return user && user.name && user.pass
-        && user.name === process.env.BUILD_USER
-        && user.pass === process.env.BUILD_PASS;
+        && user.name === conf.get('buildUsername')
+        && user.pass === conf.get('buildPassword');
 }

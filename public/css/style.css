@@ -597,7 +597,8 @@ hr {
       vertical-align: middle;
       width: 90%;
       max-width: 300px;
-      filter: contrast(0) brightness(1000%); }
+      -webkit-filter: grayscale(1);
+      filter: grayscale(1); }
   .sponsor a:hover {
     opacity: 1; }
     .sponsor a:hover span.logo img {
