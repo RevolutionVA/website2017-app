@@ -8,11 +8,11 @@ jQuery(function ($) {
     $('.site-info.date')
         .fitText(0.7, {minFontSize: '20px', maxFontSize: '50px'});
 
+    $('.site-info.location')
+        .fitText(1.8, {minFontSize: '20px'});
+
     $('.big-title')
         .fitText(0.7, {minFontSize: '20px', maxFontSize: '50px'});
-
-    $('.site-info.numbers')
-        .fitText(2.5, {minFontSize: '20px'});
 
     $(window).load(function () {
         $(document.body).css('opacity', 1);

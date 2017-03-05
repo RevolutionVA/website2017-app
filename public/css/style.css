@@ -480,8 +480,10 @@ hr {
       background-size: contain;
       vertical-align: center; }
   .section-home.section-wrapper .site-info.date {
-    line-height: 1; }
-  .section-home.section-wrapper .site-info.numbers {
+    line-height: 1;
+    margin-bottom: 0.25em; }
+  .section-home.section-wrapper .site-info.location {
+    font-size: 18px;
     line-height: 1.1; }
   .section-home.section-wrapper .site-info span {
     display: inline-block; }
