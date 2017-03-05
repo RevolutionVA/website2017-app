@@ -44,7 +44,7 @@ module.exports = {
         let groupedSponsors = _.groupBy(sponsors, 'level');
         return levels.map(level => {
             return {
-                level: level,
+                title: level,
                 sponsors: (groupedSponsors[level] || [])
                     .sort((h1, h2) => h1.title > h2.title)
             };

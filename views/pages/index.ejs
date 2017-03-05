@@ -1,0 +1,13 @@
+<% include ../partials/header.ejs %>
+<%
+title = title || '';
+body = body || '';
+%>
+<div class="container">
+    <h1 class="page-title league-gothic"><%= title %></h1>
+    <div class="page-content">
+        <%- body %>
+    </div>
+</div>
+
+<% include ../partials/footer.ejs %>

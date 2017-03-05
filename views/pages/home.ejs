@@ -1,0 +1,185 @@
+<% include ../partials/header.ejs %>
+<%
+organizers = organizers || [];
+pages = pages || {about: {intro: ''}};
+sponsorLevels = sponsorLevels || [{title: ''}];
+var sponsorSizes = {
+    'Platinum': 'col-xs-12 col-md-6 col-sm-4',
+    'Gold' :'col-xs-6 col-md-4 col-sm-3',
+    'Bronze' :'col-xs-6 col-md-4 col-sm-3',
+    'Friends of RevConf' :'col-xs-4 col-md-3 col-sm-2'
+};
+%>
+<div class="page-sections">
+
+    <div class="section-wrapper section-home full-height">
+        <div class="section-position"></div>
+        <div class="section full-height">
+            <div class="container-fluid">
+
+                <h1 id="site-title-fit-text" class="league-gothic text-xs-center">REVCONF
+                    <br class="visible-xs-inline"><span class="divider"></span> 2017
+                </h1>
+
+                <div class="row">
+                    <div class="col-sm-6 site-info date text-xs-center text-sm-right text-grey">
+                        <strong>June 1-2</strong>
+                    </div>
+                    <div class="col-sm-6 site-info location text-xs-center text-sm-left">
+                        <span><a href="https://www.wyndhamhotels.com/wyndham/virginia-beach-virginia/wyndham-virginia-beach-oceanfront/overview">Wyndham Oceanfront</a></span><br>
+                        <span>Virginia Beach, VA</span>
+                    </div>
+                </div>
+
+                <p class="slogan text-xs-center">
+                    <br>
+                    <em>
+                        <span class="nobr">Join the Revolution:</span>
+                        <span class="nobr">Uniting software professionals.</span>
+                    </em>
+                </p>
+
+                <p class="text-xs-center">
+                    <span style="display: inline-block; margin-top: 1em;">Tickets On Sale Now!</span><br><br>
+                    <a href="http://tickets.revolutionconf.com"
+                       class="btn btn-primary btn-lg"
+                       style="margin-top: 0;">
+                        <i class="fa fa-ticket" style="font-size: 110%;"></i>&ensp;Get
+                        Your&nbsp;Ticket</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper section-about">
+        <div class="section-position" id="about"></div>
+        <div class="section">
+            <div class="container">
+
+                <h2 class="league-gothic section-title">About</h2>
+
+                <div class="intro-text">
+                    <%- pages.about.intro %>
+                </div>
+                <h3 class="h2 league-gothic">Our Organizers</h3>
+                <div class="organizers">
+                    <div class="row">
+
+                        <% organizers.forEach(function(human) { %>
+                        <%- include('../partials/human.ejs', {human: human}) %>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper section-tickets">
+        <div class="section-position" id="tickets"></div>
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title league-gothic">Tickets</h2>
+
+                <p class="intro-text">Early bird tickets on sale now. For the die-hard fans. The
+                    best rate possible.</p>
+                <p><a href="http://tickets.revolutionconf.com" class="btn btn-primary btn-lg"
+                      target="_blank" style="margin-top: 0;">
+                        <i class="fa fa-ticket"></i>&ensp;Get Your&nbsp;Ticket</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper section-speakers">
+        <div class="section-position" id="speakers"></div>
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title league-gothic">Speakers</h2>
+
+                <p class="intro-text">Some of the best minds in the software industry are converging
+                    in Virginia Beach in June for RevolutionConf.<br><br>
+                    Developers. Thought Leaders. Industry Experts. They'll be here to share their
+                    insights and knowledge and to motivate you to be better.</p>
+
+                <h3 class="h1 league-gothic">Alumni Discussion Panel</h3>
+
+                <div class="discussion-panel">
+                    <div class="row">
+
+                        <% panelists.forEach(function(human) { %>
+                        <%- include('../partials/human.ejs', {human: human}) %>
+                        <% } ); %>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper section-sponsors">
+        <div class="section-position" id="sponsors"></div>
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title league-gothic">Sponsors</h2>
+
+                <p class="intro-text">We want to thank our generous sponsors for making this event
+                    possible and for showing their commitment to making our community
+                    better...stronger...faster!</p>
+
+                <div class="sponsors-list">
+
+                    <% sponsorLevels.forEach(function(level) { %>
+
+                    <% if (!level.sponsors.length) return; %>
+
+                    <h3 style="display: none"><%= level.title %></h3>
+
+                    <div class="row">
+
+                        <% level.sponsors.forEach(function(sponsor) { %>
+                        <div class="<%= sponsorSizes[level.title] %> sponsor"
+                             style="margin-bottom: 2em;">
+                            <div class="embed-responsive embed-responsive-1x1">
+                                <div class="embed-responsive-item">
+                                    <a target="_blank" href="<%= sponsor.url %>" title="<%= sponsor.title %>">
+                                        <span class="logo"><img src="<%= sponsor.logo %>"></span>
+                                        <span class="title"><%= sponsor.title %></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+
+                    </div>
+                    <% }); %>
+
+                </div>
+
+                <p><a target="_blank"
+                      href="https://drive.google.com/open?id=0B0HrtfzUfLt6QjFVYW9VeV9vejQ"
+                      outbound-track="" class="btn btn-primary btn-lg">Want to Sponsor?</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper section-location">
+        <div class="section-position" id="location"></div>
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title league-gothic">Location</h2>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h3>Wyndham Virginia Beach Oceanfront</h3>
+                        <p>5700 Atlantic Ave, Virginia Beach, VA 23451<br><a
+                                    href="tel://7574287025">(757) 428-7025</a></p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<% include ../partials/footer.ejs %>

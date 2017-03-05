@@ -7,28 +7,32 @@ const contentService = require('../services/content');
 module.exports = [
     {
         path: '/',
-        view: 'home',
-        cache: 'index.html',
+        view: 'pages/home',
+        bodyClass : 'home',
         data: function () {
             return {
                 organizers: contentService.getOrganizers(),
                 panelists: contentService.getPanelists(),
-                sponsors: contentService.getSponsors(),
+                sponsorLevels: contentService.getSponsors(),
                 pages: contentService.getPages()
             };
         }
     },
     {
-        path: '/code-of-conduct',
-        view: 'code-of-conduct',
+        path: '*',
+        view: 'pages/index',
+        bodyClass : 'page',
         data: function () {
+            return {};
         }
     },
     {
         path: '/404',
-        view: '404',
+        view: 'pages/404',
+        bodyClass : '404',
         data: function () {
+            return {};
         },
-        default: true
+        404: true
     }
 ];

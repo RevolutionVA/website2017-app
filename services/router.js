@@ -2,25 +2,49 @@
  * Router
  */
 
+const routes = require('../config/routes');
+const contentService = require('../services/content');
 
 module.exports = (app) => (req, res) => {
 
-    app.locals = Object.assign(require('../config/localVars'), app.locals);
+    let locals = {
+        socialMedia: contentService.getSocialMedia(),
+        bodyClass: []
+    };
 
     // build getter
     if (req.path === '/build') {
         return require('./builder').run(req, res);
     }
 
-    // everything else
-    const routes = require('../config/routes');
+    let route = routes.find(r => r.path == req.path);
+    let renderData = null;
 
-    let route = findRoute(req.path);
-    res.render(route.view, route.data(app, req, res));
+    if (!route) {
 
-    function findRoute(path) {
-        return routes.find(r => r.path == path)
-            || routes.find(r => r.default)
-            || routes[0];
+        let pages = contentService.getPages();
+
+        let pageSlug = req.path.substr(1);
+
+        if (pageSlug in pages) {
+
+            // defined route by page
+            route = routes.find(r => r.path === '*');
+            locals.bodyClass.push(pageSlug);
+            renderData = pages[pageSlug];
+
+        } else {
+
+            // anything else
+            route = routes.find(r => r[404]);
+        }
     }
+
+    if (route.bodyClass) {
+        locals.bodyClass.push(route.bodyClass);
+    }
+
+    app.locals = Object.assign(locals, app.locals);
+
+    res.render(route.view, renderData || route.data(app, req, res));
 };

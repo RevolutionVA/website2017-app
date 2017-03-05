@@ -46,6 +46,12 @@ body {
     overflow-y: scroll !important; }
   body.loading .loading-screen {
     display: block; }
+  body.page {
+    background-color: #fff;
+    background-image: url("../images/layout/background1.png"); }
+    body.page > .container {
+      padding: 5em 0 0;
+      margin-bottom: 4em; }
 
 html {
   background-color: #a00;
