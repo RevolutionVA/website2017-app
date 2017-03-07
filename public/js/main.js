@@ -32,4 +32,20 @@ jQuery(function ($) {
         sideNav.removeClass('open');
     });
 
+    var sliderImages = $('.section-location .images');
+
+    var sliderImageWidth = $('img', sliderImages).width();
+
+    function rotateSlider() {
+        sliderImages.stop().animate({
+            'margin-left': '-'+sliderImageWidth+'px',
+        }, 50000, 'linear', function(){
+            sliderImages.css({'margin-left': 0});
+            rotateSlider();
+        });
+    }
+
+    $(document).ready(function(){
+        rotateSlider();
+    });
 });

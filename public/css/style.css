@@ -55,7 +55,7 @@ body {
 
 html {
   background-color: #a00;
-  font-size: 16px; }
+  font-size: 18px; }
 
 .embed-responsive-1x1 {
   padding-bottom: 100%; }
@@ -561,6 +561,19 @@ hr {
 
 .section-location.section-wrapper {
   background-image: url("../images/layout/background4.png"); }
+
+.section-location .container-slider {
+  max-width: 100vw;
+  overflow: hidden;
+  margin: 2em 0; }
+  .section-location .container-slider .slider {
+    overflow: hidden; }
+    .section-location .container-slider .slider .images {
+      white-space: nowrap; }
+      .section-location .container-slider .slider .images img {
+        width: auto;
+        max-height: 75vh;
+        max-width: none; }
 
 .section-tickets.section-wrapper {
   background-image: url("../images/layout/background4.png"); }

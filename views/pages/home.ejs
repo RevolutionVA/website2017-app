@@ -163,18 +163,26 @@ var sponsorSizes = {
         <div class="section-position" id="location"></div>
         <div class="section">
             <div class="container">
-                <h2 class="section-title league-gothic">Location</h2>
-
-                <div class="row">
-                    <div class="col-xs-6">
-                        <h3>Wyndham Virginia Beach Oceanfront</h3>
-                        <p>5700 Atlantic Ave, Virginia Beach, VA 23451<br><a
-                                    href="tel://7574287025">(757) 428-7025</a></p>
-                    </div>
-
-                </div>
-
+                <h2 class="section-title league-gothic">Location
+                    <h2>Wyndham Virginia Beach Oceanfront</h2>
+                    <h3><i class="fa fa-map-marker fa-fw text-red"></i> <a target="_blank"
+                                                                           href="https://www.google.com/maps/dir/<%- pages.location.address.replace(/\s+/g, '+') %>"><%- pages.location.address %></a></h3>
+                    <h3><i class="fa fa-phone fa-fw text-red"></i> <a target="_blank" href="tel://<%- pages.location.phone.replace(/[^\d]/g, '') %>"><%- pages.location.phone %></a></h3>
             </div>
+            <div class="container-slider">
+                <div class="slider">
+                    <div class="images">
+                        <img src="/images/layout/wyndham-background.png"
+                        ><img src="/images/layout/wyndham-background.png">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="intro-text">
+                    <%- pages.location.intro %>
+                </div>
+            </div>
+
         </div>
     </div>
 
