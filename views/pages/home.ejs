@@ -1,13 +1,14 @@
 <% include ../partials/header.ejs %>
 <%
 organizers = organizers || [];
+panelists = panelists || [];
 pages = pages || {about: {intro: ''}};
-sponsorLevels = sponsorLevels || [{title: ''}];
+sponsorLevels = sponsorLevels || [{title: '', sponsors: [{title: '', logo: ''}]}];
 var sponsorSizes = {
     'Platinum': 'col-xs-12 col-md-6 col-sm-4',
-    'Gold' :'col-xs-6 col-md-4 col-sm-3',
-    'Bronze' :'col-xs-6 col-md-4 col-sm-3',
-    'Friends of RevConf' :'col-xs-4 col-md-3 col-sm-2'
+    'Gold': 'col-xs-6 col-md-4 col-sm-3',
+    'Bronze': 'col-xs-6 col-md-4 col-sm-3',
+    'Friends of RevConf': 'col-xs-4 col-md-3 col-sm-2'
 };
 %>
 <div class="page-sections">
@@ -63,7 +64,6 @@ var sponsorSizes = {
                 <h3 class="h2 league-gothic">Our Organizers</h3>
                 <div class="organizers">
                     <div class="row">
-
                         <% organizers.forEach(function(human) { %>
                         <%- include('../partials/human.ejs', {human: human}) %>
                         <% }); %>
@@ -103,11 +103,9 @@ var sponsorSizes = {
 
                 <div class="discussion-panel">
                     <div class="row">
-
-                        <% panelists.forEach(function(human) { %>
-                        <%- include('../partials/human.ejs', {human: human}) %>
-                        <% } ); %>
-
+                        <% panelists.forEach(function (human) { %>
+                        <%- include('../partials/human.ejs', {human: human}); %>
+                        <% }); %>
                     </div>
                 </div>
 
@@ -129,7 +127,7 @@ var sponsorSizes = {
 
                     <% sponsorLevels.forEach(function(level) { %>
 
-                    <% if (!level.sponsors.length) return; %>
+                    <% if (level.title && !level.sponsors.length) return; %>
 
                     <h3 style="display: none"><%= level.title %></h3>
 
