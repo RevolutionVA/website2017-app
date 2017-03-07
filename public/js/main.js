@@ -38,14 +38,14 @@ jQuery(function ($) {
 
     function rotateSlider() {
         sliderImages.stop().animate({
-            'margin-left': '-'+sliderImageWidth+'px',
-        }, 50000, 'linear', function(){
+            'margin-left': '-' + sliderImageWidth + 'px',
+        }, 50000, 'linear', function () {
             sliderImages.css({'margin-left': 0});
             rotateSlider();
         });
     }
 
-    $(document).ready(function(){
+    $(window).load(function () {
         rotateSlider();
     });
 });
