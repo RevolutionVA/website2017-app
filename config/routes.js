@@ -3,36 +3,87 @@
  */
 
 const contentService = require('../services/content');
+const route = require('../module/route');
 
 module.exports = [
-    {
-        path: '/',
-        view: 'pages/home',
-        bodyClass : 'home',
-        data: function () {
+    new route(
+        '/',
+        'pages/home',
+        () => {
             return {
+                locals: {
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: 'home'
+                },
                 organizers: contentService.getOrganizers(),
                 panelists: contentService.getPanelists(),
                 sponsorLevels: contentService.getSponsors(),
                 pages: contentService.getPages()
             };
         }
-    },
-    {
-        path: '*',
-        view: 'pages/index',
-        bodyClass : 'page',
-        data: function () {
-            return {};
+    ),
+    new route(
+        '*',
+        'pages/index',
+        path => {
+            let data = {
+                locals: {
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: 'page ' + slugify(path)
+                }
+            };
+
+            let pages = contentService.getPages();
+
+            let pageSlug = path.substr(1);
+
+            if (pageSlug in pages) {
+
+                Object.assign(data, pages[pageSlug]);
+                return data;
+            }
+
+            return null;
         }
-    },
-    {
-        path: '/404',
-        view: 'pages/404',
-        bodyClass : '404',
-        data: function () {
-            return {};
+    ),
+    new route(
+        '/speakers',
+        'pages/speakers',
+        path => {
+
+            let pages = contentService.getPages();
+
+            return {
+                locals: {
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: 'page-speaker'
+                },
+                intro : pages.speakers.intro,
+                speakers : contentService.getSpeakers(),
+                panelists: contentService.getPanelists()
+            };
+        }
+    ),
+    new route(
+        '/404',
+        'pages/404',
+        () => {
+            return {
+                locals: {
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: '404'
+                }
+            };
         },
-        404: true
-    }
+        true
+    )
 ];
+
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
+}

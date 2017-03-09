@@ -25,18 +25,18 @@ human = human ||
         </div>
 
         <div class="col-xs-6 info">
-            <h4 class="ng-binding"><%= human.firstName %> <%= human.lastName %></h4>
-            <p class="ng-binding"><%= human.title %><br>
-                <% if(human.company_name){ %>
-
+            <h4><%= human.firstName %> <%= human.lastName %></h4>
+            <p class="title"><%= human.title %></p>
+            <% if(human.company_name){ %>
+            <p class="company">
                 <% if(human.company_website){ %>
                 <a class="text-grey" target="_blank"
                    href="<%= human.company_website %>"><%= human.company_name %></a>
                 <% }else{ %>
-                <%= human.company_name %>
-                <% } %>
+                    <%= human.company_name %>
                 <% } %>
             </p>
+            <% } %>
             <p class="social">
                 <% if(human.twitter){ %>
                 <a target="_blank" href="https://twitter.com/<%= human.twitter %>">

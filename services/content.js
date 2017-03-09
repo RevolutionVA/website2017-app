@@ -7,7 +7,15 @@ const _ = require('lodash');
 global.dataStore = {};
 
 function getSet(type) {
-    global.dataStore[type] = global.dataStore[type] || fs.readJsonSync('./content/' + type + '.json');
+
+    if (!global.dataStore[type]) {
+
+        if (fs.existsSync('./content/' + type + '.json'))
+            global.dataStore[type] = fs.readJsonSync('./content/' + type + '.json');
+        else
+            global.dataStore[type] = [];
+    }
+
     return global.dataStore[type];
 }
 
@@ -29,12 +37,17 @@ module.exports = {
     },
 
     getOrganizers: function () {
-        return getSet('humans').filter(h => h.role == 'Organizer')
+        return getSet('humans').filter(h => h.role.includes('Organizer'))
+            .sort((h1, h2) => h1.lastName > h2.lastName);
+    },
+
+    getSpeakers: function () {
+        return getSet('humans').filter(h => h.role.includes('Speaker'))
             .sort((h1, h2) => h1.lastName > h2.lastName);
     },
 
     getPanelists: function () {
-        return getSet('humans').filter(h => h.role == 'Panelist')
+        return getSet('humans').filter(h => h.role.includes('Panelist'))
             .sort((h1, h2) => h1.lastName > h2.lastName);
     },
 

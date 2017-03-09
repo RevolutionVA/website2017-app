@@ -3,48 +3,27 @@
  */
 
 const routes = require('../config/routes');
-const contentService = require('../services/content');
 
 module.exports = (app) => (req, res) => {
-
-    let locals = {
-        socialMedia: contentService.getSocialMedia(),
-        bodyClass: []
-    };
 
     // build getter
     if (req.path === '/build') {
         return require('./builder').run(req, res);
     }
 
-    let route = routes.find(r => r.path == req.path);
-    let renderData = null;
+    let route = routes.find(r => r.path === req.path);
 
     if (!route) {
+        route = routes.find(r => r.path === '*');
 
-        let pages = contentService.getPages();
-
-        let pageSlug = req.path.substr(1);
-
-        if (pageSlug in pages) {
-
-            // defined route by page
-            route = routes.find(r => r.path === '*');
-            locals.bodyClass.push(pageSlug);
-            renderData = pages[pageSlug];
-
-        } else {
-
-            // anything else
+        if (!route) {
             route = routes.find(r => r[404]);
         }
     }
 
-    if (route.bodyClass) {
-        locals.bodyClass.push(route.bodyClass);
-    }
+    let data = route.viewData(req.path);
 
-    app.locals = Object.assign(locals, app.locals);
+    Object.assign(app.locals, data.locals || {});
 
-    res.render(route.view, renderData || route.data(app, req, res));
+    res.render(route.view, data);
 };
