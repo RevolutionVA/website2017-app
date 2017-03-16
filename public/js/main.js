@@ -8,11 +8,11 @@ jQuery(function ($) {
     $('.site-info.date')
         .fitText(0.7, {minFontSize: '20px', maxFontSize: '50px'});
 
+    $('.site-info.location')
+        .fitText(1.8, {minFontSize: '20px'});
+
     $('.big-title')
         .fitText(0.7, {minFontSize: '20px', maxFontSize: '50px'});
-
-    $('.site-info.numbers')
-        .fitText(2.5, {minFontSize: '20px'});
 
     $(window).load(function () {
         $(document.body).css('opacity', 1);
@@ -32,4 +32,20 @@ jQuery(function ($) {
         sideNav.removeClass('open');
     });
 
+    var sliderImages = $('.section-location .images');
+
+    var sliderImageWidth = $('img', sliderImages).width();
+
+    function rotateSlider() {
+        sliderImages.stop().animate({
+            'margin-left': '-' + sliderImageWidth + 'px'
+        }, 50000, 'linear', function () {
+            sliderImages.css({'margin-left': 0});
+            rotateSlider();
+        });
+    }
+
+    $(window).load(function () {
+        rotateSlider();
+    });
 });

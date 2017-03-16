@@ -1,0 +1,38 @@
+<% include ../partials/header.ejs %>
+<%
+speakers = speakers || [];
+panelists = panelists || []
+%>
+<div class="page-sections">
+
+    <div class="section-wrapper section-speakers">
+        <div class="section-position" id="speakers"></div>
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title league-gothic">Speakers</h2>
+                <div class="intro-text">
+                    <%- intro %>
+                </div>
+                <h3 class="h1 league-gothic">Alumni Discussion Panel</h3>
+                <div class="discussion-panel">
+                    <div class="row">
+                        <% panelists.forEach(function (human) { %>
+                        <%- include('../partials/human.ejs', {human: human}); %>
+                        <% }); %>
+                    </div>
+                </div>
+                <h3 class="h1 league-gothic">Speakers</h3>
+                <div class="discussion-panel">
+                    <div class="row">
+                        <% speakers.forEach(function (human) { %>
+                        <%- include('../partials/human.ejs', {human: human}); %>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<% include ../partials/footer.ejs %>

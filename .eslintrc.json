@@ -3,5 +3,9 @@
   "globals": {
     "document": true,
     "window": true
+  },
+  "rules": {
+    "camelcase": 0,
+    "no-constant-condition": 0
   }
 }

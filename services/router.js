@@ -4,24 +4,27 @@
  * Router
  */
 
+const routes = require('../config/routes');
 
 module.exports = (app) => (req, res) => {
 
-    app.locals = Object.assign(require('../config/localVars'), app.locals);
+    let route = routes.find(r => r.path === req.path);
 
-    // build getter
-    if (req.path === '/build') {
-        return require('./builder').run(req, res);
+    if (!route) {
+        route = routes.find(r => r.path === '*');
+
+        if (!route) {
+            route = routes.find(r => r[404]);
+        }
     }
 
-    // everything else
-    const routes = require('../config/routes');
-    const route = findRoute(req.path);
-    res.render(route.view, route.data(app, req, res));
-
-    function findRoute(path) {
-        return routes.find(r => r.path == path)
-            || routes.find(r => r.default)
-            || routes[0];
+    if (route.response && (typeof route.response === 'function')) {
+        return route.response(req, res);
     }
+
+    const data = route.viewData(req.path);
+
+    Object.assign(app.locals, data.locals || {});
+
+    res.render(route.view, data);
 };

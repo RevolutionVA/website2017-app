@@ -2,7 +2,6 @@
 
 const conf = require('./config/config.js');
 const express = require('express');
-const exphbs = require('express-handlebars');
 const app = express();
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -11,9 +10,7 @@ const builder = require('./services/builder');
 const HTTP_PORT = conf.get('port');
 const redirectUrls = require('./services/redirectUrls');
 
-// handlebars view
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs');
 
 app.get('/.well-known/acme-challenge/:content', (req, res) => {
     const content = req.param('content');
@@ -38,7 +35,7 @@ app.get('*', require('./services/router')(app));
 app.post('*', require('./services/router')(app));
 
 http.createServer(app).listen(HTTP_PORT, () => {
-    console.log('Unsecured server listening on port ' + HTTP_PORT + `.
+    console.log(`
 ██████╗ ███████╗██╗   ██╗ ██████╗ ██╗     ██╗   ██╗████████╗██╗ ██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝██║   ██║██╔═══██╗██║     ██║   ██║╚══██╔══╝██║██╔═══██╗████╗  ██║
 ██████╔╝█████╗  ██║   ██║██║   ██║██║     ██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
@@ -50,5 +47,7 @@ http.createServer(app).listen(HTTP_PORT, () => {
 ██║     ██║   ██║██╔██╗ ██║█████╗
 ██║     ██║   ██║██║╚██╗██║██╔══╝
 ╚██████╗╚██████╔╝██║ ╚████║██║
- ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝`);
+ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝
+
+Unsecured server listening on port ` + HTTP_PORT );
 });

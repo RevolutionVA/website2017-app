@@ -69,6 +69,7 @@ module.exports = {
     run: function (req, res) {
 
         console.log('Manual build starting...');
+
         build()
             .then(function () {
                 console.log('Manual build complete.');
@@ -176,6 +177,7 @@ function setRawContent() {
 
             try {
                 let unzippedFolderPath = '';
+
                 // move zipped file contents to tmpDir
                 fs.readdirSync(tmpDir).forEach(function (unzippedFolder) {
                     unzippedFolderPath = tmpDir + '/' + unzippedFolder;
@@ -190,6 +192,7 @@ function setRawContent() {
                 fs.removeSync(unzippedFolderPath);
                 console.log('Files Copied!');
                 resolve();
+
             } catch (err) {
                 console.error(err);
                 reject(err);
@@ -249,8 +252,8 @@ function generateData() {
     function processItemsDir(filePath, outputPath) {
 
         const typeName = path.basename(filePath);
-
-        const set = [];
+        const warnings = [];
+        let set = [];
 
         fs.readdirSync(filePath).forEach(slug => {
 
@@ -259,52 +262,41 @@ function generateData() {
             }
 
             const pathItem = filePath + '/' + slug;
-
-            const item = {
+            const sources = [{
                 slug: slug
-            };
-
-            const sources = [], warnings = [];
+            }];
 
             if (!fs.lstatSync(pathItem).isDirectory()) {
                 return;
             }
 
             fs.readdirSync(pathItem).forEach(file => {
-
                 const filePath = pathItem + '/' + file;
                 const fileName = path.basename(file, path.extname(file));
+                const extension = path.extname(file);
 
-                if (path.extname(file) === '.md') {
-
-                    const markdownContent = fs.readFileSync(filePath, 'utf-8');
-                    item[fileName] = marked(markdownContent);
-                }
-
-                if (path.extname(file) === '.json') {
-
-                    const data = fs.readJsonSync(filePath, {throws: false});
-
-                    if (data === null) {
-                        warnings.push(`JSON parse '${slug}' ${fileName} data was null.`);
-                    } else {
-                        sources.push(data);
+                if (extension in fileProcessors) {
+                    try {
+                        sources.push(fileProcessors[extension](typeName, slug, fileName, filePath));
+                    } catch (e) {
+                        warnings.push(e);
                     }
                 }
-
-                if (path.extname(file) === '.png') {
-                    item[fileName] =
-                        '/images/' + typeName + '/' + slug + '-' + fileName + '.png';
-                    fs.copySync(filePath, './content' + item[fileName]);
-                }
-
             });
-
-            sources.push(item);
 
             set.push(Object.assign({}, ...sources));
 
         });
+
+        if (typeName in setProcessors) {
+            try {
+                set = set.map(data => {
+                    return setProcessors[typeName](data);
+                });
+            } catch (e) {
+                warnings.push(e);
+            }
+        }
 
         fs.writeFileSync(outputPath, JSON.stringify(set, null, '\t'));
     }
@@ -349,3 +341,37 @@ function isValidBuildUser(req) {
         && user.name === conf.get('buildUsername')
         && user.pass === conf.get('buildPassword');
 }
+
+const fileProcessors = {
+
+    '.md': function (typeName, slug, fileName, filePath) {
+        const source = {};
+        const markdownContent = fs.readFileSync(filePath, 'utf-8');
+        source[fileName] = marked(markdownContent);
+        return source;
+    },
+    '.json': function (typeName, slug, fileName, filePath) {
+
+        const data = fs.readJsonSync(filePath, {throws: false});
+        if (data === null) {
+            throw new Error(`JSON parse '${slug}' ${fileName} data was null.`);
+        }
+        return data || {};
+    },
+    '.png': function (typeName, slug, fileName, filePath) {
+        const source = {};
+        source[fileName] = '/images/' + typeName + '/' + slug + '-' + fileName + '.png';
+        fs.copySync(filePath, './content' + source[fileName]);
+        return source;
+    }
+};
+
+const setProcessors = {
+
+    'humans': function (data) {
+        if (!Array.isArray(data.role)) {
+            data.role = [data.role];
+        }
+        return data;
+    }
+};
