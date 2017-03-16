@@ -6,11 +6,6 @@ const routes = require('../config/routes');
 
 module.exports = (app) => (req, res) => {
 
-    // build getter
-    if (req.path === '/build') {
-        return require('./builder').run(req, res);
-    }
-
     let route = routes.find(r => r.path === req.path);
 
     if (!route) {
@@ -19,6 +14,10 @@ module.exports = (app) => (req, res) => {
         if (!route) {
             route = routes.find(r => r[404]);
         }
+    }
+
+    if (route.response && (typeof route.response === 'function')) {
+        return route.response(req, res);
     }
 
     let data = route.viewData(req.path);

@@ -69,6 +69,7 @@ module.exports = {
     run: function (req, res) {
 
         console.log('Manual build starting...');
+
         build()
             .then(function () {
                 console.log('Manual build complete.');

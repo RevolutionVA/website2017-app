@@ -47,9 +47,15 @@ module.exports = [
         }
     ),
     new route(
+        '/build',
+        false,
+        false,
+        require('../services/builder').run
+    ),
+    new route(
         '/speakers',
         'pages/speakers',
-        path => {
+        () => {
 
             let pages = contentService.getPages();
 
@@ -61,6 +67,24 @@ module.exports = [
                 intro : pages.speakers.intro,
                 speakers : contentService.getSpeakers(),
                 panelists: contentService.getPanelists()
+            };
+        }
+    ),
+    new route(
+        '/about',
+        'pages/about',
+        () => {
+
+            let pages = contentService.getPages();
+
+            return {
+                locals: {
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: 'page-about'
+                },
+                intro : pages.about.intro,
+                organizers: contentService.getOrganizers(),
+                volunteers : []
             };
         }
     ),

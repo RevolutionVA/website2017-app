@@ -1,0 +1,30 @@
+<% include ../partials/header.ejs %>
+<%
+organizers = organizers || [];
+volunteers = volunteers || [];
+%>
+<div class="page-sections">
+
+    <div class="section-wrapper section-about">
+        <div class="section-position" id="about"></div>
+        <div class="section">
+            <div class="container">
+                <h2 class="league-gothic section-title">About</h2>
+                <div class="intro-text">
+                    <%- intro %>
+                </div>
+                <h3 class="h2 league-gothic">Our Organizers</h3>
+                <div class="organizers">
+                    <div class="row">
+                        <% organizers.forEach(function(human) { %>
+                        <%- include('../partials/human.ejs', {human: human}) %>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<% include ../partials/footer.ejs %>
