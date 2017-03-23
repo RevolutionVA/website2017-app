@@ -56,8 +56,10 @@ human = human ||
                 <% } %>
             </p>
             <% if(human.talk){ %>
-            <p class="talk"><a target="_blank"
-                  href="/talk/<%= human.talk.slug %>"><%= human.talk.title %></a></p>
+            <div class="talk">
+                <p class="title"><a href="/talk/<%= human.talk.slug %>">
+                        <i class="fa fa-bullhorn"></i> <%= human.talk.title %></a></p>
+            </div>
             <% } %>
         </div>
     </div>
