@@ -19,7 +19,8 @@ human = human ||
         <div class="col-xs-6">
             <div class="embed-responsive embed-responsive-1x1">
                 <div class="embed-responsive-item text-center">
-                    <img src="<%= human.profile ? human.profile : '/images/layout/logo.png' %>">
+                    <img src="/images/layout/logo.png"
+                         data-original="<%= human.profile ? human.profile : '/images/layout/logo.png' %>">
                 </div>
             </div>
         </div>
@@ -33,7 +34,7 @@ human = human ||
                 <a class="text-grey" target="_blank"
                    href="<%= human.companyWebsite %>"><%= human.companyName %></a>
                 <% }else{ %>
-                    <%= human.companyName %>
+                <%= human.companyName %>
                 <% } %>
             </p>
             <% } %>

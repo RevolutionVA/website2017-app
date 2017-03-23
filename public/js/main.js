@@ -48,4 +48,6 @@ jQuery(function ($) {
     $(window).load(function () {
         rotateSlider();
     });
+
+    $('img[data-original]').lazyload();
 });
