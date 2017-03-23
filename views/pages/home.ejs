@@ -10,6 +10,7 @@ var sponsorSizes = {
     'Bronze': 'col-xs-6 col-md-4 col-sm-3',
     'Friends of RevConf': 'col-xs-4 col-md-3 col-sm-2'
 };
+var humanIndex = 0;
 %>
 <div class="page-sections">
 
@@ -58,8 +59,11 @@ var sponsorSizes = {
                 <h3 class="h2 league-gothic">Our Organizers</h3>
                 <div class="organizers">
                     <div class="row">
-                        <% organizers.forEach(function(human) { %>
+                        <% humanIndex = 0; organizers.forEach(function(human) { %>
                         <%- include('../partials/human.ejs', {human: human}) %>
+                        <% if(!(++humanIndex % 2)) { %>
+                        <div class="clearfix"></div>
+                        <% } %>
                         <% }); %>
                     </div>
                 </div>
@@ -95,8 +99,11 @@ var sponsorSizes = {
                 <h3 class="h1 league-gothic">Alumni Discussion Panel</h3>
                 <div class="discussion-panel">
                     <div class="row">
-                        <% panelists.forEach(function (human) { %>
+                        <% humanIndex = 0; panelists.forEach(function (human) { %>
                         <%- include('../partials/human.ejs', {human: human}); %>
+                        <% if(!(++humanIndex % 2)) { %>
+                        <div class="clearfix"></div>
+                        <% } %>
                         <% }); %>
                     </div>
                 </div>

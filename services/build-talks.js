@@ -6,9 +6,7 @@ const path = require('path');
 const Jimp = require('Jimp');
 const program = require('commander');
 
-const humans_dir = './.content-build/humans/';
-
-const images_dir = './.speaker-images/';
+const talks_dir = './.content-build/talks/';
 
 function addDirs() {
 
@@ -21,6 +19,8 @@ function addDirs() {
             rows.push(row);
         })
         .on('done', () => {
+
+            let allTags = [];
 
             let humans = rows.map(row => {
 
@@ -37,98 +37,68 @@ function addDirs() {
                     return false;
                 }
 
-                let name_dir = [lastName, firstName].join('_').toLowerCase();
+                let speakerSlug = [firstName, lastName].join('-').toLowerCase();
 
-                if (row.Status.trim(' ').toLowerCase() !== 'accepted')
-                    name_dir = '_' + name_dir;
+                let tags = row.Tags.replace(' ', ',').split(',').map(t => t.trim()).filter(t => t.trim());
 
-                let human_dir = humans_dir + name_dir;
+                let slug = slugify(row.Title);
 
-                if (!fs.existsSync(human_dir)) {
-                    fs.mkdirSync(human_dir);
+                let talk_dir = talks_dir + slug;
+
+                let descriptionPath = talk_dir + '/description.md';
+                let detailsPath = talk_dir + '/details.json';
+
+                let details =
+                    {
+                        'title': row.Title,
+                        'slug': slug,
+                        'speaker': speakerSlug,
+                        'summary': row.Abstract,
+                        'tags': tags
+                    };
+
+                if (!fs.existsSync(talk_dir)) {
+                    fs.mkdirSync(talk_dir);
                 }
 
-                let details = {
-                    "title": "",
-                    "slug": [firstName, lastName].join('-').toLowerCase(),
-                    "role": ["Speaker"],
-                    "twitter": "",
-                    "facebook": "",
-                    "linkedin": "",
-                    "personalWebsite": "",
-                    "companyWebsite": "",
-                    "companyName": row.Employer,
-                    "firstName": firstName,
-                    "lastName": lastName
-                };
-
-                let bioPath = human_dir + '/bio.md';
-                let detailsPath = human_dir + '/details.json';
-
-                if (!fs.existsSync(bioPath)) {
-                    fs.writeFileSync(bioPath, row.Bio);
+                if (!fs.existsSync(descriptionPath)) {
+                    fs.writeFileSync(descriptionPath, row.Description);
                 }
 
                 if (!fs.existsSync(detailsPath)) {
                     fs.writeJSONSync(detailsPath, details);
                 }
 
-                return true;
             });
 
-            console.log(humans);
+            allTags = [...new Set(allTags)];
+
+            allTags.sort();
+
+            console.log(allTags);
         });
-}
-
-function addImages() {
-    fs.readdir(images_dir, (err, files) => {
-        files.forEach(file => {
-
-            let ext = path.extname(file);
-
-            let basename = path.basename(file, ext);
-
-            let imagePath = images_dir + '/' + file;
-
-            let savePath = null;
-
-            if (fs.existsSync(humans_dir + basename)) {
-                savePath = humans_dir + basename;
-            }
-            else if (fs.existsSync(humans_dir + '_' + basename)) {
-                savePath = humans_dir + '_' + basename;
-            }
-
-            if (1) {
-                Jimp.read(imagePath, function (err, image) {
-                    if (err) throw err;
-
-                    image
-                        .resize(1000, Jimp.AUTO)
-                        .quality(80)
-                        .write(savePath + '/profile.png');
-
-                    console.log('added');
-                });
-            }
-
-
-        });
-    });
 }
 
 program
     .version('0.0.1')
     .option('-d, --directories', 'add directories')
-    .option('-i,  --images', 'add image')
     .parse(process.argv);
 
-if(program.directories)
-{
+if (program.directories) {
     addDirs();
 }
 
-if(program.images)
-{
-    addImages();
+function uniqueArray(arrArg) {
+    return arrArg.filter(function (elem, pos, arr) {
+        return arr.indexOf(elem) == pos;
+    });
+}
+
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
 }

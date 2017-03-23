@@ -593,7 +593,7 @@ hr {
         font-style: italic;
         font-size: 0.8rem; }
       .human .row > div.info .social {
-        margin: 0 -3px 1em;
+        margin: 0 -3px 0.5em;
         font-size: 1rem; }
         .human .row > div.info .social a {
           margin: 0 3px; }

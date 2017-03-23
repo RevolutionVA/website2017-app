@@ -9,7 +9,8 @@ human = human ||
                 twitter: '',
                 facebook: '',
                 linkedin: '',
-                profile: ''
+                profile: '',
+                talk: false
             }
         ];
 %>
@@ -54,6 +55,10 @@ human = human ||
                     <i class="fa fa-facebook-official"></i></a>
                 <% } %>
             </p>
+            <% if(human.talk){ %>
+            <p class="talk"><a target="_blank"
+                  href="/talk/<%= human.talk.slug %>"><%= human.talk.title %></a></p>
+            <% } %>
         </div>
     </div>
 </div>

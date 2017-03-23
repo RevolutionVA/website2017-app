@@ -1,7 +1,8 @@
 <% include ../partials/header.ejs %>
 <%
 speakers = speakers || [];
-panelists = panelists || []
+panelists = panelists || [];
+var humanIndex = 0;
 %>
 <div class="page-sections">
 
@@ -16,16 +17,22 @@ panelists = panelists || []
                 <h3 class="h1 league-gothic">Alumni Discussion Panel</h3>
                 <div class="discussion-panel">
                     <div class="row">
-                        <% panelists.forEach(function (human) { %>
+                        <% humanIndex = 0; panelists.forEach(function (human) { %>
                         <%- include('../partials/human.ejs', {human: human}); %>
+                        <% if(!(++humanIndex % 2)) { %>
+                        <div class="clearfix"></div>
+                        <% } %>
                         <% }); %>
                     </div>
                 </div>
                 <h3 class="h1 league-gothic">Speakers</h3>
                 <div class="discussion-panel">
                     <div class="row">
-                        <% speakers.forEach(function (human) { %>
+                        <% humanIndex = 0; speakers.forEach(function (human) { %>
                         <%- include('../partials/human.ejs', {human: human}); %>
+                        <% if(!(++humanIndex % 2)) { %>
+                        <div class="clearfix"></div>
+                        <% } %>
                         <% }); %>
                     </div>
                 </div>

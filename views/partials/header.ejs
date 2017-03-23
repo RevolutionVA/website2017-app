@@ -1,5 +1,7 @@
 <%
 socialMedia = socialMedia || '';
+keywords = keywords || '';
+title = title || '';
 bodyClass = bodyClass || [];
 %><!DOCTYPE html>
 <!--suppress ALL -->
@@ -10,7 +12,7 @@ bodyClass = bodyClass || [];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="manifest" href="/manifest.json">
-
+    <meta name="keywords" content="<%= keywords %>"/>
     <meta name="mobile-web-app-capable" content="yes">
     <link href='/webfonts/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet'
@@ -47,7 +49,7 @@ bodyClass = bodyClass || [];
           content="RevolutionConf is a two-day, platform and language agnostic, software development conference being held on June 1-2, 2017 in Virginia Beach, VA. We are a 501c3 non-profit that formed specifically for running this and other great events for software developers in the area.">
     <meta name="author" content="@iambriansreed">
 
-    <title>RevolutionConf 2017</title>
+    <title>RevolutionConf 2017<%= title ? ' : ' + title : title %></title>
     <base href="/">
 </head>
 

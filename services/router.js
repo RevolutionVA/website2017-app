@@ -9,10 +9,18 @@ module.exports = (app) => (req, res) => {
     let route = routes.find(r => r.path === req.path);
 
     if (!route) {
-        route = routes.find(r => r.path === '*');
+        route = routes.find(r => {
+            if (!r.path.includes('*')) return false;
+            let regExpStr = '^' + r.path.replace('*', '[^/]+');
+            return new RegExp(regExpStr).test(req.path);
+        });
 
         if (!route) {
-            route = routes.find(r => r[404]);
+            route = routes.find(r => r.path === '*');
+
+            if (!route) {
+                route = routes.find(r => r[404]);
+            }
         }
     }
 
@@ -22,7 +30,14 @@ module.exports = (app) => (req, res) => {
 
     let data = route.viewData(req.path);
 
-    Object.assign(app.locals, data.locals || {});
+    if (data.redirect) {
+        res.writeHead(302, {
+            'Location': data.redirect
+        });
+        res.end();
+    }
+
+    Object.assign(app.locals, {title: '', keywords: ''}, data.locals || {});
 
     res.render(route.view, data);
 };
