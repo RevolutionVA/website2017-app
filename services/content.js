@@ -24,6 +24,22 @@ function getSpeaker(slug) {
     return getType('humans').find(human => human.slug === slug);
 }
 
+function getTalksBySpeaker() {
+
+    if (!global.dataStore['talksBySpeaker']) {
+
+        global.dataStore['talksBySpeaker'] = {};
+
+        let talks = getType('talks') || [];
+
+        talks.forEach(talk => {
+            global.dataStore['talksBySpeaker'][talk.speaker] = talk;
+        });
+    }
+
+    return global.dataStore['talksBySpeaker'];
+}
+
 module.exports = {
 
     getPages: function () {
@@ -68,20 +84,10 @@ module.exports = {
             .filter(h => h.role.includes('Speaker'))
             .sort((h1, h2) => h1.lastName > h2.lastName);
 
-        if (speakers[0].talk !== null && typeof speakers[0].talk !== 'object') {
-
-            let talksBySpeaker = {};
-            let talks = getType('talks') || [];
-
-            talks.forEach(talk => {
-                talksBySpeaker[talk.speaker] = talk;
-            });
-
-            speakers = speakers.map(speaker => {
-                speaker.talk = talksBySpeaker[speaker.slug];
-                return speaker;
-            });
-        }
+        speakers = speakers.map(human => {
+            human.talk = getTalksBySpeaker()[human.slug];
+            return human;
+        });
 
         return speakers;
     },
@@ -89,8 +95,16 @@ module.exports = {
     getSpeaker,
 
     getPanelists: function () {
-        return getType('humans').filter(h => h.role.includes('Panelist'))
+
+        let panelists = getType('humans').filter(h => h.role.includes('Panelist'))
             .sort((h1, h2) => h1.lastName > h2.lastName);
+
+        panelists = panelists.map(human => {
+            human.talk = getTalksBySpeaker()[human.slug];
+            return human;
+        });
+
+        return panelists;
     },
 
     getSponsors: function () {
