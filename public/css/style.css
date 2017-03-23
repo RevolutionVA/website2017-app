@@ -589,14 +589,23 @@ hr {
       padding: 10px 15px 0 17px;
       margin: 15px 0 0 -20px;
       background-color: rgba(20, 20, 20, 0.9); }
-      .human .row > div.info .title {
+      .human .row > div.info > .title {
         font-style: italic;
         font-size: 0.8rem; }
       .human .row > div.info .social {
-        margin: 0 -3px 1em;
+        margin: 0 -3px 0.5em;
         font-size: 1rem; }
         .human .row > div.info .social a {
           margin: 0 3px; }
+      .human .row > div.info .talk {
+        margin-top: 0.25em;
+        padding: 0.5em 0 0 0.25em;
+        border-top: #333 solid 1px;
+        min-height: 1em; }
+        .human .row > div.info .talk .title > a {
+          color: #ccc; }
+        .human .row > div.info .talk > i {
+          font-size: 1rem; }
 
 .sponsor {
   overflow: hidden; }

@@ -1,0 +1,37 @@
+<% include ../partials/header.ejs %>
+<%
+intro = '';
+talk = talk || {};
+%>
+<div class="page-sections">
+
+    <div class="section-wrapper section-speakers">
+        <div class="section-position" id="speakers"></div>
+        <div class="section">
+            <div class="container">
+                <h1 class="section-title league-gothic"><%- talk.title %></h1>
+                <% if(talk.tags.length){ %>
+                <p><%- talk.tags.join(', ') %></p>
+                <% } %>
+                <div class="intro-text">
+                    <%- talk.description %>
+                </div>
+                <div class="row">
+                    <%- include('../partials/human.ejs', {human: talk.speaker}); %>
+                    <div class="col-sm-6 text-xs-center text-sm-right">
+                        <p>
+                            <a href="http://tickets.revolutionconf.com" class="btn btn-primary btn-lg"
+                               target="_blank" style="margin-top: 0;">
+                                <i class="fa fa-ticket"></i>&ensp;Get Your&nbsp;Ticket</a>
+                        </p>
+                        <p><a href="/speakers" class="btn btn-primary btn-lg">View All Speakers</a></p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer.ejs %>

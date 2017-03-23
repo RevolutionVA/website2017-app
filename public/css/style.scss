@@ -737,7 +737,7 @@ hr {
 	}
 
 	.date-location {
-		background-color: rgba(0,0,0,0.5);
+		background-color: rgba(0, 0, 0, 0.5);
 		padding: 1em 0;
 
 		.site-info {
@@ -882,7 +882,7 @@ hr {
 				padding: 10px 15px 0 17px;
 				margin: 15px 0 0 -20px;
 				background-color: rgba(20, 20, 20, 0.9);
-				.title {
+				> .title {
 					font-style: italic;
 					font-size: 0.8rem;
 				}
@@ -890,10 +890,22 @@ hr {
 
 				}
 				.social {
-					margin:0 -3px 1em;
+					margin: 0 -3px 0.5em;
 					font-size: 1rem;
 					a {
 						margin: 0 3px;
+					}
+				}
+				.talk {
+					margin-top: 0.25em;
+					padding: 0.5em 0 0 0.25em;
+					border-top: #333 solid 1px;
+					min-height: 1em;
+					.title > a {
+						color: #ccc;
+					}
+					> i {
+						font-size: 1rem;
 					}
 				}
 			}

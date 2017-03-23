@@ -9,6 +9,12 @@ const route = require('../module/route');
 
 module.exports = [
     new route(
+        '/build',
+        false,
+        false,
+        require('../services/builder').run
+    ),
+    new route(
         '/',
         'pages/home',
         () => {
@@ -49,12 +55,6 @@ module.exports = [
         }
     ),
     new route(
-        '/build',
-        false,
-        false,
-        require('../services/builder').run
-    ),
-    new route(
         '/speakers',
         'pages/speakers',
         () => {
@@ -63,12 +63,37 @@ module.exports = [
 
             return {
                 locals: {
+                    title: 'Speakers',
                     socialMedia: contentService.getSocialMedia(),
                     bodyClass: 'page-speaker'
                 },
                 intro: pages.speakers.intro,
                 speakers: contentService.getSpeakers(),
                 panelists: contentService.getPanelists()
+            };
+        }
+    ),
+    new route(
+        '/talk/*',
+        'pages/talk',
+        (path) => {
+
+            let slug = path.replace('/talk/', '');
+            let talk = contentService.getTalk(slug);
+
+            if (!talk) {
+                return {redirect: '/404'}
+            }
+
+            return {
+                locals: {
+                    title: ' Talk - ' + talk.title,
+                    keywords: talk.tags.join(','),
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: 'page-speaker'
+                },
+                intro: '',
+                talk: talk
             };
         }
     ),
@@ -81,6 +106,7 @@ module.exports = [
 
             return {
                 locals: {
+                    title: 'About',
                     socialMedia: contentService.getSocialMedia(),
                     bodyClass: 'page-about'
                 },
@@ -96,6 +122,7 @@ module.exports = [
         () => {
             return {
                 locals: {
+                    title: 'Page not Found',
                     socialMedia: contentService.getSocialMedia(),
                     bodyClass: '404'
                 }
