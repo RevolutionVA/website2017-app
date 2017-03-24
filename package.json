@@ -14,11 +14,11 @@
 	"scripts": {
 		"start": "node app.js",
 		"postinstall": "node postinstall.js",
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "mocha --timeout 10000",
 		"lint": "eslint . --ext .js"
 	},
 	"dependencies": {
-		"adm-zip": "latest",
+		"adm-zip": "^0.4.7",
 		"basic-auth": "^1.1.0",
 		"body-parser": "^1.16.1",
 		"convict": "^2.0.0",
@@ -31,11 +31,15 @@
 		"request": "^2.79.0"
 	},
 	"devDependencies": {
+		"chai": "^3.5.0",
+		"chai-http": "^3.0.0",
+		"commander": "latest",
+		"csvtojson": "^1.1.4",
+		"editorconfig": "^0.13.2",
 		"eslint": "^3.16.1",
 		"eslint-config-eta": "^0.0.7",
-		"csvtojson": "^1.1.4",
 		"jimp": "^0.2.27",
-		"commander": "latest"
+		"mocha": "^3.2.0"
 	},
 	"engines": {
 		"node": "7.7.4"

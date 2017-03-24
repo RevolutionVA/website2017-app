@@ -13,12 +13,12 @@ const redirectUrls = require('./services/redirectUrls');
 app.set('view engine', 'ejs');
 
 app.get('/.well-known/acme-challenge/:content', (req, res) => {
-    const content = req.param('content');
-    res.send(process.env['CERTBOT_RESPONSE:' + content]);
+  const content = req.param('content');
+  res.send(process.env['CERTBOT_RESPONSE:' + content]);
 });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // redirections
 app.use('*', redirectUrls);
@@ -35,7 +35,8 @@ app.get('*', require('./services/router')(app));
 app.post('*', require('./services/router')(app));
 
 http.createServer(app).listen(HTTP_PORT, () => {
-    console.log(`
+  console.log(
+    `
 ██████╗ ███████╗██╗   ██╗ ██████╗ ██╗     ██╗   ██╗████████╗██╗ ██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝██║   ██║██╔═══██╗██║     ██║   ██║╚══██╔══╝██║██╔═══██╗████╗  ██║
 ██████╔╝█████╗  ██║   ██║██║   ██║██║     ██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
@@ -49,5 +50,8 @@ http.createServer(app).listen(HTTP_PORT, () => {
 ╚██████╗╚██████╔╝██║ ╚████║██║
  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝
 
-Unsecured server listening on port ` + HTTP_PORT );
+Unsecured server listening on port ` + HTTP_PORT
+  );
 });
+
+module.exports = app;
