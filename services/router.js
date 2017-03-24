@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * Router
  */
@@ -28,7 +30,7 @@ module.exports = (app) => (req, res) => {
         return route.response(req, res);
     }
 
-    let data = route.viewData(req.path);
+    const data = route.viewData(req.path);
 
     if (data.redirect) {
         res.writeHead(302, {

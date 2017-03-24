@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * Routes
  */
@@ -32,16 +34,16 @@ module.exports = [
         '*',
         'pages/index',
         path => {
-            let data = {
+            const data = {
                 locals: {
                     socialMedia: contentService.getSocialMedia(),
                     bodyClass: 'page ' + slugify(path)
                 }
             };
 
-            let pages = contentService.getPages();
+            const pages = contentService.getPages();
 
-            let pageSlug = path.substr(1);
+            const pageSlug = path.substr(1);
 
             if (pageSlug in pages) {
 
@@ -57,7 +59,7 @@ module.exports = [
         'pages/speakers',
         () => {
 
-            let pages = contentService.getPages();
+            const pages = contentService.getPages();
 
             return {
                 locals: {
@@ -100,7 +102,7 @@ module.exports = [
         'pages/about',
         () => {
 
-            let pages = contentService.getPages();
+            const pages = contentService.getPages();
 
             return {
                 locals: {

@@ -95,7 +95,7 @@ function build() {
         .then(() => {
             console.log('Data Store Created.');
             return generatePages(appRoot);
-        })
+        });
 
 }
 
@@ -131,7 +131,7 @@ function setRawContent() {
                         reject(err);
                     }
 
-                    console.log("Zip Downloaded!");
+                    console.log('Zip Downloaded!');
                     resolve();
                 });
             });
@@ -144,11 +144,11 @@ function setRawContent() {
         return new Promise((resolve, reject) => {
 
             try {
-                let zip = new AdmZip(tmpZipPath);
+                const zip = new AdmZip(tmpZipPath);
                 //noinspection JSUnresolvedFunction
                 zip.extractAllTo(tmpDir, true);
                 fs.removeSync(tmpZipPath);
-                console.log("Zip Extracted!");
+                console.log('Zip Extracted!');
                 resolve();
             } catch (err) {
                 console.error(err);
@@ -166,7 +166,7 @@ function setRawContent() {
             }
         });
 
-        console.log("Files Copied Locally!");
+        console.log('Files Copied Locally!');
 
         return Promise.resolve();
     }
@@ -190,7 +190,7 @@ function setRawContent() {
                     });
                 });
                 fs.removeSync(unzippedFolderPath);
-                console.log("Files Copied!");
+                console.log('Files Copied!');
                 resolve();
 
             } catch (err) {
@@ -214,11 +214,11 @@ function generateData() {
 
         try {
 
-            let dataTypes = [];
+            const dataTypes = [];
 
             fs.readdirSync(tmpDir).forEach(function (fileType) {
 
-                let curPath = tmpDir + '/' + fileType;
+                const curPath = tmpDir + '/' + fileType;
 
                 if (!fs.lstatSync(curPath).isDirectory()) {
 
@@ -232,7 +232,7 @@ function generateData() {
                 }
             });
 
-            let content = {
+            const content = {
                 updated: new Date(),
                 dataTypes
             };
@@ -251,9 +251,9 @@ function generateData() {
 
     function processItemsDir(filePath, outputPath) {
 
-        let typeName = path.basename(filePath);
-
-        let set = [], warnings = [];
+        const typeName = path.basename(filePath);
+        const warnings = [];
+        let set = [];
 
         fs.readdirSync(filePath).forEach(slug => {
 
@@ -261,9 +261,8 @@ function generateData() {
                 return;
             }
 
-            let pathItem = filePath + '/' + slug;
-
-            let sources = [{
+            const pathItem = filePath + '/' + slug;
+            const sources = [{
                 slug: slug
             }];
 
@@ -272,10 +271,9 @@ function generateData() {
             }
 
             fs.readdirSync(pathItem).forEach(file => {
-
-                let filePath = pathItem + '/' + file;
-                let fileName = path.basename(file, path.extname(file));
-                let extension = path.extname(file);
+                const filePath = pathItem + '/' + file;
+                const fileName = path.basename(file, path.extname(file));
+                const extension = path.extname(file);
 
                 if (extension in fileProcessors) {
                     try {
@@ -307,10 +305,11 @@ function generateData() {
 function generatePages() {
 
     return new Promise((resolve, reject) => {
-
+        /*eslint-disable */
         if (0 == 'Implement this later.') {
             reject();
         }
+        /*eslint-enable */
 
         resolve();
 
@@ -319,12 +318,12 @@ function generatePages() {
 
 function isValidBuildHook(req) {
 
-    let secret = process.env.GITHUB_HOOK_SECRET;
-    let xHubSignature = req.headers['x-hub-signature'];
+    const secret = process.env.GITHUB_HOOK_SECRET;
+    const xHubSignature = req.headers['x-hub-signature'];
 
     if (req.body && xHubSignature && secret) {
 
-        let xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
+        const xHubSignatureGenerated = 'sha1=' + (require('crypto').createHmac('sha1', secret))
                 .update(JSON.stringify(req.body))
                 .digest('hex');
 
@@ -343,31 +342,31 @@ function isValidBuildUser(req) {
         && user.pass === conf.get('buildPassword');
 }
 
-let fileProcessors = {
+const fileProcessors = {
 
     '.md': function (typeName, slug, fileName, filePath) {
-        let source = {};
-        let markdownContent = fs.readFileSync(filePath, 'utf-8');
+        const source = {};
+        const markdownContent = fs.readFileSync(filePath, 'utf-8');
         source[fileName] = marked(markdownContent);
         return source;
     },
     '.json': function (typeName, slug, fileName, filePath) {
 
-        let data = fs.readJsonSync(filePath, {throws: false});
+        const data = fs.readJsonSync(filePath, {throws: false});
         if (data === null) {
             throw new Error(`JSON parse '${slug}' ${fileName} data was null.`);
         }
         return data || {};
     },
     '.png': function (typeName, slug, fileName, filePath) {
-        let source = {};
+        const source = {};
         source[fileName] = '/images/' + typeName + '/' + slug + '-' + fileName + '.png';
         fs.copySync(filePath, './content' + source[fileName]);
         return source;
     }
 };
 
-let setProcessors = {
+const setProcessors = {
 
     'humans': function (data) {
         if (!Array.isArray(data.role)) {

@@ -1,3 +1,5 @@
+'use strict';
+
 const builder = require('./services/builder');
 
 builder.build()

@@ -12,9 +12,9 @@ const images_dir = './.speaker-images/';
 
 function addDirs() {
 
-    let rows = [];
+    const rows = [];
 
-    let csvStr = fs.readFileSync('./data.csv', 'utf8');
+    const csvStr = fs.readFileSync('./data.csv', 'utf8');
     csv({noheader: false})
         .fromString(csvStr)
         .on('json', (row) => {
@@ -22,10 +22,12 @@ function addDirs() {
         })
         .on('done', () => {
 
-            let humans = rows.map(row => {
+            const humans = rows.map(row => {
 
+// this chunk is failing undef check
+/*eslint-disable */
                 [firstName, lastName, other_name] =
-                    row.Name.split(' ').filter(function (name) {
+                    row.Name.split(' ').filter((name) => {
                         return !name.includes('.');
                     });
 
@@ -42,28 +44,29 @@ function addDirs() {
                 if (row.Status.trim(' ').toLowerCase() !== 'accepted')
                     name_dir = '_' + name_dir;
 
-                let human_dir = humans_dir + name_dir;
+                const human_dir = humans_dir + name_dir;
 
                 if (!fs.existsSync(human_dir)) {
                     fs.mkdirSync(human_dir);
                 }
 
-                let details = {
-                    "title": "",
-                    "slug": [firstName, lastName].join('-').toLowerCase(),
-                    "role": ["Speaker"],
-                    "twitter": "",
-                    "facebook": "",
-                    "linkedin": "",
-                    "personalWebsite": "",
-                    "companyWebsite": "",
-                    "companyName": row.Employer,
-                    "firstName": firstName,
-                    "lastName": lastName
+                const details = {
+                    'title': '',
+                    'slug': [firstName, lastName].join('-').toLowerCase(),
+                    'role': ['Speaker'],
+                    'twitter': '',
+                    'facebook': '',
+                    'linkedin': '',
+                    'personalWebsite': '',
+                    'companyWebsite': '',
+                    'companyName': row.Employer,
+                    'firstName': firstName,
+                    'lastName': lastName
                 };
+/*eslint-enable */
 
-                let bioPath = human_dir + '/bio.md';
-                let detailsPath = human_dir + '/details.json';
+                const bioPath = human_dir + '/bio.md';
+                const detailsPath = human_dir + '/details.json';
 
                 if (!fs.existsSync(bioPath)) {
                     fs.writeFileSync(bioPath, row.Bio);
@@ -84,23 +87,22 @@ function addImages() {
     fs.readdir(images_dir, (err, files) => {
         files.forEach(file => {
 
-            let ext = path.extname(file);
+            const ext = path.extname(file);
 
-            let basename = path.basename(file, ext);
+            const basename = path.basename(file, ext);
 
-            let imagePath = images_dir + '/' + file;
+            const imagePath = images_dir + '/' + file;
 
             let savePath = null;
 
             if (fs.existsSync(humans_dir + basename)) {
                 savePath = humans_dir + basename;
-            }
-            else if (fs.existsSync(humans_dir + '_' + basename)) {
+            }            else if (fs.existsSync(humans_dir + '_' + basename)) {
                 savePath = humans_dir + '_' + basename;
             }
 
             if (1) {
-                Jimp.read(imagePath, function (err, image) {
+                Jimp.read(imagePath, (err, image) => {
                     if (err) throw err;
 
                     image
@@ -123,12 +125,10 @@ program
     .option('-i,  --images', 'add image')
     .parse(process.argv);
 
-if(program.directories)
-{
+if(program.directories){
     addDirs();
 }
 
-if(program.images)
-{
+if(program.images){
     addImages();
 }

@@ -13,7 +13,7 @@ const redirectUrls = require('./services/redirectUrls');
 app.set('view engine', 'ejs');
 
 app.get('/.well-known/acme-challenge/:content', (req, res) => {
-    let content = req.param('content');
+    const content = req.param('content');
     res.send(process.env['CERTBOT_RESPONSE:' + content]);
 });
 
