@@ -31,9 +31,12 @@
 	},
 	"devDependencies": {
 		"eslint": "^3.16.1",
-		"eslint-config-eta": "^0.0.7"
+		"eslint-config-eta": "^0.0.7",
+		"csvtojson": "^1.1.4",
+		"jimp": "^0.2.27",
+		"commander": "latest"
 	},
 	"engines": {
-		"node": "6.10.0"
+		"node": "7.7.4"
 	}
 }
