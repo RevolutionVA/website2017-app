@@ -70,6 +70,10 @@ module.exports = {
 
         console.log('Manual build starting...');
 
+        global.dataStore = {};
+
+        console.log('Erased Datastore...');
+
         build()
             .then(function () {
                 console.log('Manual build complete.');
