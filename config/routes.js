@@ -6,6 +6,7 @@
 
 const contentService = require('../services/content');
 const route = require('../module/route');
+const moment = require('moment');
 
 module.exports = [
     new route(
@@ -113,6 +114,25 @@ module.exports = [
                 intro: pages.about.intro,
                 organizers: contentService.getOrganizers(),
                 volunteers: []
+            };
+        }
+    ),
+    new route(
+        '/schedule',
+        'pages/schedule',
+        () => {
+
+            const pages = contentService.getPages();
+
+            return {
+                locals: {
+                    title: 'Schedule',
+                    socialMedia: contentService.getSocialMedia(),
+                    bodyClass: 'page-schedule'
+                },
+                moment : moment,
+                intro: pages.schedule.intro,
+                schedule: contentService.getSchedule()
             };
         }
     ),
