@@ -573,15 +573,62 @@ hr {
 	}
 }
 
-.schedule {
-	.fa-heart {
-		color: $color_bright_red_approx;
-	}
-	.timeslot + .no-timeslots {
-		display: none;
-	}
-	.form-inline > * {
-		margin-bottom: .5rem;
+.page-sections .section-wrapper {
+
+	.schedule {
+
+		a {
+			color: #eee;
+		}
+
+		.timeslot {
+			margin: 0 0 1em;
+
+			.times {
+				margin: 0 !important;
+				padding: 1em 0 1em 1em;
+				background-color: rgba(0, 0, 0, 0.8);
+			}
+
+			.event {
+				margin: 0 0 1em 3em;
+				border-bottom: 1px solid #333;
+
+				.title {
+					margin: 0 0 0.5em !important;
+
+				}
+				.location {
+					color: #666;
+				}
+				.speaker {
+					a {
+						color: #666;
+					}
+					display: inline-block;
+					padding-left: 0.75em;
+					margin-left: 0.5em;
+					border-left: 1px solid #666;
+				}
+				.summary {
+					margin-bottom: 1em;
+				}
+			}
+
+			.times + .event {
+				margin-top: 1em;
+				padding-top: 1em;
+				border-top: 1px solid #333;
+			}
+
+		}
+
+		.fa-heart {
+			color: $color_bright_red_approx;
+		}
+		.form-inline > * {
+			margin-bottom: .5rem;
+		}
 	}
 }
 
