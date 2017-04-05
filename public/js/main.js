@@ -32,9 +32,7 @@ jQuery(function ($) {
         sideNav.removeClass('open');
     });
 
-    var sliderImages = $('.section-location .images');
-
-    var sliderImageWidth = $('img', sliderImages).width();
+    var sliderImages, sliderImageWidth;
 
     function rotateSlider() {
         sliderImages.stop().animate({
@@ -45,9 +43,12 @@ jQuery(function ($) {
         });
     }
 
-    $(window).load(function () {
-        rotateSlider();
-    });
+    $('.slider .images img')
+        .on('load', function () {
+            sliderImages = $('.section-location .images');
+            sliderImageWidth = $('img', sliderImages).width();
+            rotateSlider();
+        });
 
     $('img[data-original]').lazyload();
 
