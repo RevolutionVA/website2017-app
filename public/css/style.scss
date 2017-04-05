@@ -591,8 +591,14 @@ hr {
 			}
 
 			.event {
-				margin: 0 0 1em 3em;
-				border-bottom: 1px solid #333;
+				padding: 1em 1.5em 0.5em 1.5em;
+				margin: 0 0 0 2em;
+				border-top: 1px solid #333;
+
+				&:hover {
+					background-color: #111;
+
+				}
 
 				.title {
 					margin: 0 0 0.5em !important;
@@ -616,9 +622,7 @@ hr {
 			}
 
 			.times + .event {
-				margin-top: 1em;
 				padding-top: 1em;
-				border-top: 1px solid #333;
 			}
 
 		}

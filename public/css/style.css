@@ -379,8 +379,11 @@ hr {
     padding: 1em 0 1em 1em;
     background-color: rgba(0, 0, 0, 0.8); }
   .page-sections .section-wrapper .schedule .timeslot .event {
-    margin: 0 0 1em 3em;
-    border-bottom: 1px solid #333; }
+    padding: 1em 1.5em 0.5em 1.5em;
+    margin: 0 0 0 2em;
+    border-top: 1px solid #333; }
+    .page-sections .section-wrapper .schedule .timeslot .event:hover {
+      background-color: #111; }
     .page-sections .section-wrapper .schedule .timeslot .event .title {
       margin: 0 0 0.5em !important; }
     .page-sections .section-wrapper .schedule .timeslot .event .location {
@@ -395,9 +398,7 @@ hr {
     .page-sections .section-wrapper .schedule .timeslot .event .summary {
       margin-bottom: 1em; }
   .page-sections .section-wrapper .schedule .timeslot .times + .event {
-    margin-top: 1em;
-    padding-top: 1em;
-    border-top: 1px solid #333; }
+    padding-top: 1em; }
 .page-sections .section-wrapper .schedule .fa-heart {
   color: #a00; }
 .page-sections .section-wrapper .schedule .form-inline > * {
