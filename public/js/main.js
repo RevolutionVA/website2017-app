@@ -32,7 +32,7 @@ jQuery(function ($) {
         sideNav.removeClass('open');
     });
 
-    var sliderImages, sliderImageWidth;
+    var sliderImages = $('.section-location .images'), sliderImageWidth = 0;
 
     function rotateSlider() {
         sliderImages.stop().animate({
@@ -45,12 +45,25 @@ jQuery(function ($) {
 
     $('.slider .images img')
         .on('load', function () {
-            sliderImages = $('.section-location .images');
             sliderImageWidth = $('img', sliderImages).width();
             rotateSlider();
         });
 
     $('img[data-original]').lazyload();
+
+    $('img[data-original][data-delay]')
+        .each(function () {
+
+            var img = $(this), delay = parseInt(img.data('delay'));
+
+            $(window)
+                .on('load', function () {
+                    setTimeout(function () {
+                        img.trigger('delay');
+                    }, delay);
+                });
+        })
+        .lazyload({event: 'delay'});
 
     $('a.talk-link').on('click', function (event) {
 
