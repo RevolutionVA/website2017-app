@@ -28,8 +28,8 @@ schedule = schedule || [];
                     <% } lastDaySlot = event.dateDay; %>
 
                     <%-
-                        '<div class="timeslot">' +
-                        '<h4 class="h4 times">' + event.startTime + ' - ' + event.endTime + '</h4>'
+                        '<div class="timeslot"><div class="line"></div>' +
+                        '<h4 class="h3 times">' + event.startTime + ' - ' + event.endTime + '</h4>'
                         ; %>
 
                     <% } lastTimeSlot = event.timeSlot; %>
@@ -37,6 +37,10 @@ schedule = schedule || [];
                     <% if(event.talk) { %>
 
                     <div class="event talk">
+
+                        <div class="manager">
+                            <button class="btn btn-link unchecked" data-heart="<%- event.talk.slug %>"><i class="fa fa-heart"></i></button>
+                        </div>
 
                         <h3 class="h4 title">
                             <a class="talk-link" target="_blank" href="/talk/<%- event.talk.slug %>"><%- event.talk.title %></a>
