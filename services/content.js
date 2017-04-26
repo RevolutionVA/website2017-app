@@ -76,7 +76,8 @@ function getType(type, process) {
 }
 
 function getSpeaker(slug) {
-    return getType('humans').find(human => human.slug === slug);
+    return getType('humans')
+        .then(humans => humans.find(human => human.slug === slug));
 }
 
 function getTalksBySpeaker() {
@@ -96,14 +97,21 @@ function getTalksBySpeaker() {
 
 function getTalk(slug) {
 
-    const talk = getType('talks').find(talk => talk.slug === slug);
+    return getType('talks').then(talks => {
 
-    if (talk && !talk.speakerSlug) {
-        talk.speakerSlug = talk.speaker + '';
-        talk.speaker = getSpeaker(talk.speakerSlug);
-    }
+        let talk = talks.find(talk => talk.slug === slug);
 
-    return talk;
+        if (!talk || !talk.speaker)
+            return talk;
+
+        return getSpeaker(talk.speaker)
+            .then(speaker => {
+                talk.speakerSlug = talk.speaker + '';
+                talk.speaker = speaker;
+
+                return talk;
+            });
+    });
 }
 
 function parseDate(strDate) {
