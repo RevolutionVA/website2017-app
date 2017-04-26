@@ -29,6 +29,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
+    "pg": "^6.1.5",
     "request": "^2.79.0"
   },
   "devDependencies": {

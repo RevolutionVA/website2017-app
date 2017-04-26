@@ -371,31 +371,47 @@ hr {
   display: none; }
 
 .page-sections .section-wrapper .schedule a {
-  color: #eee; }
+  color: #fff; }
 .page-sections .section-wrapper .schedule .timeslot {
-  margin: 0 0 1em; }
+  margin: 0 0 1em;
+  position: relative; }
   .page-sections .section-wrapper .schedule .timeslot .times {
-    margin: 0 !important;
+    position: relative;
     padding: 1em 0 1em 1em;
-    background-color: rgba(0, 0, 0, 0.8); }
+    margin: 0 0 -1px 0 !important;
+    border-left: 1px solid #333;
+    border-bottom: 1px solid #333;
+    background-color: rgba(20, 20, 20, 0.9);
+    color: #a00; }
+  .page-sections .section-wrapper .schedule .timeslot .times + .event {
+    border-top: 1px solid #222; }
   .page-sections .section-wrapper .schedule .timeslot .event {
+    position: relative;
     padding: 1em 1.5em 0.5em 1.5em;
     margin: 0 0 0 2em;
-    border-top: 1px solid #333; }
-    .page-sections .section-wrapper .schedule .timeslot .event:hover {
-      background-color: #111; }
+    border-left: 1px solid #333;
+    border-top: 1px solid #222;
+    background-color: rgba(20, 20, 20, 0.8); }
+    .page-sections .section-wrapper .schedule .timeslot .event:last-child {
+      border-bottom: 1px solid #333; }
+    .page-sections .section-wrapper .schedule .timeslot .event [data-heart].unchecked .fa-heart {
+      color: #666; }
+    .page-sections .section-wrapper .schedule .timeslot .event .manager {
+      float: right;
+      min-width: 4em; }
     .page-sections .section-wrapper .schedule .timeslot .event .title {
       margin: 0 0 0.5em !important; }
     .page-sections .section-wrapper .schedule .timeslot .event .location {
-      color: #666; }
+      color: #888; }
     .page-sections .section-wrapper .schedule .timeslot .event .speaker {
+      border-left: 1px solid #666;
       display: inline-block;
       padding-left: 0.75em;
-      margin-left: 0.5em;
-      border-left: 1px solid #666; }
+      margin-left: 0.5em; }
       .page-sections .section-wrapper .schedule .timeslot .event .speaker a {
-        color: #666; }
+        color: #999; }
     .page-sections .section-wrapper .schedule .timeslot .event .summary {
+      display: inline-block;
       margin-bottom: 1em; }
   .page-sections .section-wrapper .schedule .timeslot .times + .event {
     padding-top: 1em; }

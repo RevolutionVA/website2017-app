@@ -72,4 +72,11 @@ jQuery(function ($) {
         $(this).closest('.event').find('.summary').toggle();
 
     });
+
+    $('[data-heart]').on('click', function () {
+
+        $(this).toggleClass('unchecked');
+
+    });
+
 });

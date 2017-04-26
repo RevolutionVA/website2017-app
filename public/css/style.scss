@@ -578,26 +578,49 @@ hr {
 	.schedule {
 
 		a {
-			color: #eee;
+			color: #fff;
 		}
 
 		.timeslot {
 			margin: 0 0 1em;
+			position: relative;
 
 			.times {
-				margin: 0 !important;
+				position: relative;
 				padding: 1em 0 1em 1em;
-				background-color: rgba(0, 0, 0, 0.8);
+				margin: 0 0 -1px 0 !important;
+				border-left: 1px solid #333;
+				border-bottom: 1px solid #333;
+				background-color: rgba(20, 20, 20, 0.9);
+				color: $color_bright_red_approx;
+
 			}
 
+			.times + .event {
+				border-top: 1px solid #222;
+			}
+
+
 			.event {
+				position: relative;
 				padding: 1em 1.5em 0.5em 1.5em;
 				margin: 0 0 0 2em;
-				border-top: 1px solid #333;
+				border-left: 1px solid #333;
+				border-top: 1px solid #222;
+				background-color: rgba(20, 20, 20, 0.8);
 
-				&:hover {
-					background-color: #111;
+				&:last-child {
+					border-bottom: 1px solid #333;
 
+				}
+
+				[data-heart].unchecked .fa-heart {
+					color: #666;
+				}
+
+				.manager {
+					float: right;
+					min-width: 4em;
 				}
 
 				.title {
@@ -605,18 +628,19 @@ hr {
 
 				}
 				.location {
-					color: #666;
+					color: #888;
 				}
 				.speaker {
+					border-left: 1px solid #666;
 					a {
-						color: #666;
+						color: #999;
 					}
 					display: inline-block;
 					padding-left: 0.75em;
 					margin-left: 0.5em;
-					border-left: 1px solid #666;
 				}
 				.summary {
+					display: inline-block;
 					margin-bottom: 1em;
 				}
 			}

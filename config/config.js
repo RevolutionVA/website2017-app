@@ -39,6 +39,48 @@ const conf = convict({
         format: String,
         default: '2017',
         env: 'BUILD_PASS'
+    },
+    dbUser: {
+        doc: 'Database user.',
+        format: String,
+        default: 'revconf2017',
+        env: 'PGUSER'
+    },
+    dbName: {
+        doc: 'Database name.',
+        format: String,
+        default: 'revconf2017',
+        env: 'PGDATABASE'
+    },
+    dbPassword: {
+        doc: 'Database password.',
+        format: String,
+        default: 'revconfrevconf',
+        env: 'PGPASSWORD'
+    },
+    dbHost: {
+        doc: 'Server hosting the postgres database.',
+        format: String,
+        default: 'localhost',
+        env: 'PGHOST'
+    },
+    dbPort: {
+        doc: 'Database port.',
+        format: 'port',
+        default: 5432,
+        env: 'PGPORT'
+    },
+    dbMax: {
+        doc: 'Max number of clients in the pool.',
+        format: Number,
+        default: 10,
+        env: 'PGMAX'
+    },
+    dbIdleTimeoutMillis: {
+        doc: 'How long a client is allowed to remain idle before being closed.',
+        format: Number,
+        default: 30000,
+        env: 'PGITM'
     }
 });
 

@@ -13,7 +13,7 @@ module.exports = (app) => (req, res) => {
     if (!route) {
         route = routes.find(r => {
             if (!r.path.includes('*')) return false;
-            let regExpStr = '^' + r.path.replace('*', '[^/]+');
+            const regExpStr = '^' + r.path.replace('*', '[^/]+');
             return new RegExp(regExpStr).test(req.path);
         });
 
@@ -30,16 +30,22 @@ module.exports = (app) => (req, res) => {
         return route.response(req, res);
     }
 
-    const data = route.viewData(req.path);
+    route.viewData(req.path)
+        .then(data => {
 
-    if (data.redirect) {
-        res.writeHead(302, {
-            'Location': data.redirect
+            if (data.redirect) {
+                res.writeHead(302, {
+                    'Location': data.redirect
+                });
+                res.end();
+            }
+
+            Object.assign(app.locals, {title: '', keywords: ''}, data.locals || {});
+
+            res.render(route.view, data);
+        })
+        .catch(err => {
+
+            res.end();
         });
-        res.end();
-    }
-
-    Object.assign(app.locals, {title: '', keywords: ''}, data.locals || {});
-
-    res.render(route.view, data);
 };
