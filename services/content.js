@@ -159,16 +159,20 @@ module.exports = {
     },
 
     getSpeakers: function () {
-        return getType('humans', data => {
-            return data
-                .filter(h => h.role.includes('Speaker'))
-                .sort((h1, h2) => h1.lastName > h2.lastName)
-                .map(human => {
-                    human.talk = getTalksBySpeaker()[human.slug];
-                    return human;
-                });
-        });
 
+        return getTalksBySpeaker()
+            .then(talksBySpeaker => {
+
+                return getType('humans', data => {
+                    return data
+                        .filter(h => h.role.includes('Speaker'))
+                        .sort((h1, h2) => h1.lastName > h2.lastName)
+                        .map(human => {
+                            human.talk = talksBySpeaker[human.slug];
+                            return human;
+                        });
+                });
+            });
     },
 
     getSpeaker,
@@ -204,15 +208,20 @@ module.exports = {
     },
 
     getPanelists: function () {
-        return getType('humans', humans => {
-            return humans
-                .filter(h => h.role.includes('Panelist'))
-                .sort((h1, h2) => h1.lastName > h2.lastName)
-                .map(human => {
-                    human.talk = getTalksBySpeaker()[human.slug];
-                    return human;
+
+        return getTalksBySpeaker()
+            .then(talksBySpeaker => {
+
+                return getType('humans', humans => {
+                    return humans
+                        .filter(h => h.role.includes('Panelist'))
+                        .sort((h1, h2) => h1.lastName > h2.lastName)
+                        .map(human => {
+                            human.talk = talksBySpeaker[human.slug];
+                            return human;
+                        });
                 });
-        });
+            });
     },
 
     getSponsors: function () {
