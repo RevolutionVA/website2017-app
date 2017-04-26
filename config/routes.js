@@ -19,40 +19,58 @@ module.exports = [
         '/',
         'pages/home',
         () => {
-            return {
-                locals: {
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: 'home'
-                },
-                organizers: contentService.getOrganizers(),
-                panelists: contentService.getPanelists(),
-                sponsorLevels: contentService.getSponsors(),
-                pages: contentService.getPages()
-            };
+
+            return Promise.all([
+                contentService.getSocialMedia(),
+                contentService.getOrganizers(),
+                contentService.getPanelists(),
+                contentService.getSponsors(),
+                contentService.getPages()
+            ])
+                .then(results => {
+                    return {
+                        locals: {
+                            socialMedia: results[0],
+                            bodyClass: 'home'
+                        },
+                        organizers: results[1],
+                        panelists: results[2],
+                        sponsorLevels: results[3],
+                        pages: results[4]
+                    };
+                });
         }
     ),
     new route(
         '*',
         'pages/index',
         path => {
-            const data = {
-                locals: {
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: 'page ' + slugify(path)
-                }
-            };
 
-            const pages = contentService.getPages();
+            return Promise.all([
+                contentService.getSocialMedia(),
+                contentService.getPages()
+            ])
+                .then(results => {
 
-            const pageSlug = path.substr(1);
+                    const pages = results[1];
 
-            if (pageSlug in pages) {
+                    const data = {
+                        locals: {
+                            socialMedia: results[0],
+                            bodyClass: 'page ' + slugify(path)
+                        }
+                    };
 
-                Object.assign(data, pages[pageSlug]);
-                return data;
-            }
+                    const pageSlug = path.substr(1);
 
-            return null;
+                    if (pageSlug in pages) {
+
+                        Object.assign(data, pages[pageSlug]);
+                        return data;
+                    }
+
+                    return null;
+                });
         }
     ),
     new route(
@@ -60,18 +78,26 @@ module.exports = [
         'pages/speakers',
         () => {
 
-            const pages = contentService.getPages();
+            return Promise.all([
+                contentService.getSocialMedia(),
+                contentService.getPages(),
+                contentService.getSpeakers(),
+                contentService.getPanelists()
+            ])
+                .then(results => {
 
-            return {
-                locals: {
-                    title: 'Speakers',
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: 'page-speaker'
-                },
-                intro: pages.speakers.intro,
-                speakers: contentService.getSpeakers(),
-                panelists: contentService.getPanelists()
-            };
+                    return {
+                        locals: {
+                            title: 'Speakers',
+                            socialMedia: results[0],
+                            bodyClass: 'page-speaker'
+                        },
+                        intro: results[1].speakers.intro,
+                        speakers: results[2],
+                        panelists: results[3]
+                    };
+
+                });
         }
     ),
     new route(
@@ -79,23 +105,29 @@ module.exports = [
         'pages/talk',
         (path) => {
 
-            let slug = path.replace('/talk/', '');
-            let talk = contentService.getTalk(slug);
+            const slug = path.replace('/talk/', '');
 
-            if (!talk) {
-                return {redirect: '/404'}
-            }
+            return Promise.all([
+                contentService.getSocialMedia(),
+                contentService.getTalk(slug)
+            ])
+                .then(results => {
 
-            return {
-                locals: {
-                    title: ' Talk - ' + talk.title,
-                    keywords: talk.tags.join(','),
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: 'page-speaker'
-                },
-                intro: '',
-                talk: talk
-            };
+                    if (!results[1]) {
+                        return {redirect: '/404'};
+                    }
+
+                    return {
+                        locals: {
+                            title: ' Talk - ' + results[1].title,
+                            keywords: results[1].tags.join(','),
+                            socialMedia: results[0],
+                            bodyClass: 'page-speaker'
+                        },
+                        intro: '',
+                        talk: results[1]
+                    };
+                });
         }
     ),
     new route(
@@ -103,18 +135,24 @@ module.exports = [
         'pages/about',
         () => {
 
-            const pages = contentService.getPages();
+            return Promise.all([
+                contentService.getSocialMedia(),
+                contentService.getPages(),
+                contentService.getOrganizers()
+            ])
+                .then(results => {
 
-            return {
-                locals: {
-                    title: 'About',
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: 'page-about'
-                },
-                intro: pages.about.intro,
-                organizers: contentService.getOrganizers(),
-                volunteers: []
-            };
+                    return {
+                        locals: {
+                            title: 'About',
+                            socialMedia: results[0],
+                            bodyClass: 'page-about'
+                        },
+                        intro: results[1].about.intro,
+                        organizers: results[2],
+                        volunteers: []
+                    };
+                });
         }
     ),
     new route(
@@ -122,31 +160,44 @@ module.exports = [
         'pages/schedule',
         () => {
 
-            const pages = contentService.getPages();
+            return Promise.all([
+                contentService.getSocialMedia(),
+                contentService.getPages(),
+                contentService.getSchedule()
+            ])
+                .then(results => {
 
-            return {
-                locals: {
-                    title: 'Schedule',
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: 'page-schedule'
-                },
-                moment : moment,
-                intro: pages.schedule.intro,
-                schedule: contentService.getSchedule()
-            };
+                    return {
+                        locals: {
+                            title: 'Schedule',
+                            socialMedia: results[0],
+                            bodyClass: 'page-schedule'
+                        },
+                        moment: moment,
+                        intro: results[1].schedule.intro,
+                        schedule: results[2]
+                    };
+                });
         }
     ),
     new route(
         '/404',
         'pages/404',
         () => {
-            return {
-                locals: {
-                    title: 'Page not Found',
-                    socialMedia: contentService.getSocialMedia(),
-                    bodyClass: '404'
-                }
-            };
+
+            return Promise.all([
+                contentService.getSocialMedia()
+            ])
+                .then(results => {
+
+                    return {
+                        locals: {
+                            title: 'Page not Found',
+                            socialMedia: results[0],
+                            bodyClass: '404'
+                        }
+                    };
+                });
         },
         true
     )

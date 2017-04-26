@@ -6,6 +6,7 @@ const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const marked = require('marked');
 const path = require('path');
+const contentService = require('../services/content');
 
 const appRoot = process.cwd();
 const zipUrl = conf.get('contentZipUrl');
@@ -70,10 +71,6 @@ module.exports = {
 
         console.log('Manual build starting...');
 
-        global.dataStore = {};
-
-        console.log('Erased Datastore...');
-
         build()
             .then(function () {
                 console.log('Manual build complete.');
@@ -84,6 +81,7 @@ module.exports = {
                 console.error(err);
                 res.send('<pre style="color:red;">' + err.stack + '</pre>');
             });
+
     },
 
     build: build
@@ -94,11 +92,13 @@ function build() {
     return setRawContent(appRoot, zipUrl)
         .then(() => {
             console.log('Raw Content Store Created.');
+            return contentService.sourcesClear();
+        })
+        .then(() => {
             return generateData(appRoot);
         })
         .then(() => {
             console.log('Data Store Created.');
-            return generatePages(appRoot);
         });
 
 }
@@ -220,19 +220,23 @@ function generateData() {
 
             const dataTypes = [];
 
-            fs.readdirSync(tmpDir).forEach(function (fileType) {
+            fs.readdirSync(tmpDir).forEach(function (setType) {
 
-                const curPath = tmpDir + '/' + fileType;
+                const curPath = tmpDir + '/' + setType;
 
                 if (!fs.lstatSync(curPath).isDirectory()) {
 
-                    if (fileType.endsWith('.json')) {
-                        fs.copySync(curPath, contentDir + '/' + fileType);
-                        dataTypes.push(fileType);
+                    if (setType.endsWith('.json')) {
+
+                        let data = fs.readFileSync(curPath, 'utf-8');
+                        contentService.sourceCreate(setType.substring(0, setType.length - 5), data);
+
+                        dataTypes.push(setType);
                     }
                 } else {
-                    processItemsDir(curPath, contentDir + '/' + fileType + '.json');
-                    dataTypes.push(fileType + '.json');
+
+                    processItemsDir(curPath, setType);
+                    dataTypes.push(setType + '.json');
                 }
             });
 
@@ -253,7 +257,7 @@ function generateData() {
         resolve();
     });
 
-    function processItemsDir(filePath, outputPath) {
+    function processItemsDir(filePath, setType) {
 
         const typeName = path.basename(filePath);
         const warnings = [];
@@ -275,13 +279,17 @@ function generateData() {
             }
 
             fs.readdirSync(pathItem).forEach(file => {
+
                 const filePath = pathItem + '/' + file;
                 const fileName = path.basename(file, path.extname(file));
                 const extension = path.extname(file);
 
                 if (extension in fileProcessors) {
+
+                    let fileProcessor = fileProcessors[extension];
+
                     try {
-                        sources.push(fileProcessors[extension](typeName, slug, fileName, filePath));
+                        sources.push(fileProcessor(typeName, slug, fileName, filePath));
                     } catch (e) {
                         warnings.push(e);
                     }
@@ -302,22 +310,8 @@ function generateData() {
             }
         }
 
-        fs.writeFileSync(outputPath, JSON.stringify(set, null, '\t'));
+        contentService.sourceCreate(setType, JSON.stringify(set));
     }
-}
-
-function generatePages() {
-
-    return new Promise((resolve, reject) => {
-        /*eslint-disable */
-        if (0 == 'Implement this later.') {
-            reject();
-        }
-        /*eslint-enable */
-
-        resolve();
-
-    });
 }
 
 function isValidBuildHook(req) {
@@ -362,10 +356,10 @@ const fileProcessors = {
         }
         return data || {};
     },
-    '.png': function (typeName, slug, fileName, filePath) {
-        const source = {};
-        source[fileName] = '/images/' + typeName + '/' + slug + '-' + fileName + '.png';
-        fs.copySync(filePath, './content' + source[fileName]);
+    '.png': function (typeName, slug, fileName) {
+        let source = {};
+        source[fileName] = 'https://cdn.rawgit.com/RevolutionVA/website2017/master/'
+            + typeName + '/' + slug + '/' + fileName + '.png';
         return source;
     }
 };

@@ -3,27 +3,76 @@
 /*
  * Module
  */
-const fs = require('fs-extra');
 const _ = require('lodash');
 const moment = require('moment');
+const pg = require('pg');
+const conf = require('../config/config.js');
 
-global.dataStore = {};
+const pool = new pg.Pool({
+    user: conf.get('dbUser'),
+    database: conf.get('dbName'),
+    password: conf.get('dbPassword'),
+    host: conf.get('dbHost'),
+    port: conf.get('dbPort'),
+    max: conf.get('dbMax'),
+    idleTimeoutMillis: conf.get('dbIdleTimeoutMillis')
+});
 
-function getType(type, process, subType) {
+function query(sql, vars) {
+    return new Promise((resolve, reject) => {
+        pool.connect(function (err, client, done) {
+            if (err) {
+                console.error(err);
+                reject(err);
+            }
+            client.query(sql, vars || [], function (err, result) {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                }
+                resolve(result);
+                done();
+            });
+        });
 
-    let storeKey = subType || type;
+    });
+}
 
-    if (!global.dataStore[storeKey]) {
+function sourcesClear() {
 
-        process = typeof process === 'function' ? process : (data => data);
+    return query('DROP TABLE IF EXISTS sources;')
+        .then(() => {
+            return query('CREATE TABLE sources ( source_type varchar(50), items text );');
+        });
+}
 
-        if (fs.existsSync('./content/' + type + '.json'))
-            global.dataStore[storeKey] = process(fs.readJsonSync('./content/' + type + '.json'));
-        else
-            global.dataStore[storeKey] = [];
-    }
+function sourceExists(type) {
 
-    return global.dataStore[storeKey];
+    return query('SELECT COUNT(*) FROM sources WHERE source_type = $1', [type])
+        .then(count => {
+            return count === '1';
+        });
+}
+
+function sourceCreate(type, store) {
+
+    return query('INSERT INTO sources (source_type,items) VALUES ($1, $2)', [type, store]);
+}
+
+function sourceGet(type, process) {
+
+    return query('SELECT items FROM sources WHERE source_type = $1', [type])
+        .then(result => {
+
+            return process(JSON.parse(result.rows[0].items));
+        });
+}
+
+function getType(type, process) {
+
+    process = typeof process === 'function' ? process : (data => data);
+
+    return sourceGet(type, process);
 }
 
 function getSpeaker(slug) {
@@ -32,18 +81,17 @@ function getSpeaker(slug) {
 
 function getTalksBySpeaker() {
 
-    if (!global.dataStore['talksBySpeaker']) {
+    return getType('talks')
+        .then(talks => {
 
-        global.dataStore['talksBySpeaker'] = {};
+            const talksBySpeaker = {};
 
-        const talks = getType('talks') || [];
+            talks.forEach(talk => {
+                talksBySpeaker[talk.speaker] = talk;
+            });
 
-        talks.forEach(talk => {
-            global.dataStore['talksBySpeaker'][talk.speaker] = talk;
+            return talksBySpeaker;
         });
-    }
-
-    return global.dataStore['talksBySpeaker'];
 }
 
 function getTalk(slug) {
@@ -69,6 +117,12 @@ function parseDate(strDate) {
 
 module.exports = {
 
+    sourcesClear,
+
+    sourceExists,
+
+    sourceCreate,
+
     getPages: function () {
         return getType('pages', pages => {
 
@@ -80,10 +134,6 @@ module.exports = {
 
             return pagesObject;
         });
-    },
-
-    getTalks: function () {
-        return getType('talks');
     },
 
     getTalk,
@@ -105,7 +155,7 @@ module.exports = {
             return data
                 .filter(h => h.role.includes('Organizer'))
                 .sort((h1, h2) => h1.lastName > h2.lastName);
-        }, 'organizers');
+        });
     },
 
     getSpeakers: function () {
@@ -117,7 +167,7 @@ module.exports = {
                     human.talk = getTalksBySpeaker()[human.slug];
                     return human;
                 });
-        }, 'speakers')
+        });
 
     },
 
@@ -162,20 +212,24 @@ module.exports = {
                     human.talk = getTalksBySpeaker()[human.slug];
                     return human;
                 });
-        }, 'panelists');
+        });
     },
 
     getSponsors: function () {
         return getType('sponsors', sponsors => {
-            const levels = getType('sponsorship-levels');
-            const groupedSponsors = _.groupBy(sponsors, 'level');
-            return levels.map(level => {
-                return {
-                    title: level,
-                    sponsors: (groupedSponsors[level] || [])
-                        .sort((h1, h2) => h1.title > h2.title)
-                };
-            });
+            return getType('sponsorship-levels')
+                .then(levels => {
+
+                    const groupedSponsors = _.groupBy(sponsors, 'level');
+
+                    return levels.map(level => {
+                        return {
+                            title: level,
+                            sponsors: (groupedSponsors[level] || [])
+                                .sort((h1, h2) => h1.title > h2.title)
+                        };
+                    });
+                });
         });
     }
 
