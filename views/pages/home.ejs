@@ -5,10 +5,10 @@ panelists = panelists || [];
 pages = pages || {about: {intro: ''}, tickets: {intro: ''}, speakers: {intro: ''}, sponsors: {intro: ''}};
 sponsorLevels = sponsorLevels || [{title: '', sponsors: [{title: '', logo: ''}]}];
 var sponsorSizes = {
-    'Platinum': 'col-xs-12 col-md-6 col-sm-4',
-    'Gold': 'col-xs-6 col-md-4 col-sm-3',
-    'Bronze': 'col-xs-6 col-md-4 col-sm-3',
-    'Friends of RevConf': 'col-xs-4 col-md-3 col-sm-2'
+    'Platinum': 'col-xs-12 col-sm-6',
+    'Gold': 'col-xs-6 col-sm-4',
+    'Bronze': 'col-xs-4 col-sm-3',
+    'Friends of RevConf': 'col-xs-4 col-sm-3'
 };
 var humanIndex = 0;
 %>
@@ -123,21 +123,23 @@ var humanIndex = 0;
                 <div class="sponsors-list">
                     <% sponsorLevels.forEach(function(level) { %>
                     <% if (level.title && !level.sponsors.length) return; %>
-                    <h3 style="display: none"><%= level.title %></h3>
-                    <div class="row">
-                        <% level.sponsors.forEach(function(sponsor) { %>
-                        <div class="<%= sponsorSizes[level.title] %> sponsor"
-                             style="margin-bottom: 2em;">
-                            <div class="embed-responsive embed-responsive-1x1">
-                                <div class="embed-responsive-item">
-                                    <a target="_blank" href="<%= sponsor.url %>" title="<%= sponsor.title %>">
-                                        <span class="logo"><img src="<%= sponsor.logo %>"></span>
-                                        <span class="title"><%= sponsor.title %></span>
-                                    </a>
+                    <hr>
+                    <div class="sponsor-level <%= level.title.toLowerCase().replace(/ /g, '-') %>">
+                        <h3 class="level-title text-red te"><%= level.title %></h3>
+                        <div class="row sponsors">
+                            <% level.sponsors.forEach(function(sponsor) { %>
+                            <div class="sponsor <%= sponsorSizes[level.title] %>">
+                                <div class="embed-responsive embed-responsive-4by3">
+                                    <div class="embed-responsive-item">
+                                        <a target="_blank" href="<%= sponsor.url %>" title="<%= sponsor.title %>">
+                                            <span class="logo"><img src="<%= sponsor.logo %>"></span>
+                                            <span class="title"><%= sponsor.title %></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+                            <% }); %>
                         </div>
-                        <% }); %>
                     </div>
                     <% }); %>
                 </div>
