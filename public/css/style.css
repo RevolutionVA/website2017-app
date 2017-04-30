@@ -678,14 +678,14 @@ hr {
         font-size: 1rem; }
         .human .row > div.info .social a {
           margin: 0 3px; }
-      .human .row > div.info .talk {
+      .human .row > div.info .talk, .human .row > div.info .interview {
         margin-top: 0.25em;
         padding: 0.5em 0 0 0.25em;
         border-top: #333 solid 1px;
         min-height: 1em; }
-        .human .row > div.info .talk .title > a {
+        .human .row > div.info .talk .title > a, .human .row > div.info .interview .title > a {
           color: #ccc; }
-        .human .row > div.info .talk > i {
+        .human .row > div.info .talk > i, .human .row > div.info .interview > i {
           font-size: 1rem; }
 
 .sponsor {
