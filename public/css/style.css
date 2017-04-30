@@ -197,7 +197,7 @@ hr {
     outline: 0; }
 
 .btn-play {
-  outline: none;
+  outline: none !important;
   position: absolute;
   display: block;
   top: 0;
