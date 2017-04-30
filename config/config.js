@@ -22,6 +22,12 @@ const conf = convict({
         default: 'http://github.com/revolutionva/website2017/archive/master.zip',
         env: 'CONTENT_ZIP_URL'
     },
+    contentCdnUrl: {
+        doc: 'The content CDN root url.',
+        format: 'url',
+        default: 'https://raw.githubusercontent.com/revolutionva/website2017/master',
+        env: 'CONTENT_CDN_URL'
+    },
     contentLocal: {
         doc: 'The directory path for a local copy of the content repo.',
         format: String,

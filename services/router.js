@@ -30,7 +30,8 @@ module.exports = (app) => (req, res) => {
         return route.response(req, res);
     }
 
-    route.viewData(req.path)
+    route
+        .viewData(req.path)
         .then(data => {
 
             if (data.redirect) {

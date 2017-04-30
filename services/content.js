@@ -99,7 +99,7 @@ function getTalk(slug) {
 
     return getType('talks').then(talks => {
 
-        let talk = talks.find(talk => talk.slug === slug);
+        const talk = talks.find(talk => talk.slug === slug);
 
         if (!talk || !talk.speaker)
             return talk;
