@@ -61,6 +61,12 @@ human = human ||
                         <i class="fa fa-bullhorn"></i> <%= human.talk.title %></a></p>
             </div>
             <% } %>
+            <% if(human.interview){ %>
+            <div class="interview">
+                <p class="title"><a href="https://www.youtube.com/watch?v=<%= human.interview %>" data-lity>
+                        <i class="fa fa-play"></i> Interview</a></p>
+            </div>
+            <% } %>
         </div>
     </div>
 </div>

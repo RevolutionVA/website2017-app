@@ -1,5 +1,5 @@
 //colors
-$color_bright_red_approx: #a00;
+$color_bright_red_approx: #a80000;
 $color_mountain_mist_approx: #999;
 $color_storm_dust_approx: #666;
 $white: #fff;
@@ -9,6 +9,7 @@ $color_tundora_approx: #444;
 $black_30: rgba(0, 0, 0, .3);
 $color_woodsmoke_approx: #111;
 $color_milano_red_approx: #d51305;
+$color_red_dark: #0d0000;
 $color_celeste_approx: #ccc;
 $color_gray_approx: #7e7e7e;
 $color_pink_swan_approx: #bbb;
@@ -109,6 +110,8 @@ body {
 }
 
 @import "fontello.css";
+
+@import "lity.min.css";
 
 body {
 	background-color: $color_bright_red_approx;
@@ -331,6 +334,51 @@ hr {
 	}
 	&:active:focus {
 		outline: 0;
+	}
+}
+
+.btn-play {
+	outline: none !important;
+	position: absolute;
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	-webkit-border-radius: 100%;
+	-moz-border-radius: 100%;
+	border-radius: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	color: rgba(255, 255, 255, 0.9) !important;
+	line-height: 100%;
+	text-align: center;
+	font-size: 0.25em;
+	animation: blinker 4s infinite ease;
+	i {
+
+		position: absolute;
+		display: block;
+		top: 50%;
+		width: 100%;
+		margin-top: -0.5em;
+		padding-left: 0.25em;
+		text-shadow: none;
+
+	}
+}
+
+@-webkit-keyframes blinker {
+	0% {
+		opacity: 1.0;
+	}
+	33% {
+		opacity: 0.0;
+	}
+	66% {
+		opacity: 0.0;
+	}
+	100% {
+		opacity: 1.0;
 	}
 }
 
@@ -600,7 +648,6 @@ hr {
 				border-top: 1px solid #222;
 			}
 
-
 			.event {
 				position: relative;
 				padding: 1em 1.5em 0.5em 1.5em;
@@ -708,9 +755,10 @@ hr {
 		position: relative;
 		display: table;
 		width: 100%;
-		background: #000 fixed center center;
+		background: $color_red_dark fixed center center;
 		background-size: cover;
-		box-shadow: inset 0 0 10em 3em rgba(0, 0, 0, 0.8);
+		xbox-shadow: inset 0 0 10em 3em #260302;
+		border-bottom: solid 5px #000;
 		color: #fff;
 
 		a {
@@ -801,6 +849,7 @@ hr {
 		color: rgba(255, 255, 255, 1);
 
 		.divider {
+			position: relative;
 			display: inline-block;
 			opacity: 0.9;
 			width: 0.75em;
@@ -971,7 +1020,7 @@ hr {
 						margin: 0 3px;
 					}
 				}
-				.talk {
+				.talk, .interview {
 					margin-top: 0.25em;
 					padding: 0.5em 0 0 0.25em;
 					border-top: #333 solid 1px;
