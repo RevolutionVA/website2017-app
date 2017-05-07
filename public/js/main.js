@@ -89,7 +89,7 @@ jQuery(function ($) {
             favorite(heart.data('heart'), !heart.hasClass('unchecked'));
         });
 
-        var favorites = window.localStorage.getItem('revConfSchedule').split(',') || [],
+        var favorites = (window.localStorage.getItem('revConfSchedule') || '').split(',') || [],
             saveTimeout = false;
 
         favorites = Array.isArray(favorites) ? favorites : [];
