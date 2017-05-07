@@ -1,7 +1,7 @@
 // build.js
 
 module.exports = () => {
-    return {
+    return Promise.resolve({
         response: require('../services/builder').run
-    };
+    });
 };
