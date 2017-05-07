@@ -1,6 +1,7 @@
 /* globals jQuery */
 
 jQuery(function ($) {
+    
     $(document.getElementById('site-title-fit-text')).fitText(0.55, {
         minFontSize: '100px'
     });

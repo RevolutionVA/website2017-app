@@ -23,21 +23,21 @@ schedule = schedule || [];
                     %>
 
                     <% if(!eventPrev || eventPrev.dateDay !== event.dateDay ) {
-                        daySlotId = event.dateDay.replace(/ /g, '-');
+                        daySlotId = event.dateDay.replace(/ /g, '-').toLowerCase();;
                     %>
                     <h3 class="day"><%- event.dateDay %></h3>
                     <div class="day-group">
                         <span class="place" id="<%= daySlotId %>"></span>
-                        <a class="line" href="#<%= daySlotId %>"><span></span></a>
+                        <a class="line" href="/schedule#<%= daySlotId %>"><span></span></a>
                         <% } %>
 
                         <% if (!eventPrev || eventPrev.timeSlot !== event.timeSlot) {
-                            timeSlotId = event.dateDay.replace(/ /g, '-') + '-' + event.timeSlot.replace(/ /g, '-');
+                            timeSlotId = event.dateDay.replace(/ /g, '-') + '-' + event.timeSlot.replace(/ /g, '-').toLowerCase();
                         %>
                         <h4 class="h3 time"><%= event.startTime + ' - ' + event.endTime %></h4>
                         <div class="time-group">
                             <span class="place" id="<%= timeSlotId %>"></span>
-                            <a class="line" href="#<%= timeSlotId %>"><span></span></a>
+                            <a class="line" href="/schedule#<%= timeSlotId %>"><span></span></a>
                             <% } %>
 
                             <div class="event <%= event.talk ? 'talk' : 'other' %>" id="<%= event.slug %>">
@@ -52,7 +52,7 @@ schedule = schedule || [];
 
                                 <h3 class="h4 title">
                                     <a class="talk-link" target="_blank"
-                                       href="/talk/<%- event.talk.slug %>"><%- event.talk.title %></a>
+                                       href="/talk/<%- event.talk.slug %>"><%- event.talk.title || 'TBD' %></a>
                                 </h3>
 
                                 <p>

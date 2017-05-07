@@ -647,7 +647,7 @@ hr {
 			left: 0;
 			top: 0;
 			bottom: 0;
-			padding: 0 0.75em 0 0.5em;
+			padding: 0 0.75em 0 0.75em;
 			span {
 				position: absolute;
 				display: block;
@@ -701,7 +701,7 @@ hr {
 
 				.event {
 
-					padding: 1em 0 0 0;
+					padding: 1em 0 0 0.5em;
 					position: relative;
 					overflow: hidden;
 					border-bottom: solid 1px #eee;
