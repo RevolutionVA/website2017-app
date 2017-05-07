@@ -1,0 +1,36 @@
+[
+	{
+		"path": "/",
+		"view": "pages/home",
+		"controller": "home"
+	},
+	{
+		"path": "/build",
+		"controller": "build"
+	},
+	{
+		"path": "/speakers",
+		"view": "pages/speakers",
+		"controller": "speakers"
+	},
+	{
+		"path": "/talk/:talkSlug",
+		"view": "pages/talk",
+		"controller": "talk"
+	},
+	{
+		"path": "/about",
+		"view": "pages/about",
+		"controller": "about"
+	},
+	{
+		"path": "/schedule",
+		"view": "pages/schedule",
+		"controller": "schedule"
+	},
+	{
+		"path": "/:pageSlug",
+		"view": "pages/index",
+		"controller": "page"
+	}
+]

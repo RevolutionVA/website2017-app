@@ -4,7 +4,7 @@ schedule = schedule || [];
 %>
 <div class="page-sections">
 
-    <div class="section-wrapper section-speakers">
+    <div class="section-wrapper section-speakers" id="schedule-app">
         <div class="section-position" id="schedule"></div>
         <div class="section">
             <div class="container">
@@ -28,30 +28,34 @@ schedule = schedule || [];
                     <% } lastDaySlot = event.dateDay; %>
 
                     <%-
-                        '<div class="timeslot"><div class="line"></div>' +
+                        '<div class="timeslot">' +
+                        '<div class="line"></div>' +
                         '<h4 class="h3 times">' + event.startTime + ' - ' + event.endTime + '</h4>'
                         ; %>
 
                     <% } lastTimeSlot = event.timeSlot; %>
 
-                    <% if(event.talk) { %>
+                    <div class="event <%= event.talk ? 'talk' : 'other' %>" id="<%= event.slug %>">
 
-                    <div class="event talk">
+                        <% if(event.talk) { %>
 
                         <div class="manager">
-                            <button class="btn btn-link unchecked" data-heart="<%- event.talk.slug %>"><i class="fa fa-heart"></i></button>
+                            <button class="btn btn-link unchecked heart" data-heart="<%- event.talk.slug %>"><i
+                                        class="fa fa-heart"></i></button>
+                            <button class="btn btn-link saving"><i class="fa fa-spinner fa-spin fa-fw"></i></button>
                         </div>
 
                         <h3 class="h4 title">
-                            <a class="talk-link" target="_blank" href="/talk/<%- event.talk.slug %>"><%- event.talk.title %></a>
+                            <a class="talk-link" target="_blank"
+                               href="/talk/<%- event.talk.slug %>"><%- event.talk.title %></a>
                         </h3>
 
                         <p>
                             <span class="location"><%- event.location %></span>
                             <% if(event.talk.speaker) { %>
                             <span class="speaker">
-                                <a href="/speakers#<%- event.talk.speaker.slug %>"><%- event.talk.speaker.firstName + ' ' + event.talk.speaker.lastName %></a>
-                            </span>
+                                    <a href="/speakers#<%- event.talk.speaker.slug %>"><%- event.talk.speaker.firstName + ' ' + event.talk.speaker.lastName %></a>
+                                </span>
                             <% } %>
                         </p>
 
@@ -61,11 +65,7 @@ schedule = schedule || [];
                         </div>
                         <% } %>
 
-                    </div>
-
-                    <% }else{ %>
-
-                    <div class="event">
+                        <% }else{ %>
 
                         <h4 class="title">
                             <%- event.title %>
@@ -81,73 +81,16 @@ schedule = schedule || [];
                         </div>
                         <% } %>
 
-                    </div>
+                        <% } %>
 
-                    <% } %>
+                    </div>
 
                     <% }); %>
 
-                    <%- '</div>' // close out timeslot  %>
+                    <%- '</div>' // close out timeslot   %>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--
-[
-    {
-		"title": "Opening Remarks",
-		"description": "",
-		"location": "Atlantic Ballroom",
-		"start": "2017-06-02-0900",
-		"end": "2017-06-02-0915",
-		"startMomemt": "2017-06-02T13:00:00.000Z",
-		"endMomemt": "2017-06-02T13:15:00.000Z",
-		"startTime": "9:00 am",
-		"endTime": "9:15 am",
-		"dateDay": "June 2",
-		"timeSlot": "2017-06-02-0900_2017-06-02-0915"
-	},
-	{
-		"talk": {
-			"slug": "anatomy-of-a-progressive-web-app",
-			"description": "<p>The growth of mobile web traffic has been outpacing desktop web traffic for years, and data reveals that users are likely to abandon experiences that too long to load.</p>\n<p>Progressive web apps aim to be reliable, fast and engaging, regardless of form factor or quality of internet connection. We&#39;ll walk through several key aspects of PWAs, illustrating performance and usability improvements by showing quantitative comparisons to an equivalent &quot;classic SPA&quot;.</p>\n<p>Finally, we&#39;ll begin with a &quot;classic SPA&quot; system, and incrementally apply improvements to it using progressive web app technologies, eventually arriving at an instantly-loading eventually-consistent offline and mobile-friendly app, built purely using web technologies.</p>\n",
-			"title": "Anatomy of a Progressive Web App",
-			"speaker": {
-				"slug": "mike-north",
-				"bio": "<p>Mike is a developer trainer, with clients ranging from Silicon Valley giants to startups all over the world. He has a passion for enabling teams to use the latest and greatest modern web technologies without leaving their users behind.</p>\n<p>Before becoming a modern web consultant, Mike was the CTO of Levanto Financial and UI Architect of Yahoo’s Ads &amp; Data division, where he worked to unify the company’s portfolio of ad products into a single cohesive user experience, around a foundation of open source, modern web standards.</p>\n<p>Having a passion for developer productivity and moving fast to get a product into production, Mike is naturally drawn to opinionated frameworks and tools that help reduce the number of decisions developers must make in their day-to-day work. He intends to keep “hands on” engineering and product development as part of his job for the foreseeable future and strives to be data driven and user-informed when making decisions.</p>\n<p>Over the past five years, Mike has contributed to the modern web community through speaking and teaching across four continents, building video courses and publishing written curriculum, and organizing community events to bring experts and users together. He is currently a business and technology advisor for two stealth mode startups.</p>\n",
-				"title": "",
-				"role": [
-					"Speaker"
-				],
-				"twitter": "",
-				"facebook": "",
-				"linkedin": "",
-				"personalWebsite": "",
-				"companyWebsite": "",
-				"companyName": "LinkedIn",
-				"firstName": "Mike",
-				"lastName": "North",
-				"profile": "/images/humans/north_mike-profile.png"
-			},
-			"summary": "Progressive web apps aim to be reliable, fast and engaging, regardless of form factor or quality of internet connection. We'll walk through several key aspects of PWAs, illustrating performance and usability improvements by showing quantitative comparisons to an equivalent \"classic SPA\".",
-			"tags": [
-				"pwa",
-				"ui",
-				"ux"
-			],
-			"speakerSlug": "mike-north"
-		},
-		"location": "Atlantic Ballroom",
-		"start": "2017-06-02-0930",
-		"end": "2017-06-02-1015",
-		"startMomemt": "2017-06-02T13:30:00.000Z",
-		"endMomemt": "2017-06-02T14:15:00.000Z",
-		"startTime": "9:30 am",
-		"endTime": "10:15 am",
-		"dateDay": "June 2",
-		"timeSlot": "2017-06-02-0930_2017-06-02-1015"
-	}
-]
--->
 <% include ../partials/footer.ejs %>

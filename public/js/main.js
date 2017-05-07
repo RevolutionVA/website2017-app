@@ -32,7 +32,7 @@ jQuery(function ($) {
         sideNav.removeClass('open');
     });
 
-    var sliderImages = $('.section-location .images'), sliderImageWidth = 0;
+    let sliderImages = $('.section-location .images'), sliderImageWidth = 0;
 
     function rotateSlider() {
         sliderImages.stop().animate({
@@ -54,7 +54,7 @@ jQuery(function ($) {
     $('img[data-original][data-delay]')
         .each(function () {
 
-            var img = $(this), delay = parseInt(img.data('delay'));
+            let img = $(this), delay = parseInt(img.data('delay'));
 
             $(window)
                 .on('load', function () {
@@ -73,10 +73,48 @@ jQuery(function ($) {
 
     });
 
-    $('[data-heart]').on('click', function () {
 
-        $(this).toggleClass('unchecked');
-
+    $(window).load(function () {
+        new ScheduleApp($('#schedule-app'));
     });
+
+    function ScheduleApp(element) {
+
+        if (!element.length)
+            return;
+
+
+        $('[data-heart]', element).on('click', function () {
+            const heart = $(this).toggleClass('unchecked');
+            favorite(heart.id, !heart.hasClass('unchecked'));
+        });
+
+        let favorites = window.localStorage.getItem('revConfSchedule') || [],
+            saveTimeout = false;
+
+        favorites = Array.isArray(favorites) ? favorites : [];
+
+        const favorite = function (eventSlug, set) {
+
+            const index = favorites.indexOf(eventSlug);
+
+            if (set) {
+                index === -1 && favorites.push(eventSlug) && updateStorage();
+            } else {
+                index > -1 && favorites.splice(index, 1) && updateStorage();
+            }
+        }
+
+        const updateStorage = function () {
+
+            if (saveTimeout)
+                clearTimeout(saveTimeout);
+
+            saveTimeout = setTimeout(function () {
+                window.localStorage.setItem('revConfSchedule', favorites);
+            }, 1000);
+        }
+    };
+
 
 });

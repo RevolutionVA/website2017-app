@@ -2,6 +2,7 @@
 <%
 speakers = speakers || [];
 panelists = panelists || [];
+keynoteSpeaker = keynoteSpeaker || [];
 var humanIndex = 0;
 %>
 <div class="page-sections">
@@ -14,6 +15,73 @@ var humanIndex = 0;
                 <div class="intro-text">
                     <%- intro %>
                 </div>
+
+                <h3 class="h1 league-gothic">Keynote Speaker</h3>
+                <div class="keynote-speaker">
+
+                    <div class="row">
+
+                        <div class="col-xs-5 image">
+                            <div class="embed-responsive embed-responsive-1x1">
+                                <div class="embed-responsive-item text-center">
+                                    <img src="/images/layout/logo.png"
+                                         data-original="<%= keynoteSpeaker.profile ? keynoteSpeaker.profile : '/images/layout/logo.png' %>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-7 info">
+                            <div class="info-wrap">
+                                <h4><%= keynoteSpeaker.firstName %> <%= keynoteSpeaker.lastName %></h4>
+                                <p class="title"><%= keynoteSpeaker.title %></p>
+                                <% if(keynoteSpeaker.companyName){ %>
+                                <p class="company">
+                                    <% if(keynoteSpeaker.companyWebsite){ %>
+                                    <a class="text-grey" target="_blank"
+                                       href="<%= keynoteSpeaker.companyWebsite %>"><%= keynoteSpeaker.companyName %></a>
+                                    <% }else{ %>
+                                    <%= keynoteSpeaker.companyName %>
+                                    <% } %>
+                                </p>
+                                <% } %>
+                                <p class="social">
+                                    <% if(keynoteSpeaker.twitter){ %>
+                                    <a target="_blank" href="https://twitter.com/<%= keynoteSpeaker.twitter %>">
+                                        <i class="fa fa-twitter"></i></a>
+                                    <% } %>
+                                    <% if(keynoteSpeaker.linkedin){ %>
+                                    <a target="_blank"
+                                       href="https://www.linkedin.com/in/<%= keynoteSpeaker.linkedin %>">
+                                        <i class="fa fa-linkedin"></i></a>
+                                    <% } %>
+                                    <% if(keynoteSpeaker.facebook){ %>
+                                    <a target="_blank"
+                                       href="https://www.facebook.com/<%= keynoteSpeaker.facebook %>">
+                                        <i class="fa fa-facebook-official"></i></a>
+                                    <% } %>
+                                </p>
+                                <% if(keynoteSpeaker.talk){ %>
+                                <div class="talk">
+                                    <p class="title"><a href="/talk/<%= keynoteSpeaker.talk.slug %>">
+                                            <i class="fa fa-bullhorn"></i> <%= keynoteSpeaker.talk.title %></a></p>
+                                </div>
+                                <% } %>
+                                <% if(keynoteSpeaker.interview){ %>
+                                <div class="interview">
+                                    <p class="title"><a
+                                                href="https://www.youtube.com/watch?v=<%= keynoteSpeaker.interview %>"
+                                                data-lity>
+                                            <i class="fa fa-play"></i> Interview</a></p>
+                                </div>
+                                <% } %>
+                                <div class="bio">
+                                    <%- keynoteSpeaker.bio %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h3 class="h1 league-gothic">Alumni Discussion Panel</h3>
                 <div class="discussion-panel">
                     <div class="row">

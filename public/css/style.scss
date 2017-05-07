@@ -11,16 +11,12 @@ $color_woodsmoke_approx: #111;
 $color_milano_red_approx: #d51305;
 $color_red_dark: #0d0000;
 $color_celeste_approx: #ccc;
-$color_gray_approx: #7e7e7e;
+$gray: #7e7e7e;
 $color_pink_swan_approx: #bbb;
-$gray: gray;
-$white_50: rgba(255, 255, 255, .5);
-$white_70: rgba(255, 255, 255, .7);
 $color_alto_approx: #ddd;
 $color_log_cabin_approx: #232323;
 $color_silver_chalice_approx: #b0b0b0;
 $black_70: rgba(0, 0, 0, .7);
-$white_40: rgba(255, 255, 255, .4);
 $color_mine_shaft_approx: #333;
 $white_10: rgba(255, 255, 255, .1);
 $white_95: rgba(255, 255, 255, .95);
@@ -499,7 +495,7 @@ hr {
 	}
 	&.disabled {
 		background: $color_celeste_approx;
-		color: $color_gray_approx !important;
+		color: $gray !important;
 		border-color: $color_pink_swan_approx;
 		opacity: 1;
 	}
@@ -621,6 +617,10 @@ hr {
 	}
 }
 
+#schedule-app {
+	padding-top: 4em;
+}
+
 .page-sections .section-wrapper {
 
 	.schedule {
@@ -630,6 +630,7 @@ hr {
 		}
 
 		.timeslot {
+
 			margin: 0 0 1em;
 			position: relative;
 
@@ -649,6 +650,7 @@ hr {
 			}
 
 			.event {
+
 				position: relative;
 				padding: 1em 1.5em 0.5em 1.5em;
 				margin: 0 0 0 2em;
@@ -661,13 +663,35 @@ hr {
 
 				}
 
-				[data-heart].unchecked .fa-heart {
-					color: #666;
-				}
-
 				.manager {
 					float: right;
 					min-width: 4em;
+
+					.heart .fa-heart {
+						color: $color_bright_red_approx;
+					}
+					.heart.unchecked .fa-heart {
+						color: #666;
+					}
+
+					.fa-heart {
+						color: $color_bright_red_approx;
+					}
+					.fa-spinner {
+						color: $color_bright_red_approx;
+					}
+					.saving {
+						display: none;
+					}
+					&.saving {
+						.heart {
+							display: none;
+						}
+						.saving {
+							display: block;
+						}
+					}
+
 				}
 
 				.title {
@@ -698,9 +722,6 @@ hr {
 
 		}
 
-		.fa-heart {
-			color: $color_bright_red_approx;
-		}
 		.form-inline > * {
 			margin-bottom: .5rem;
 		}
@@ -709,7 +730,7 @@ hr {
 
 .site-footer {
 
-	color: $white_70;
+	color: $gray;
 	padding: 3rem 0 0.75rem;
 	font-size: 1rem;
 	background-color: $black;
@@ -757,7 +778,6 @@ hr {
 		width: 100%;
 		background: $color_red_dark fixed center center;
 		background-size: cover;
-		xbox-shadow: inset 0 0 10em 3em #260302;
 		border-bottom: solid 5px #000;
 		color: #fff;
 
@@ -782,7 +802,7 @@ hr {
 		&.bg-dark {
 			background-color: $color_log_cabin_approx;
 			.section .section-subtitle {
-				color: $white_50;
+				color: $gray;
 			}
 		}
 		&.bg-grey {
@@ -802,7 +822,7 @@ hr {
 			.section-title {
 				color: $color_bright_red_approx;
 				text-transform: uppercase;
-				margin: 0 0 1.5rem;
+				margin: 0.5em 0 0.25em;
 				font-size: 3rem;
 			}
 			.section-subtitle {
@@ -930,7 +950,7 @@ hr {
 			top: 0;
 			bottom: 0;
 			width: 1px;
-			background: $white_40;
+			background: $gray;
 		}
 		i.fa {
 			margin-right: 10px;
@@ -985,7 +1005,14 @@ hr {
 }
 
 .section-speakers.section-wrapper {
+
 	background-image: url('../images/layout/background3.png');
+
+	.keynote-speaker {
+
+		font-size: 16px;
+
+	}
 }
 
 .human {
@@ -1001,35 +1028,42 @@ hr {
 		background-color: rgba(255, 255, 255, 0.05);
 		margin: 0;
 		> div {
-			padding: 0;
+			padding: 5px;
 			&.info {
-				padding: 10px 15px 0 17px;
-				margin: 15px 0 0 -20px;
-				background-color: rgba(20, 20, 20, 0.9);
-				> .title {
-					font-style: italic;
-					font-size: 0.8rem;
-				}
-				.company {
+				.info-wrap {
+					padding: 5px 10px;
+					margin-left: -5px;
 
-				}
-				.social {
-					margin: 0 -3px 0.5em;
-					font-size: 1rem;
-					a {
-						margin: 0 3px;
+					background-color: rgba(20, 20, 20, 0.9);
+					> h4 {
+						color: $gray;
 					}
-				}
-				.talk, .interview {
-					margin-top: 0.25em;
-					padding: 0.5em 0 0 0.25em;
-					border-top: #333 solid 1px;
-					min-height: 1em;
-					.title > a {
-						color: #ccc;
+
+					> .title {
+						font-style: italic;
+						font-size: 0.8rem;
 					}
-					> i {
+					.company {
+
+					}
+					.social {
+						margin: 0 -3px 0.5em;
 						font-size: 1rem;
+						a {
+							margin: 0 3px;
+						}
+					}
+					.talk, .interview {
+						margin-top: 0.25em;
+						padding: 0.5em 0 0 0.25em;
+						border-top: #333 solid 1px;
+						min-height: 1em;
+						.title > a {
+							color: #ccc;
+						}
+						> i {
+							font-size: 1rem;
+						}
 					}
 				}
 			}
@@ -1133,7 +1167,7 @@ hr {
 .section-signup {
 	.section-title {
 		font-size: 2.25em !important;
-		margin: 0 0 1rem !important;
+		margin: 0 0 0.25em !important;
 	}
 	.form-control {
 		min-width: 200px;
@@ -1236,15 +1270,5 @@ hr {
 		&:hover .name {
 			opacity: .85;
 		}
-	}
-}
-
-.keynote-speaker .contributor {
-	padding: 0;
-	.img-content-sep {
-		margin-bottom: 1rem;
-	}
-	.circle-awesome {
-		margin-bottom: 0;
 	}
 }

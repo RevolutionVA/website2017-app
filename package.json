@@ -31,7 +31,8 @@
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "pg": "^6.1.5",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "route-parser": "0.0.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",
