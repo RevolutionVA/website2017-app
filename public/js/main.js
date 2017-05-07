@@ -73,7 +73,6 @@ jQuery(function ($) {
 
     });
 
-
     $(window).load(function () {
         new ScheduleApp($('#schedule-app'));
     });
@@ -83,18 +82,24 @@ jQuery(function ($) {
         if (!element.length)
             return;
 
+        const saving_changes = $('.saving-changes').hide();
 
         $('[data-heart]', element).on('click', function () {
+
             const heart = $(this).toggleClass('unchecked');
-            favorite(heart.id, !heart.hasClass('unchecked'));
+            favorite(heart.data('heart'), !heart.hasClass('unchecked'));
         });
 
-        let favorites = window.localStorage.getItem('revConfSchedule') || [],
+        let favorites = window.localStorage.getItem('revConfSchedule').split(',') || [],
             saveTimeout = false;
 
         favorites = Array.isArray(favorites) ? favorites : [];
 
-        const favorite = function (eventSlug, set) {
+        $.each(favorites, (index, favorite) => {
+            $('[data-heart="' + favorite + '"]').removeClass('unchecked');
+        });
+
+        function favorite(eventSlug, set) {
 
             const index = favorites.indexOf(eventSlug);
 
@@ -105,16 +110,19 @@ jQuery(function ($) {
             }
         }
 
-        const updateStorage = function () {
+        function updateStorage() {
 
             if (saveTimeout)
                 clearTimeout(saveTimeout);
 
+            saving_changes.show();
+
             saveTimeout = setTimeout(function () {
                 window.localStorage.setItem('revConfSchedule', favorites);
+                saving_changes.hide();
             }, 1000);
-        }
-    };
+        };
+    }
 
 
 });

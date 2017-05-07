@@ -29,7 +29,7 @@
 		"controller": "schedule"
 	},
 	{
-		"path": "/:pageSlug",
+		"path": "/*pageSlug",
 		"view": "pages/index",
 		"controller": "page"
 	}

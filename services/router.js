@@ -28,6 +28,7 @@ module.exports = (app) => (req, res) => {
 
     const controller = require('../controllers/' + routeFound.controller);
 
+
     controller(urlParams)
         .then(data => {
 

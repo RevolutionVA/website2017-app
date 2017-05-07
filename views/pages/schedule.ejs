@@ -8,86 +8,97 @@ schedule = schedule || [];
         <div class="section-position" id="schedule"></div>
         <div class="section">
             <div class="container">
-                <h2 class="section-title league-gothic">Schedule</h2>
-                <div class="intro-text">
-                    <%- intro %>
-                </div>
                 <div class="schedule">
-                    <% var lastTimeSlot = ''; var lastDaySlot = '';
+                    <h1>
+                        <span class="league-gothic">Schedule</span>
+                        <span class="pull-right saving-changes"><i class="fa fa-spinner fa-spin fa-fw"></i> Saving Changes</span>
+                    </h1>
+                    <%
+                    var eventPrev = {}, event = {}, eventNext = {}, timeSlotId = '', daySlotId = '';
 
-                    schedule.forEach(event => { %>
+                    for(let i = 0; i < schedule.length; i++) {
+                        eventPrev = schedule[i - 1];
+                        event = schedule[i];
+                        eventNext = schedule[i + 1];
+                    %>
 
-                    <% if (lastTimeSlot !== event.timeSlot) { %>
+                    <% if(!eventPrev || eventPrev.dateDay !== event.dateDay ) {
+                        daySlotId = event.dateDay.replace(/ /g, '-');
+                    %>
+                    <h3 class="day"><%- event.dateDay %></h3>
+                    <div class="day-group">
+                        <span class="place" id="<%= daySlotId %>"></span>
+                        <a class="line" href="#<%= daySlotId %>"><span></span></a>
+                        <% } %>
 
-                    <% if (lastTimeSlot) { %>
-                    <%- '</div>' %>
-                    <% } %>
+                        <% if (!eventPrev || eventPrev.timeSlot !== event.timeSlot) {
+                            timeSlotId = event.dateDay.replace(/ /g, '-') + '-' + event.timeSlot.replace(/ /g, '-');
+                        %>
+                        <h4 class="h3 time"><%= event.startTime + ' - ' + event.endTime %></h4>
+                        <div class="time-group">
+                            <span class="place" id="<%= timeSlotId %>"></span>
+                            <a class="line" href="#<%= timeSlotId %>"><span></span></a>
+                            <% } %>
 
-                    <% if(lastDaySlot !== event.dateDay ){ %>
-                    <h3><%- event.dateDay %></h3>
-                    <% } lastDaySlot = event.dateDay; %>
+                            <div class="event <%= event.talk ? 'talk' : 'other' %>" id="<%= event.slug %>">
 
-                    <%-
-                        '<div class="timeslot">' +
-                        '<div class="line"></div>' +
-                        '<h4 class="h3 times">' + event.startTime + ' - ' + event.endTime + '</h4>'
-                        ; %>
+                                <% if(event.talk) { %>
 
-                    <% } lastTimeSlot = event.timeSlot; %>
+                                <div class="manager">
+                                    <button class="btn btn-link unchecked heart" data-heart="<%- event.talk.slug %>"><i
+                                                class="fa fa-heart"></i></button>
+                                    <button class="btn btn-link saving"></button>
+                                </div>
 
-                    <div class="event <%= event.talk ? 'talk' : 'other' %>" id="<%= event.slug %>">
+                                <h3 class="h4 title">
+                                    <a class="talk-link" target="_blank"
+                                       href="/talk/<%- event.talk.slug %>"><%- event.talk.title %></a>
+                                </h3>
 
-                        <% if(event.talk) { %>
-
-                        <div class="manager">
-                            <button class="btn btn-link unchecked heart" data-heart="<%- event.talk.slug %>"><i
-                                        class="fa fa-heart"></i></button>
-                            <button class="btn btn-link saving"><i class="fa fa-spinner fa-spin fa-fw"></i></button>
-                        </div>
-
-                        <h3 class="h4 title">
-                            <a class="talk-link" target="_blank"
-                               href="/talk/<%- event.talk.slug %>"><%- event.talk.title %></a>
-                        </h3>
-
-                        <p>
-                            <span class="location"><%- event.location %></span>
-                            <% if(event.talk.speaker) { %>
-                            <span class="speaker">
+                                <p>
+                                    <span class="location"><%- event.location %></span>
+                                    <% if(event.talk.speaker) { %>
+                                    <span class="speaker">
                                     <a href="/speakers#<%- event.talk.speaker.slug %>"><%- event.talk.speaker.firstName + ' ' + event.talk.speaker.lastName %></a>
                                 </span>
-                            <% } %>
-                        </p>
+                                    <% } %>
+                                </p>
 
-                        <% if( event.talk.summary ){ %>
-                        <div class="summary" style="display: none">
-                            <%- event.talk.summary; %>
+                                <% if( event.talk.summary ){ %>
+                                <div class="summary" style="display: none">
+                                    <%- event.talk.summary; %>
+                                </div>
+                                <% } %>
+
+                                <% }else{ %>
+
+                                <h4 class="title">
+                                    <%- event.title %>
+                                </h4>
+
+                                <p>
+                                    <span class="location"><%- event.location %></span>
+                                </p>
+
+                                <% if( event.description ){ %>
+                                <div class="description" style="display: none">
+                                    <%- event.description; %>
+                                </div>
+                                <% } %>
+
+                                <% } %>
+
+                            </div>
+
+                            <% if (!eventNext || eventNext.timeSlot !== event.timeSlot) { %>
                         </div>
                         <% } %>
 
-                        <% }else{ %>
-
-                        <h4 class="title">
-                            <%- event.title %>
-                        </h4>
-
-                        <p>
-                            <span class="location"><%- event.location %></span>
-                        </p>
-
-                        <% if( event.description ){ %>
-                        <div class="description" style="display: none">
-                            <%- event.description; %>
-                        </div>
-                        <% } %>
-
-                        <% } %>
-
+                        <% if (!eventNext || eventNext.dateDay !== event.dateDay) { %>
                     </div>
+                    <% } %>
 
-                    <% }); %>
-
-                    <%- '</div>' // close out timeslot   %>
+                    <% } %>
                 </div>
             </div>
         </div>
