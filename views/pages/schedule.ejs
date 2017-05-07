@@ -23,7 +23,7 @@ schedule = schedule || [];
                     %>
 
                     <% if(!eventPrev || eventPrev.dateDay !== event.dateDay ) {
-                        daySlotId = event.dateDay.replace(/ /g, '-').toLowerCase();;
+                        daySlotId = event.dateDay.replace(/ /g, '-').toLowerCase();
                     %>
                     <h3 class="day"><%- event.dateDay %></h3>
                     <div class="day-group">
@@ -32,7 +32,7 @@ schedule = schedule || [];
                         <% } %>
 
                         <% if (!eventPrev || eventPrev.timeSlot !== event.timeSlot) {
-                            timeSlotId = event.dateDay.replace(/ /g, '-') + '-' + event.timeSlot.replace(/ /g, '-').toLowerCase();
+                            timeSlotId = (event.timeSlot.replace(/[ |_]/g, '-')).toLowerCase();
                         %>
                         <h4 class="h3 time"><%= event.startTime + ' - ' + event.endTime %></h4>
                         <div class="time-group">
