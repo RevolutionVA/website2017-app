@@ -9,7 +9,7 @@ var sponsorSizes = {
     'Platinum': 'col-xs-12 col-sm-6',
     'Gold': 'col-xs-6 col-sm-4',
     'Bronze': 'col-xs-4 col-sm-3',
-    'Friends of RevConf': 'col-xs-4 col-sm-3'
+    'Friends of RevConf': 'col-xs-3 col-sm-2'
 };
 var humanIndex = 0;
 %>
@@ -155,7 +155,9 @@ var humanIndex = 0;
                                 <% } %>
                                 <% if(keynoteSpeaker.interview){ %>
                                 <div class="interview">
-                                    <p class="title"><a href="https://www.youtube.com/watch?v=<%= keynoteSpeaker.interview %>" data-lity>
+                                    <p class="title"><a
+                                                href="https://www.youtube.com/watch?v=<%= keynoteSpeaker.interview %>"
+                                                data-lity>
                                             <i class="fa fa-play"></i> Interview</a></p>
                                 </div>
                                 <% } %>

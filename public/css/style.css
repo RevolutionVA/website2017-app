@@ -705,6 +705,7 @@ hr {
           font-size: 1rem; }
 
 .sponsor {
+  margin-bottom: 2em;
   overflow: hidden; }
   .sponsor a {
     position: absolute;

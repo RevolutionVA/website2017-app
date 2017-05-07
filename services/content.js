@@ -164,7 +164,7 @@ module.exports = function () {
             ])
                 .then(results => {
                     const sponsors = results[0];
-                    const sponsorshipLevels = results[0];
+                    const sponsorshipLevels = results[1];
 
                     const groupedSponsors = _.groupBy(sponsors, 'level');
 
