@@ -68,6 +68,16 @@ module.exports = function () {
                 });
         },
 
+        getVolunteers: function () {
+
+            return getType('humans')
+                .then(data => {
+                    return data
+                        .filter(h => h.role.includes('Volunteer'))
+                        .sort((h1, h2) => h1.lastName > h2.lastName);
+                });
+        },
+
         getSpeakers: function () {
 
             return getTalksBySpeaker()

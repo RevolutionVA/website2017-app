@@ -10,7 +10,8 @@ module.exports = () => {
     return promiseObjectResolver({
         socialMedia: content.getSocialMedia(),
         pages: content.getPages(),
-        organizers: content.getOrganizers()
+        organizers: content.getOrganizers(),
+        volunteers: content.getVolunteers()
     })
         .then(results => ({
             locals: {
@@ -20,6 +21,6 @@ module.exports = () => {
             },
             intro: results.pages.about.intro,
             organizers: results.organizers,
-            volunteers: []
+            volunteers: results.volunteers
         }));
 }

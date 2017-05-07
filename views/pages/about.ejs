@@ -13,6 +13,7 @@ volunteers = volunteers || [];
                 <div class="intro-text">
                     <%- intro %>
                 </div>
+
                 <h3 class="h2 league-gothic">Our Organizers</h3>
                 <div class="organizers">
                     <div class="row">
@@ -21,6 +22,16 @@ volunteers = volunteers || [];
                         <% }); %>
                     </div>
                 </div>
+
+                <h3 class="h2 league-gothic">Our Volunteers</h3>
+                <div class="organizers">
+                    <div class="row">
+                        <% volunteers.forEach(function(human) { %>
+                        <%- include('../partials/human.ejs', {human: human}) %>
+                        <% }); %>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
