@@ -406,58 +406,106 @@ hr {
 .btn-toggle.open .fa-plus {
   display: none; }
 
-.page-sections .section-wrapper .schedule a {
-  color: #fff; }
-.page-sections .section-wrapper .schedule .timeslot {
-  margin: 0 0 1em;
-  position: relative; }
-  .page-sections .section-wrapper .schedule .timeslot .times {
+#schedule-app {
+  padding: 1em 1em 1em;
+  background: #fff; }
+
+.page-sections .section-wrapper .schedule {
+  color: #123123; }
+  .page-sections .section-wrapper .schedule .saving-changes {
+    display: none;
+    font-size: 0.75rem;
+    color: #999; }
+  .page-sections .section-wrapper .schedule a {
+    color: #333 !important; }
+  .page-sections .section-wrapper .schedule .line {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding: 0 0.75em 0 0.75em; }
+    .page-sections .section-wrapper .schedule .line span {
+      position: absolute;
+      display: block;
+      left: 0.75em;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #333; }
+  .page-sections .section-wrapper .schedule .place {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    margin-top: -8em;
+    width: 1px;
+    height: 1px;
+    background: #a80000; }
+  .page-sections .section-wrapper .schedule .day-group + .day {
+    margin-top: 2em; }
+  .page-sections .section-wrapper .schedule .day-group {
     position: relative;
-    padding: 1em 0 1em 1em;
-    margin: 0 0 -1px 0 !important;
-    border-left: 1px solid #333;
-    border-bottom: 1px solid #333;
-    background-color: rgba(20, 20, 20, 0.9);
-    color: #a80000; }
-  .page-sections .section-wrapper .schedule .timeslot .times + .event {
-    border-top: 1px solid #222; }
-  .page-sections .section-wrapper .schedule .timeslot .event {
-    position: relative;
-    padding: 1em 1.5em 0.5em 1.5em;
-    margin: 0 0 0 2em;
-    border-left: 1px solid #333;
-    border-top: 1px solid #222;
-    background-color: rgba(20, 20, 20, 0.8); }
-    .page-sections .section-wrapper .schedule .timeslot .event:last-child {
-      border-bottom: 1px solid #333; }
-    .page-sections .section-wrapper .schedule .timeslot .event [data-heart].unchecked .fa-heart {
-      color: #666; }
-    .page-sections .section-wrapper .schedule .timeslot .event .manager {
-      float: right;
-      min-width: 4em; }
-    .page-sections .section-wrapper .schedule .timeslot .event .title {
-      margin: 0 0 0.5em !important; }
-    .page-sections .section-wrapper .schedule .timeslot .event .location {
-      color: #888; }
-    .page-sections .section-wrapper .schedule .timeslot .event .speaker {
-      border-left: 1px solid #666;
-      display: inline-block;
-      padding-left: 0.75em;
-      margin-left: 0.5em; }
-      .page-sections .section-wrapper .schedule .timeslot .event .speaker a {
-        color: #999; }
-    .page-sections .section-wrapper .schedule .timeslot .event .summary {
-      display: inline-block;
-      margin-bottom: 1em; }
-  .page-sections .section-wrapper .schedule .timeslot .times + .event {
-    padding-top: 1em; }
-.page-sections .section-wrapper .schedule .fa-heart {
-  color: #a80000; }
-.page-sections .section-wrapper .schedule .form-inline > * {
-  margin-bottom: .5rem; }
+    padding: 0 0 0 1.5em;
+    overflow: hidden; }
+    .page-sections .section-wrapper .schedule .day-group .time {
+      position: relative;
+      color: #a80000;
+      margin-top: 0;
+      margin-bottom: 0.5em !important; }
+    .page-sections .section-wrapper .schedule .day-group .time-group + .time {
+      margin-top: 1em; }
+    .page-sections .section-wrapper .schedule .day-group .time-group {
+      position: relative;
+      padding: 0 0 0 1.5em;
+      overflow: hidden; }
+      .page-sections .section-wrapper .schedule .day-group .time-group .line span {
+        background: #a80000; }
+      .page-sections .section-wrapper .schedule .day-group .time-group .event {
+        padding: 1em 0 0 0.5em;
+        position: relative;
+        overflow: hidden;
+        border-bottom: solid 1px #eee; }
+        .page-sections .section-wrapper .schedule .day-group .time-group .event .manager {
+          float: right;
+          text-align: right;
+          min-width: 4em; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager .heart .fa-heart {
+            font-size: 1.25em;
+            color: #a80000; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager .heart.unchecked .fa-heart {
+            color: #ddd; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager .fa-heart {
+            color: #a80000; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager .fa-spinner {
+            color: #a80000; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager .saving {
+            display: none; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager.saving .heart {
+            display: none; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .manager.saving .saving {
+            display: block; }
+        .page-sections .section-wrapper .schedule .day-group .time-group .event .title {
+          margin: 0 0 0.5em !important; }
+        .page-sections .section-wrapper .schedule .day-group .time-group .event .location {
+          color: #666; }
+        .page-sections .section-wrapper .schedule .day-group .time-group .event .speaker {
+          border-left: 1px solid #666;
+          display: inline-block;
+          padding-left: 0.75em;
+          margin-left: 0.5em; }
+          .page-sections .section-wrapper .schedule .day-group .time-group .event .speaker a {
+            color: #999; }
+        .page-sections .section-wrapper .schedule .day-group .time-group .event .summary {
+          display: inline-block;
+          margin-bottom: 1em; }
+      .page-sections .section-wrapper .schedule .day-group .time-group .times + .event {
+        padding-top: 1em; }
+  .page-sections .section-wrapper .schedule .form-inline > * {
+    margin-bottom: .5rem; }
 
 .site-footer {
-  color: rgba(255, 255, 255, 0.7);
+  color: #7e7e7e;
   padding: 3rem 0 0.75rem;
   font-size: 1rem;
   background-color: #000; }
@@ -494,11 +542,10 @@ hr {
     width: 100%;
     background: #0d0000 fixed center center;
     background-size: cover;
-    xbox-shadow: inset 0 0 10em 3em #260302;
     border-bottom: solid 5px #000;
     color: #fff; }
     .page-sections .section-wrapper a {
-      color: gray; }
+      color: #7e7e7e; }
       .page-sections .section-wrapper a:focus {
         color: #fff; }
       .page-sections .section-wrapper a:hover {
@@ -511,7 +558,7 @@ hr {
     .page-sections .section-wrapper.bg-dark {
       background-color: #232323; }
       .page-sections .section-wrapper.bg-dark .section .section-subtitle {
-        color: rgba(255, 255, 255, 0.5); }
+        color: #7e7e7e; }
     .page-sections .section-wrapper.bg-grey {
       background-color: #b0b0b0; }
     .page-sections .section-wrapper .section {
@@ -526,7 +573,7 @@ hr {
       .page-sections .section-wrapper .section .section-title {
         color: #a80000;
         text-transform: uppercase;
-        margin: 0 0 1.5rem;
+        margin: 0.5em 0 0.25em;
         font-size: 3rem; }
       .page-sections .section-wrapper .section .section-subtitle {
         color: rgba(0, 0, 0, 0.7);
@@ -616,7 +663,7 @@ hr {
       top: 0;
       bottom: 0;
       width: 1px;
-      background: rgba(255, 255, 255, 0.4); }
+      background: #7e7e7e; }
     .section-intro.section-wrapper .row i.fa {
       margin-right: 10px;
       color: #a80000; }
@@ -654,6 +701,8 @@ hr {
 
 .section-speakers.section-wrapper {
   background-image: url("../images/layout/background3.png"); }
+  .section-speakers.section-wrapper .keynote-speaker {
+    font-size: 16px; }
 
 .human img {
   -webkit-filter: grayscale(1);
@@ -665,30 +714,33 @@ hr {
   background-color: rgba(255, 255, 255, 0.05);
   margin: 0; }
   .human .row > div {
-    padding: 0; }
-    .human .row > div.info {
-      padding: 10px 15px 0 17px;
-      margin: 15px 0 0 -20px;
+    padding: 5px; }
+    .human .row > div.info .info-wrap {
+      padding: 5px 10px;
+      margin-left: -5px;
       background-color: rgba(20, 20, 20, 0.9); }
-      .human .row > div.info > .title {
+      .human .row > div.info .info-wrap > h4 {
+        color: #7e7e7e; }
+      .human .row > div.info .info-wrap > .title {
         font-style: italic;
         font-size: 0.8rem; }
-      .human .row > div.info .social {
+      .human .row > div.info .info-wrap .social {
         margin: 0 -3px 0.5em;
         font-size: 1rem; }
-        .human .row > div.info .social a {
+        .human .row > div.info .info-wrap .social a {
           margin: 0 3px; }
-      .human .row > div.info .talk, .human .row > div.info .interview {
+      .human .row > div.info .info-wrap .talk, .human .row > div.info .info-wrap .interview {
         margin-top: 0.25em;
         padding: 0.5em 0 0 0.25em;
         border-top: #333 solid 1px;
         min-height: 1em; }
-        .human .row > div.info .talk .title > a, .human .row > div.info .interview .title > a {
+        .human .row > div.info .info-wrap .talk .title > a, .human .row > div.info .info-wrap .interview .title > a {
           color: #ccc; }
-        .human .row > div.info .talk > i, .human .row > div.info .interview > i {
+        .human .row > div.info .info-wrap .talk > i, .human .row > div.info .info-wrap .interview > i {
           font-size: 1rem; }
 
 .sponsor {
+  margin-bottom: 2em;
   overflow: hidden; }
   .sponsor a {
     position: absolute;
@@ -754,7 +806,7 @@ hr {
 
 .section-signup .section-title {
   font-size: 2.25em !important;
-  margin: 0 0 1rem !important; }
+  margin: 0 0 0.25em !important; }
 .section-signup .form-control {
   min-width: 200px; }
 .section-signup .form-group {
@@ -835,12 +887,5 @@ hr {
       opacity: .01; }
     .section-partners .partner > a:hover .name {
       opacity: .85; }
-
-.keynote-speaker .contributor {
-  padding: 0; }
-  .keynote-speaker .contributor .img-content-sep {
-    margin-bottom: 1rem; }
-  .keynote-speaker .contributor .circle-awesome {
-    margin-bottom: 0; }
 
 /*# sourceMappingURL=style.css.map */

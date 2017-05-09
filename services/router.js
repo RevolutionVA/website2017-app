@@ -4,46 +4,49 @@
  * Router
  */
 
-const routes = require('../config/routes');
+const Route = require('route-parser');
+const fs = require('fs-extra');
+const routes = fs.readJsonSync('./config/routes.json');
 
 module.exports = (app) => (req, res) => {
 
-    let route = routes.find(r => r.path === req.path);
+    let routeFound = null, urlParams = {};
 
-    if (!route) {
-        route = routes.find(r => {
-            if (!r.path.includes('*')) return false;
-            const regExpStr = '^' + r.path.replace('*', '[^/]+');
-            return new RegExp(regExpStr).test(req.path);
-        });
+    const requestPath = req.path;
 
-        if (!route) {
-            route = routes.find(r => r.path === '*');
+    routes.forEach(route => {
 
-            if (!route) {
-                route = routes.find(r => r[404]);
-            }
+        if (routeFound) return;
+
+        const testUrlParams = new Route(route.path).match(requestPath);
+
+        if (testUrlParams) {
+            urlParams = testUrlParams;
+            routeFound = route;
         }
-    }
+    });
 
-    if (route.response && (typeof route.response === 'function')) {
-        return route.response(req, res);
-    }
+    const controller = require('../controllers/' + routeFound.controller);
 
-    route
-        .viewData(req.path)
+
+    controller(urlParams)
         .then(data => {
+
+            if (data.response && (typeof data.response === 'function')) {
+                return data.response(req, res);
+            }
 
             if (data.redirect) {
                 res.writeHead(302, {
                     'Location': data.redirect
                 });
                 res.end();
+                return;
             }
 
             Object.assign(app.locals, {title: '', keywords: ''}, data.locals || {});
 
-            res.render(route.view, data);
+            res.render(data.view || routeFound.view, data);
         })
         .catch(err => {
 

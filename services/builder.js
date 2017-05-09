@@ -98,13 +98,13 @@ function build() {
         .getData()
         .then(dataTypes => {
 
-            contentService.sourcesClear()
+            contentService().sourcesClear()
                 .then(() => {
                     console.log('Data Generated.');
 
                     const promises = dataTypes.map(dataType => {
                         const json = JSON.stringify(dataType.items);
-                        return contentService.sourceCreate(dataType.type, json);
+                        return contentService().sourceCreate(dataType.type, json);
                     });
 
                     return Promise.all(promises);

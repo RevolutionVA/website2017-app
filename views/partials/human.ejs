@@ -15,9 +15,10 @@ human = human ||
         ];
 %>
 <div class="col-md-6 human" style="margin-bottom: 2em;" id="<%= human.slug %>">
+    
     <div class="row">
 
-        <div class="col-xs-6">
+        <div class="col-xs-5 image">
             <div class="embed-responsive embed-responsive-1x1">
                 <div class="embed-responsive-item text-center">
                     <img src="/images/layout/logo.png"
@@ -26,47 +27,50 @@ human = human ||
             </div>
         </div>
 
-        <div class="col-xs-6 info">
-            <h4><%= human.firstName %> <%= human.lastName %></h4>
-            <p class="title"><%= human.title %></p>
-            <% if(human.companyName){ %>
-            <p class="company">
-                <% if(human.companyWebsite){ %>
-                <a class="text-grey" target="_blank"
-                   href="<%= human.companyWebsite %>"><%= human.companyName %></a>
-                <% }else{ %>
-                <%= human.companyName %>
+        <div class="col-xs-7 info">
+            <div class="info-wrap">
+                <h4><%= human.firstName %> <%= human.lastName %></h4>
+                <p class="title"><%= human.title %></p>
+                <% if(human.companyName){ %>
+                <p class="company">
+                    <% if(human.companyWebsite){ %>
+                    <a class="text-grey" target="_blank"
+                       href="<%= human.companyWebsite %>"><%= human.companyName %></a>
+                    <% }else{ %>
+                    <%= human.companyName %>
+                    <% } %>
+                </p>
                 <% } %>
-            </p>
-            <% } %>
-            <p class="social">
-                <% if(human.twitter){ %>
-                <a target="_blank" href="https://twitter.com/<%= human.twitter %>">
-                    <i class="fa fa-twitter"></i></a>
+                <p class="social">
+                    <% if(human.twitter){ %>
+                    <a target="_blank" href="https://twitter.com/<%= human.twitter %>">
+                        <i class="fa fa-twitter"></i></a>
+                    <% } %>
+                    <% if(human.linkedin){ %>
+                    <a target="_blank"
+                       href="https://www.linkedin.com/in/<%= human.linkedin %>">
+                        <i class="fa fa-linkedin"></i></a>
+                    <% } %>
+                    <% if(human.facebook){ %>
+                    <a target="_blank"
+                       href="https://www.facebook.com/<%= human.facebook %>">
+                        <i class="fa fa-facebook-official"></i></a>
+                    <% } %>
+                </p>
+                <% if(human.talk){ %>
+                <div class="talk">
+                    <p class="title"><a href="/talk/<%= human.talk.slug %>">
+                            <i class="fa fa-bullhorn"></i> <%= human.talk.title %></a></p>
+                </div>
                 <% } %>
-                <% if(human.linkedin){ %>
-                <a target="_blank"
-                   href="https://www.linkedin.com/in/<%= human.linkedin %>">
-                    <i class="fa fa-linkedin"></i></a>
+                <% if(human.interview){ %>
+                <div class="interview">
+                    <p class="title"><a href="https://www.youtube.com/watch?v=<%= human.interview %>" data-lity>
+                            <i class="fa fa-play"></i> Interview</a></p>
+                </div>
                 <% } %>
-                <% if(human.facebook){ %>
-                <a target="_blank"
-                   href="https://www.facebook.com/<%= human.facebook %>">
-                    <i class="fa fa-facebook-official"></i></a>
-                <% } %>
-            </p>
-            <% if(human.talk){ %>
-            <div class="talk">
-                <p class="title"><a href="/talk/<%= human.talk.slug %>">
-                        <i class="fa fa-bullhorn"></i> <%= human.talk.title %></a></p>
             </div>
-            <% } %>
-            <% if(human.interview){ %>
-            <div class="interview">
-                <p class="title"><a href="https://www.youtube.com/watch?v=<%= human.interview %>" data-lity>
-                        <i class="fa fa-play"></i> Interview</a></p>
-            </div>
-            <% } %>
         </div>
     </div>
+
 </div>

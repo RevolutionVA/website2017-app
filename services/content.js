@@ -4,10 +4,10 @@
  * Module
  */
 const _ = require('lodash');
+const slugify = require('../modules/slugify');
 const moment = require('moment');
 const pg = require('pg');
 const conf = require('../config/config.js');
-
 const pool = new pg.Pool({
     user: conf.get('dbUser'),
     database: conf.get('dbName'),
@@ -18,228 +18,167 @@ const pool = new pg.Pool({
     idleTimeoutMillis: conf.get('dbIdleTimeoutMillis')
 });
 
-function query(sql, vars) {
-    return new Promise((resolve, reject) => {
-        pool.connect(function (err, client, done) {
-            if (err) {
-                console.error(err);
-                reject(err);
-            }
-            client.query(sql, vars || [], function (err, result) {
-                if (err) {
-                    console.error(err);
-                    reject(err);
-                }
-                resolve(result);
-                done();
-            });
-        });
+module.exports = function () {
 
-    });
-}
+    const store = {};
 
-function sourcesClear() {
+    return {
 
-    return query('DROP TABLE IF EXISTS sources;')
-        .then(() => {
-            return query('CREATE TABLE sources ( source_type varchar(50), items text );');
-        });
-}
+        sourcesClear,
 
-function sourceExists(type) {
+        sourceExists,
 
-    return query('SELECT COUNT(*) FROM sources WHERE source_type = $1', [type])
-        .then(count => {
-            return count === '1';
-        });
-}
+        sourceCreate,
 
-function sourceCreate(type, store) {
+        getPages: function () {
+            return getType('pages')
+                .then(pages => {
 
-    return query('INSERT INTO sources (source_type,items) VALUES ($1, $2)', [type, store]);
-}
+                    const pagesObject = {list: pages};
 
-function sourceGet(type, process) {
+                    pages.forEach(page => {
+                        pagesObject[page.slug] = page;
+                    });
 
-    return query('SELECT items FROM sources WHERE source_type = $1', [type])
-        .then(result => {
+                    return pagesObject;
+                });
+        },
 
-            return process(JSON.parse(result.rows[0].items));
-        });
-}
+        getTalk,
 
-function getType(type, process) {
-
-    process = typeof process === 'function' ? process : (data => data);
-
-    return sourceGet(type, process);
-}
-
-function getSpeaker(slug) {
-    return getType('humans')
-        .then(humans => humans.find(human => human.slug === slug));
-}
-
-function getTalksBySpeaker() {
-
-    return getType('talks')
-        .then(talks => {
-
-            const talksBySpeaker = {};
-
-            talks.forEach(talk => {
-                talksBySpeaker[talk.speaker] = talk;
-            });
-
-            return talksBySpeaker;
-        });
-}
-
-function getTalk(slug) {
-
-    return getType('talks').then(talks => {
-
-        const talk = talks.find(talk => talk.slug === slug);
-
-        if (!talk || !talk.speaker)
-            return talk;
-
-        return getSpeaker(talk.speaker)
-            .then(speaker => {
-                talk.speakerSlug = talk.speaker + '';
-                talk.speaker = speaker;
-
-                return talk;
-            });
-    });
-}
-
-function parseDate(strDate) {
-
-    return moment(
-        strDate.substring(0, 10) + ' ' +
-        strDate.substring(11, 11 + 2) + ':' +
-        strDate.substring(13, 13 + 2)
-    );
-}
-
-module.exports = {
-
-    sourcesClear,
-
-    sourceExists,
-
-    sourceCreate,
-
-    getPages: function () {
-        return getType('pages', pages => {
-
-            const pagesObject = {list: pages};
-
-            pages.forEach(page => {
-                pagesObject[page.slug] = page;
-            });
-
-            return pagesObject;
-        });
-    },
-
-    getTalk,
-
-    getSocialMedia: function () {
-        return getType('social-media', data => {
-            return data
-                .map(link => {
-                    link.iconClass = (link.icon === 'lanyrd' ? 'icon icon-' : 'fa fa-') +
-                        link.icon;
-                    return link;
-                })
-                .reverse();
-        });
-    },
-
-    getOrganizers: function () {
-        return getType('humans', data => {
-            return data
-                .filter(h => h.role.includes('Organizer'))
-                .sort((h1, h2) => h1.lastName > h2.lastName);
-        });
-    },
-
-    getSpeakers: function () {
-
-        return getTalksBySpeaker()
-            .then(talksBySpeaker => {
-
-                return getType('humans', data => {
+        getSocialMedia: function () {
+            return getType('social-media')
+                .then(data => {
                     return data
-                        .filter(h => h.role.includes('Speaker'))
-                        .sort((h1, h2) => h1.lastName > h2.lastName)
-                        .map(human => {
-                            human.talk = talksBySpeaker[human.slug];
-                            return human;
+                        .map(link => {
+                            link.iconClass = (link.icon === 'lanyrd' ? 'icon icon-' : 'fa fa-') +
+                                link.icon;
+                            return link;
+                        })
+                        .reverse();
+                });
+        },
+
+        getOrganizers: function () {
+            return getType('humans')
+                .then(data => {
+                    return data
+                        .filter(h => h.role.includes('Organizer'))
+                        .sort((h1, h2) => h1.lastName > h2.lastName);
+                });
+        },
+
+        getVolunteers: function () {
+
+            return getType('humans')
+                .then(data => {
+                    return data
+                        .filter(h => h.role.includes('Volunteer'))
+                        .sort((h1, h2) => h1.lastName > h2.lastName);
+                });
+        },
+
+        getSpeakers: function () {
+
+            return getTalksBySpeaker()
+                .then(talksBySpeaker => {
+
+                    return getType('humans')
+                        .then(humans => {
+                            return humans
+                                .filter(h => h.role.includes('Speaker'))
+                                .sort((h1, h2) => h1.lastName > h2.lastName)
+                                .map(human => {
+                                    human.talk = talksBySpeaker[human.slug];
+                                    return human;
+                                });
                         });
                 });
-            });
-    },
+        },
 
-    getSpeaker,
+        getSpeaker,
 
-    getSchedule: function () {
-        return getType('schedule', events => {
-            return events
-                .map(event => {
-                    if (event.talk) {
-                        event.talk = getTalk(event.talk);
-                    }
+        getSchedule: function () {
+            return Promise.all([
+                getTalks(),
+                getType('schedule')
+            ])
+                .then(results => {
 
-                    event.startMomemt = parseDate(event.start);
-                    event.endMomemt = parseDate(event.end);
+                    const talks = results[0];
+                    const events = results[1];
 
-                    event.startTime = event.startMomemt.format('LT').toLowerCase();
-                    event.endTime = event.endMomemt.format('LT').toLowerCase();
+                    return events
+                        .map(event => {
 
-                    event.dateDay = event.startMomemt.format('MMMM D');
+                            event.slug = slugify([event.location, event.start, event.end]);
 
-                    event.timeSlot = event.start + '_' + event.end;
-                    return event;
-                })
-                .sort((event1, event2) => {
+                            event.startMomemt = parseDate(event.start);
+                            event.endMomemt = parseDate(event.end);
 
-                    if (event1.timeSlot === event2.timeSlot) {
-                        return (event1.location < event2.location) ? -1 : (event1.location > event2.location) ? 1 : 0;
-                    }
+                            event.startTime = event.startMomemt.format('LT').toLowerCase();
+                            event.endTime = event.endMomemt.format('LT').toLowerCase();
 
-                    return event1.timeSlot < event2.timeSlot ? -1 : 1;
-                });
-        });
-    },
+                            event.dateDay = event.startMomemt.format('MMMM D');
 
-    getPanelists: function () {
+                            event.timeSlot = event.start + '_' + event.end;
 
-        return getTalksBySpeaker()
-            .then(talksBySpeaker => {
+                            if (event.talk)
+                                event.talk = talks.find(talk => event.talk === talk.slug);
 
-                return getType('humans', humans => {
-                    return humans
-                        .filter(h => h.role.includes('Panelist'))
-                        .sort((h1, h2) => h1.lastName > h2.lastName)
-                        .map(human => {
-                            human.talk = talksBySpeaker[human.slug];
-                            return human;
+                            return event;
+                        })
+                        .sort((event1, event2) => {
+
+                            if (event1.timeSlot === event2.timeSlot) {
+                                return (event1.location < event2.location) ? -1
+                                    : (event1.location > event2.location) ? 1 : 0;
+                            }
+
+                            return event1.timeSlot < event2.timeSlot ? -1 : 1;
                         });
                 });
-            });
-    },
+        },
 
-    getSponsors: function () {
-        return getType('sponsors', sponsors => {
-            return getType('sponsorship-levels')
-                .then(levels => {
+        getPanelists: function () {
+
+            return getTalksBySpeaker()
+                .then(talksBySpeaker => {
+
+                    return getType('humans')
+                        .then(humans => {
+                            return humans
+                                .filter(h => h.role.includes('Panelist'))
+                                .sort((h1, h2) => h1.lastName > h2.lastName)
+                                .map(human => {
+                                    human.talk = talksBySpeaker[human.slug];
+                                    return human;
+                                });
+                        });
+                });
+        },
+
+        getKeynoteSpeaker: function () {
+
+            return getType('humans')
+                .then(humans => {
+                    const speakers = humans.filter(h => h.role.includes('Keynote Speaker'));
+                    return speakers.length && speakers[0];
+                });
+        },
+
+        getSponsors: function () {
+            return Promise.all([
+                getType('sponsors'),
+                getType('sponsorship-levels')
+            ])
+                .then(results => {
+                    const sponsors = results[0];
+                    const sponsorshipLevels = results[1];
 
                     const groupedSponsors = _.groupBy(sponsors, 'level');
 
-                    return levels.map(level => {
+                    return sponsorshipLevels.map(level => {
                         return {
                             title: level,
                             sponsors: (groupedSponsors[level] || [])
@@ -247,7 +186,120 @@ module.exports = {
                         };
                     });
                 });
+        }
+
+    };
+
+    function query(sql, vars) {
+        return new Promise((resolve, reject) => {
+            pool.connect(function (err, client, done) {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                }
+                client.query(sql, vars || [], function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                    }
+                    resolve(result);
+                    done();
+                });
+            });
+
         });
     }
 
-};
+    function sourcesClear() {
+
+        return query('DROP TABLE IF EXISTS sources;')
+            .then(() => {
+                return query('CREATE TABLE sources ( source_type varchar(50), items text );');
+            });
+    }
+
+    function sourceExists(type) {
+
+        return query('SELECT COUNT(*) FROM sources WHERE source_type = $1', [type])
+            .then(count => {
+                return count === '1';
+            });
+    }
+
+    function sourceCreate(type, store) {
+
+        return query('INSERT INTO sources (source_type,items) VALUES ($1, $2)', [type, store]);
+    }
+
+    function getType(type) {
+
+        if (store.hasOwnProperty(type))
+            return Promise.resolve(store[type]);
+
+        return query('SELECT items FROM sources WHERE source_type = $1', [type])
+            .then(result => {
+
+                const response = JSON.parse(result.rows[0].items);
+                store[type] = response;
+                return Promise.resolve(response);
+            });
+    }
+
+    function getSpeaker(slug) {
+        return getType('humans')
+            .then(humans => humans.find(human => human.slug === slug));
+    }
+
+    function getTalksBySpeaker() {
+
+        return getType('talks')
+            .then(talks => {
+
+                const talksBySpeaker = {};
+
+                talks.forEach(talk => {
+                    talksBySpeaker[talk.speaker] = talk;
+                });
+
+                return talksBySpeaker;
+            });
+    }
+
+    function getTalks() {
+
+        return Promise.all([
+            getType('talks'),
+            getType('humans')
+        ])
+            .then(results => {
+
+                const talks = results[0];
+                const humans = results[1];
+
+                talks.map(talk => {
+                    talk.speaker = humans.find(human => human.slug === talk.speaker);
+                });
+
+                return talks;
+            });
+    }
+
+    function getTalk(slug) {
+
+        return getTalks()
+            .then(talks => {
+                return talks.find(talk => talk.slug === slug);
+            });
+    }
+
+    function parseDate(strDate) {
+
+        return moment(
+            strDate.substring(0, 10) + ' ' +
+            strDate.substring(11, 11 + 2) + ':' +
+            strDate.substring(13, 13 + 2)
+        );
+    }
+}
+;
+
