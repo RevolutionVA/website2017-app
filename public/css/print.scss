@@ -1,0 +1,11 @@
+header.site-header {
+	display: none;
+}
+
+a[href]:after {
+	content: none !important;
+}
+
+.heart.unchecked {
+	display: none;
+}

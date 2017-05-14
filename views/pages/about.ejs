@@ -1,6 +1,7 @@
 <% include ../partials/header.ejs %>
 <%
 organizers = organizers || [];
+boardMembers = boardMembers || [];
 volunteers = volunteers || [];
 %>
 <div class="page-sections">
@@ -23,6 +24,18 @@ volunteers = volunteers || [];
                     </div>
                 </div>
 
+                <% if(boardMembers.length) { %>
+                <h3 class="h2 league-gothic">Our Board Members</h3>
+                <div class="organizers">
+                    <div class="row">
+                        <% boardMembers.forEach(function(human) { %>
+                        <%- include('../partials/human.ejs', {human: human}) %>
+                        <% }); %>
+                    </div>
+                </div>
+                <% } %>
+
+                <% if(volunteers.length) { %>
                 <h3 class="h2 league-gothic">Our Volunteers</h3>
                 <div class="organizers">
                     <div class="row">
@@ -31,6 +44,7 @@ volunteers = volunteers || [];
                         <% }); %>
                     </div>
                 </div>
+                <% } %>
 
             </div>
         </div>

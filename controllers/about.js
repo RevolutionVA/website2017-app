@@ -11,7 +11,8 @@ module.exports = () => {
         socialMedia: content.getSocialMedia(),
         pages: content.getPages(),
         organizers: content.getOrganizers(),
-        volunteers: content.getVolunteers()
+        volunteers: content.getVolunteers(),
+        boardMembers: content.getBoardMembers()
     })
         .then(results => ({
             locals: {
@@ -21,6 +22,7 @@ module.exports = () => {
             },
             intro: results.pages.about.intro,
             organizers: results.organizers,
-            volunteers: results.volunteers
+            volunteers: results.volunteers,
+            boardMembers: results.boardMembers
         }));
 }
