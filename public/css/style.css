@@ -49,7 +49,7 @@ body {
     background-color: #fff;
     background-image: url("../images/layout/background1.png"); }
     body.page > .container {
-      padding: 5em 0 0;
+      padding: 5em 1em 0;
       margin-bottom: 4em; }
 
 html {
